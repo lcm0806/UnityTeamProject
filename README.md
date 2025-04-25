@@ -24,7 +24,7 @@ Github Repository URL<br/>
 <br/>
 (https://github.com/lcm0806/UnityTeamProject/tree/main)](https://github.com/lcm0806/UnityTeamProject.git)<br/>
 <br/>
--------------------------------------------<br/>
+-------------------------------------------
 <br/>
 역할 분담 <br/>
 이창민 - 플레이어<br/>
