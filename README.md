@@ -25,8 +25,9 @@ Github Repository URL<br/>
 (https://github.com/lcm0806/UnityTeamProject/tree/main)](https://github.com/lcm0806/UnityTeamProject.git)<br/>
 <br/>
 -------------------------------------------
-<br/>
+
 역할 분담 <br/>
+
 이창민 - 플레이어<br/>
 강소현 - 아이템<br/>
 민만준 - 몬스터<br/>
