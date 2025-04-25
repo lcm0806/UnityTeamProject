@@ -20,16 +20,16 @@
 
 Github Repository URL
 
-[[https://github.com/](https://github.com/lcm0806/UnityTeamProject/tree/main)](https://github.com/lcm0806/UnityTeamProject.git)
+(https://github.com/lcm0806/UnityTeamProject/tree/main)](https://github.com/lcm0806/UnityTeamProject.git)
 
 -------------------------------------------
 
-역할 분담 (이름 - 담당 작업 영역)
-이창민 - 플레이어
-강소현 - 아이템
-민만준 - 몬스터
-장한길 - 맵
-모민호 - UI
+역할 분담 <br/>
+이창민 - 플레이어<br/>
+강소현 - 아이템<br/>
+민만준 - 몬스터<br/>
+장한길 - 맵<br/>
+모민호 - UI<br/>
 
 -------------------------------------------
 
