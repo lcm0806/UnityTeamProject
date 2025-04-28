@@ -1,23 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;    // Slider, Text 사용을 위해 추가
+using UnityEngine.EventSystems;
+using TMPro;
 
 public class OpeningUIManager : MonoBehaviour
 {
-    [Header("◾ Opening panels (0:Title,1:SaveSlots,2:Menu)")]
     public GameObject[] panels;
-
-    [Header("◾ Setting panel (not in 'panels' array!)")]
     public GameObject settingPanel;
-
-    [Header("◾ In‐game HUD")]
     public GameObject healthUI;
+    public Slider soundSlider;
+    public TextMeshProUGUI percentDisplay;
 
-    [Header("◾ Sound 설정 (슬라이더 & 퍼센트)")]
-    public Slider soundSlider;       // SettingPanel 안의 Slider
-    public Text percentDisplay;      // 퍼센트 표시용 Text
 
     private int currentIndex = 0;
     private bool isGameActive = false;
@@ -25,23 +22,31 @@ public class OpeningUIManager : MonoBehaviour
 
     void Start()
     {
-        // 초기화
         isGameActive = false;
         isPaused = false;
         Time.timeScale = 1f;
 
-        healthUI?.SetActive(false);
-        settingPanel?.SetActive(false);
+
+        if (healthUI != null) healthUI.SetActive(false);
+        if (settingPanel != null) settingPanel.SetActive(false);
+
         UpdatePanels();
 
-        // 슬라이더 콜백 연결
+        // 슬라이더 이벤트 연결
         if (soundSlider != null)
             soundSlider.onValueChanged.AddListener(OnSoundSliderChanged);
+
+        // 시작 시 슬라이더 퍼센트 표시도 갱신
+        if (soundSlider != null)
+            OnSoundSliderChanged(soundSlider.value);
+
     }
 
     void Update()
     {
-        // ▶ 화살표 네비: 게임 시작 전 & 설정창 닫힌 상태에서만
+
+        // 게임이 아직 시작 전이고, 설정창이 꺼진 상태일 때만 방향키 네비게이션 허용
+
         if (!isGameActive && (settingPanel == null || !settingPanel.activeSelf))
         {
             if (Input.GetKeyDown(KeyCode.DownArrow) && currentIndex < panels.Length - 1)
@@ -55,23 +60,23 @@ public class OpeningUIManager : MonoBehaviour
                 UpdatePanels();
             }
         }
-        // ▶ 게임 중 ESC → 일시정지
+
         else if (isGameActive && !isPaused && Input.GetKeyDown(KeyCode.Escape))
         {
             PauseGame();
         }
     }
 
-    // panels 중 currentIndex 하나만 켜고, settingPanel은 항상 끔
+
     void UpdatePanels()
     {
         for (int i = 0; i < panels.Length; i++)
             panels[i].SetActive(i == currentIndex);
 
-        settingPanel?.SetActive(false);
-    }
 
-    // --- 버튼 콜백들 ---
+        if (settingPanel != null)
+            settingPanel.SetActive(false);
+    }
 
     public void OnNewGameButton()
     {
@@ -96,10 +101,11 @@ public class OpeningUIManager : MonoBehaviour
     public void OnSettingButton()
     {
         Debug.Log("Go to Setting Panel");
-        // 모든 오프닝 메뉴 숨기기
-        foreach (var p in panels) p.SetActive(false);
 
-        // 설정창만 켜고 최상위로 이동
+        foreach (var p in panels)
+            p.SetActive(false);
+
+
         if (settingPanel != null)
         {
             settingPanel.SetActive(true);
@@ -110,8 +116,11 @@ public class OpeningUIManager : MonoBehaviour
     public void OnBackFromSetting()
     {
         Debug.Log("Back from Setting");
-        settingPanel?.SetActive(false);
-        currentIndex = 2; // MenuPanel 인덱스
+        if (settingPanel != null)
+            settingPanel.SetActive(false);
+
+        currentIndex = 2;
+
         UpdatePanels();
     }
 
@@ -124,7 +133,6 @@ public class OpeningUIManager : MonoBehaviour
 #endif
     }
 
-    // --- 게임 시작 / 일시정지 / 재개 ---
 
     private void StartGame()
     {
@@ -132,19 +140,31 @@ public class OpeningUIManager : MonoBehaviour
         isPaused = false;
         Time.timeScale = 1f;
 
-        foreach (var p in panels) p.SetActive(false);
-        settingPanel?.SetActive(false);
-        healthUI?.SetActive(true);
+
+        foreach (var p in panels)
+            p.SetActive(false);
+
+        if (settingPanel != null)
+            settingPanel.SetActive(false);
+
+        if (healthUI != null)
+            healthUI.SetActive(true);
+
     }
 
     private void PauseGame()
     {
         isPaused = true;
-        Time.timeScale = 0f;
 
-        foreach (var p in panels) p.SetActive(false);
-        panels[2].SetActive(true); // MenuPanel
-        healthUI?.SetActive(false);
+
+        foreach (var p in panels)
+            p.SetActive(false);
+
+        panels[2].SetActive(true);
+
+        if (healthUI != null)
+            healthUI.SetActive(false);
+
     }
 
     private void ResumeGame()
@@ -152,11 +172,14 @@ public class OpeningUIManager : MonoBehaviour
         isPaused = false;
         Time.timeScale = 1f;
 
-        panels[2].SetActive(false);
-        healthUI?.SetActive(true);
+        if (panels.Length > 2)
+            panels[2].SetActive(false);
+
+        if (healthUI != null)
+            healthUI.SetActive(true);
     }
 
-    // --- 슬라이더 값 변경 콜백 ---
+
     private void OnSoundSliderChanged(float value)
     {
         if (percentDisplay != null && soundSlider != null)
@@ -165,8 +188,20 @@ public class OpeningUIManager : MonoBehaviour
             int pct = Mathf.RoundToInt(normalized * 100f);
             percentDisplay.text = pct + "%";
 
-            // 실제 볼륨 적용 (원한다면)
-            // AudioListener.volume = normalized;
+
+            // AudioListener.volume = normalized; // 필요하면 사용
         }
     }
+
+    public void OnGoBackButton()
+    {
+        Debug.Log("Go back to Menu Panel");
+
+        if (settingPanel != null)
+            settingPanel.SetActive(false);
+
+        currentIndex = 2; // MenuPanel로 돌아가기 (현재 panels 배열에서 인덱스 2번이 MenuPanel이라 가정)
+        UpdatePanels();
+    }
 }
+
