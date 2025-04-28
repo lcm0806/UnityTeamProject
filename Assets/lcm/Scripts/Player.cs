@@ -9,6 +9,8 @@ public class Player : MonoBehaviour
 
     [SerializeField] private float speed;
     [SerializeField] private float jumpPower;
+    [SerializeField] private int health;
+    [SerializeField] private int Damage;
 
     private bool wDown;
     private bool jDown;
