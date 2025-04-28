@@ -4,15 +4,29 @@ using UnityEngine;
 
 public class Monster : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] int hp;
+    [SerializeField] int attackDamage;
+    [SerializeField] float speed;
+    [SerializeField] LayerMask targetLayer;
+    [SerializeField] Transform targetPos;
+    [SerializeField] Transform MuzzleRos;
+
+    private void DetectPlayer()
     {
-        
+        //todo
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Move()
     {
-        
+        //todo
+    }
+
+    private void Attack()
+    {
+        //todo
+    }
+    private void Die()
+    {
+        //todo
     }
 }
