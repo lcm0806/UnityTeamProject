@@ -4,51 +4,29 @@ using UnityEngine;
 
 public class Monster : MonoBehaviour
 {
-    public int maxHealth;
-    public int curHealth;
+    [SerializeField] int hp;
+    [SerializeField] int attackDamage;
+    [SerializeField] float speed;
+    [SerializeField] LayerMask targetLayer;
+    [SerializeField] Transform targetPos;
+    [SerializeField] Transform MuzzleRos;
 
-    Rigidbody rigid;
-    BoxCollider BoxCollider;
-    Material mat;
-
-    private void Awake()
+    private void DetectPlayer()
     {
-        rigid = GetComponent<Rigidbody>();
-        BoxCollider = GetComponent<BoxCollider>();
-        mat = GetComponent<MeshRenderer>().material;
+        //todo
     }
 
-    private void OnTriggerEnter(Collider other) //충돌판정
+    private void Move()
     {
-        //  if (other.tag == "태그이름")
-        //  {
-        //      Weapon weapon = other.GetComponent<Weapon>();
-        //      curHealth -= weapon.damage;
-        StartCoroutine(OnDamage());
-        //  }
-        //  else if (other.tag == "태그이름1")
-        //  {
-        //      Weapon1 weapon1 = other.GetComponent<Weapon1>();
-        //      curHealth -= weapon1.damage;
-        StartCoroutine(OnDamage());
-        //  }
+        //todo
     }
 
-    IEnumerator OnDamage()
+    private void Attack()
     {
-        mat.color = Color.red;
-        yield return new WaitForSeconds(0.1f);
-
-        if (curHealth > 0)
-        {
-            mat.color = Color.white;
-        }
-        else 
-        {
-            mat.color = Color.gray;
-            gameObject.layer = 21;
-            Destroy(gameObject, 4);
-        }
+        //todo
     }
-
+    private void Die()
+    {
+        //todo
+    }
 }
