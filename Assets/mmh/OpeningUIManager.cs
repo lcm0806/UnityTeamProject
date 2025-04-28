@@ -1,45 +1,77 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;    // Slider, Text ì‚¬ìš©ì„ ìœ„í•´ ì¶”ê°€
 
 public class OpeningUIManager : MonoBehaviour
 {
-    public GameObject[] panels; // TitlePanel, SaveSlotsPanel, MenuPanel ¼ø¼­
-    private int currentIndex = 0;
+    [Header("â—¾ Opening panels (0:Title,1:SaveSlots,2:Menu)")]
+    public GameObject[] panels;
 
-    public GameObject healthUI; // HealthUI ¿¬°á
+    [Header("â—¾ Setting panel (not in 'panels' array!)")]
+    public GameObject settingPanel;
+
+    [Header("â—¾ Inâ€game HUD")]
+    public GameObject healthUI;
+
+    [Header("â—¾ Sound ì„¤ì • (ìŠ¬ë¼ì´ë” & í¼ì„¼íŠ¸)")]
+    public Slider soundSlider;       // SettingPanel ì•ˆì˜ Slider
+    public Text percentDisplay;      // í¼ì„¼íŠ¸ í‘œì‹œìš© Text
+
+    private int currentIndex = 0;
+    private bool isGameActive = false;
+    private bool isPaused = false;
 
     void Start()
     {
-        // °ÔÀÓ ½ÃÀÛÇÒ ¶§ HealthUI´Â ²¨Áø »óÅÂ
-        if (healthUI != null)
-            healthUI.SetActive(false);
+        // ì´ˆê¸°í™”
+        isGameActive = false;
+        isPaused = false;
+        Time.timeScale = 1f;
 
-        // ÆĞ³Î ÃÊ±âÈ­ (TitlePanel¸¸ ÄÑ°í ³ª¸ÓÁö ²û)
-        for (int i = 0; i < panels.Length; i++)
-        {
-            panels[i].SetActive(i == 0); // 0¹ø ÀÎµ¦½º¸¸ true (TitlePanel)
-        }
+        healthUI?.SetActive(false);
+        settingPanel?.SetActive(false);
+        UpdatePanels();
+
+        // ìŠ¬ë¼ì´ë” ì½œë°± ì—°ê²°
+        if (soundSlider != null)
+            soundSlider.onValueChanged.AddListener(OnSoundSliderChanged);
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.DownArrow))
+        // â–¶ í™”ì‚´í‘œ ë„¤ë¹„: ê²Œì„ ì‹œì‘ ì „ & ì„¤ì •ì°½ ë‹«íŒ ìƒíƒœì—ì„œë§Œ
+        if (!isGameActive && (settingPanel == null || !settingPanel.activeSelf))
         {
-            currentIndex++;
-            if (currentIndex >= panels.Length)
-                currentIndex = 0;
-            UpdatePanels();
+            if (Input.GetKeyDown(KeyCode.DownArrow) && currentIndex < panels.Length - 1)
+            {
+                currentIndex++;
+                UpdatePanels();
+            }
+            else if (Input.GetKeyDown(KeyCode.UpArrow) && currentIndex > 0)
+            {
+                currentIndex--;
+                UpdatePanels();
+            }
+        }
+        // â–¶ ê²Œì„ ì¤‘ ESC â†’ ì¼ì‹œì •ì§€
+        else if (isGameActive && !isPaused && Input.GetKeyDown(KeyCode.Escape))
+        {
+            PauseGame();
         }
     }
 
+    // panels ì¤‘ currentIndex í•˜ë‚˜ë§Œ ì¼œê³ , settingPanelì€ í•­ìƒ ë”
     void UpdatePanels()
     {
         for (int i = 0; i < panels.Length; i++)
-        {
             panels[i].SetActive(i == currentIndex);
-        }
+
+        settingPanel?.SetActive(false);
     }
+
+    // --- ë²„íŠ¼ ì½œë°±ë“¤ ---
 
     public void OnNewGameButton()
     {
@@ -49,23 +81,92 @@ public class OpeningUIManager : MonoBehaviour
 
     public void OnContinueButton()
     {
-        Debug.Log("Continue Game!");
-        StartGame();
+        if (!isGameActive)
+        {
+            Debug.Log("Continue Game Start!");
+            StartGame();
+        }
+        else if (isPaused)
+        {
+            Debug.Log("Resume Game!");
+            ResumeGame();
+        }
     }
+
+    public void OnSettingButton()
+    {
+        Debug.Log("Go to Setting Panel");
+        // ëª¨ë“  ì˜¤í”„ë‹ ë©”ë‰´ ìˆ¨ê¸°ê¸°
+        foreach (var p in panels) p.SetActive(false);
+
+        // ì„¤ì •ì°½ë§Œ ì¼œê³  ìµœìƒìœ„ë¡œ ì´ë™
+        if (settingPanel != null)
+        {
+            settingPanel.SetActive(true);
+            settingPanel.transform.SetAsLastSibling();
+        }
+    }
+
+    public void OnBackFromSetting()
+    {
+        Debug.Log("Back from Setting");
+        settingPanel?.SetActive(false);
+        currentIndex = 2; // MenuPanel ì¸ë±ìŠ¤
+        UpdatePanels();
+    }
+
+    public void OnExitButton()
+    {
+        Debug.Log("Exit Game");
+        Application.Quit();
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#endif
+    }
+
+    // --- ê²Œì„ ì‹œì‘ / ì¼ì‹œì •ì§€ / ì¬ê°œ ---
 
     private void StartGame()
     {
-        // ¸ğµç ¿ÀÇÁ´× ÆĞ³Î ²ô±â
-        foreach (GameObject panel in panels)
+        isGameActive = true;
+        isPaused = false;
+        Time.timeScale = 1f;
+
+        foreach (var p in panels) p.SetActive(false);
+        settingPanel?.SetActive(false);
+        healthUI?.SetActive(true);
+    }
+
+    private void PauseGame()
+    {
+        isPaused = true;
+        Time.timeScale = 0f;
+
+        foreach (var p in panels) p.SetActive(false);
+        panels[2].SetActive(true); // MenuPanel
+        healthUI?.SetActive(false);
+    }
+
+    private void ResumeGame()
+    {
+        isPaused = false;
+        Time.timeScale = 1f;
+
+        panels[2].SetActive(false);
+        healthUI?.SetActive(true);
+    }
+
+    // --- ìŠ¬ë¼ì´ë” ê°’ ë³€ê²½ ì½œë°± ---
+    private void OnSoundSliderChanged(float value)
+    {
+        if (percentDisplay != null && soundSlider != null)
         {
-            panel.SetActive(false);
+            float normalized = value / soundSlider.maxValue;
+            int pct = Mathf.RoundToInt(normalized * 100f);
+            percentDisplay.text = pct + "%";
+
+            // ì‹¤ì œ ë³¼ë¥¨ ì ìš© (ì›í•œë‹¤ë©´)
+            // AudioListener.volume = normalized;
         }
-
-        // HealthUI ÄÑ±â
-        if (healthUI != null)
-            healthUI.SetActive(true);
-
-        // ¿©±â¼­ ³ªÁß¿¡ "°ÔÀÓÇÃ·¹ÀÌ ¾À ÀÌµ¿"µµ Ãß°¡ °¡´É
-        // SceneManager.LoadScene("°ÔÀÓÇÃ·¹ÀÌ¾ÀÀÌ¸§");
     }
 }

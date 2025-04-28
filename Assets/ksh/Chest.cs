@@ -11,11 +11,11 @@ public class NewBehaviourScript : MonoBehaviour
     public void OpenChest()
     {
         
-        Rigidbody rb = item.GetComponent<Rigidbody>();
+      //  Rigidbody rb = item.GetComponent<Rigidbody>();
         
-        if(rb != null)
+      //  if(rb != null)
         {
-            rb.AddForce(Vector3.up * ThrowForce, ForceMode.Impulse);
+      //      rb.AddForce(Vector3.up * ThrowForce, ForceMode.Impulse);
         }
         
     }
