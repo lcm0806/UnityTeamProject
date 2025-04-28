@@ -2,17 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.SearchService;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 public class NextMapLoader : MonoBehaviour
 {
-    public string nextMapName;
+    [SerializeField] GameObject nextMap;
+    [SerializeField] int nextMapPos;
+    [SerializeField] Transform loadPoint;
+    [SerializeField] UnityEvent OnMapMove;
     private void OnTriggerEnter(Collider other)
     {
         if(other.CompareTag("Player"))
         {
-            Debug.Log("다음 씬 로딩");
-            SceneManager.LoadScene(nextMapName);
+            if(!nextMap.activeSelf)
+            {
+                Debug.Log($"{nextMap} 로딩");
+                nextMap.SetActive(true);
+            }
+            other.gameObject.transform.position = loadPoint.position;
+            CameraManager.currentMap = nextMapPos;
+            OnMapMove?.Invoke();
         }
     }
 }

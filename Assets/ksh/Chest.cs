@@ -16,6 +16,7 @@ public class NewBehaviourScript : MonoBehaviour
 
     private void Awake()
     {
+
         player = GameObject.FindGameObjectWithTag("Player"); //플레이어 태그 설정
         animator = GetComponent<Animator>();
         IsPlayerEnter = false; //초가엔 False
@@ -46,6 +47,7 @@ public class NewBehaviourScript : MonoBehaviour
         {
             IsPlayerEnter = true;
         }
+
     }
 
     private void OnTriggerExit(Collider other)
