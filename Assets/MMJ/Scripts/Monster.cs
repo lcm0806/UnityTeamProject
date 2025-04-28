@@ -2,11 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.AI;
 
 public class Monster : MonoBehaviour
 {
     public int maxHealth;
     public int curHealth;
+    public Transform target;
+    public float moveSpeed;
 
     Rigidbody rigid;
     BoxCollider boxCollider;
@@ -33,6 +36,13 @@ public class Monster : MonoBehaviour
             StartCoroutine(OnDamage(reactVec));
         }
     }
+    private void Update()
+    {
+        if (target != null)
+        {
+            Trace();
+        }
+    }
 
     IEnumerator OnDamage(Vector3 reactVec)
     { 
@@ -54,4 +64,11 @@ public class Monster : MonoBehaviour
             Destroy(gameObject, 4);
         }
     }
+
+    private void Trace()
+    {
+        transform.position = Vector3.MoveTowards(transform.position, target.transform.position, moveSpeed * Time.deltaTime);
+        transform.LookAt(target.transform.position);
+    }
+
 }
