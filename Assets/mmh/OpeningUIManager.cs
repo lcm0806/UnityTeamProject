@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
@@ -14,6 +15,7 @@ public class OpeningUIManager : MonoBehaviour
     public Slider soundSlider;
     public TextMeshProUGUI percentDisplay;
 
+
     private int currentIndex = 0;
     private bool isGameActive = false;
     private bool isPaused = false;
@@ -23,6 +25,7 @@ public class OpeningUIManager : MonoBehaviour
         isGameActive = false;
         isPaused = false;
         Time.timeScale = 1f;
+
 
         if (healthUI != null) healthUI.SetActive(false);
         if (settingPanel != null) settingPanel.SetActive(false);
@@ -36,11 +39,14 @@ public class OpeningUIManager : MonoBehaviour
         // 시작 시 슬라이더 퍼센트 표시도 갱신
         if (soundSlider != null)
             OnSoundSliderChanged(soundSlider.value);
+
     }
 
     void Update()
     {
+
         // 게임이 아직 시작 전이고, 설정창이 꺼진 상태일 때만 방향키 네비게이션 허용
+
         if (!isGameActive && (settingPanel == null || !settingPanel.activeSelf))
         {
             if (Input.GetKeyDown(KeyCode.DownArrow) && currentIndex < panels.Length - 1)
@@ -54,16 +60,19 @@ public class OpeningUIManager : MonoBehaviour
                 UpdatePanels();
             }
         }
+
         else if (isGameActive && !isPaused && Input.GetKeyDown(KeyCode.Escape))
         {
             PauseGame();
         }
     }
 
+
     void UpdatePanels()
     {
         for (int i = 0; i < panels.Length; i++)
             panels[i].SetActive(i == currentIndex);
+
 
         if (settingPanel != null)
             settingPanel.SetActive(false);
@@ -92,8 +101,10 @@ public class OpeningUIManager : MonoBehaviour
     public void OnSettingButton()
     {
         Debug.Log("Go to Setting Panel");
+
         foreach (var p in panels)
             p.SetActive(false);
+
 
         if (settingPanel != null)
         {
@@ -109,6 +120,7 @@ public class OpeningUIManager : MonoBehaviour
             settingPanel.SetActive(false);
 
         currentIndex = 2;
+
         UpdatePanels();
     }
 
@@ -121,11 +133,13 @@ public class OpeningUIManager : MonoBehaviour
 #endif
     }
 
+
     private void StartGame()
     {
         isGameActive = true;
         isPaused = false;
         Time.timeScale = 1f;
+
 
         foreach (var p in panels)
             p.SetActive(false);
@@ -135,11 +149,13 @@ public class OpeningUIManager : MonoBehaviour
 
         if (healthUI != null)
             healthUI.SetActive(true);
+
     }
 
     private void PauseGame()
     {
         isPaused = true;
+
 
         foreach (var p in panels)
             p.SetActive(false);
@@ -148,6 +164,7 @@ public class OpeningUIManager : MonoBehaviour
 
         if (healthUI != null)
             healthUI.SetActive(false);
+
     }
 
     private void ResumeGame()
@@ -162,6 +179,7 @@ public class OpeningUIManager : MonoBehaviour
             healthUI.SetActive(true);
     }
 
+
     private void OnSoundSliderChanged(float value)
     {
         if (percentDisplay != null && soundSlider != null)
@@ -169,6 +187,7 @@ public class OpeningUIManager : MonoBehaviour
             float normalized = value / soundSlider.maxValue;
             int pct = Mathf.RoundToInt(normalized * 100f);
             percentDisplay.text = pct + "%";
+
 
             // AudioListener.volume = normalized; // 필요하면 사용
         }
@@ -185,3 +204,4 @@ public class OpeningUIManager : MonoBehaviour
         UpdatePanels();
     }
 }
+

@@ -216,7 +216,9 @@ GameObject:
   - component: {fileID: 124061674}
   - component: {fileID: 124061677}
   - component: {fileID: 124061676}
+
   - component: {fileID: 124061678}
+
   m_Layer: 5
   m_Name: HealthUI
   m_TagString: Untagged
@@ -237,8 +239,10 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 717378617}
+
   - {fileID: 890628602}
   - {fileID: 31237648}
+
   m_Father: {fileID: 1368768626}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
@@ -246,6 +250,7 @@ RectTransform:
   m_AnchoredPosition: {x: 155, y: -49}
   m_SizeDelta: {x: 300, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+
 --- !u!114 &124061676
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -284,6 +289,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 124061673}
   m_CullTransparentMesh: 1
+
 --- !u!114 &124061678
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -305,6 +311,7 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7997059901804314226, guid: 647258c6651cd24488370feefd10a9a7, type: 3}
   m_PrefabInstance: {fileID: 506272819}
   m_PrefabAsset: {fileID: 0}
+
 --- !u!1 &189316966
 GameObject:
   m_ObjectHideFlags: 0
@@ -572,7 +579,9 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 216145086}
   m_CullTransparentMesh: 1
+
 --- !u!1 &216920116
+
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -580,17 +589,21 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
+
   - component: {fileID: 216920117}
   - component: {fileID: 216920119}
   - component: {fileID: 216920118}
   m_Layer: 5
   m_Name: Background
+
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+
 --- !u!224 &216920117
+
 RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2258,6 +2271,7 @@ MonoBehaviour:
   fullHeart: {fileID: 21300000, guid: 2a33c06e9a848e94aa9b4f443d3484f5, type: 3}
   emptyHeart: {fileID: 21300000, guid: 2fc1142b49e35ae419fdd115e7c48013, type: 3}
   health: 3
+
 --- !u!1 &1368768622
 GameObject:
   m_ObjectHideFlags: 0
