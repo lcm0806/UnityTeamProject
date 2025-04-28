@@ -6,13 +6,18 @@ using UnityEngine.SceneManagement;
 
 public class NextMapLoader : MonoBehaviour
 {
-    public string nextMapName;
+    [SerializeField] GameObject nextMap;
+    [SerializeField] Transform loadPoint;
     private void OnTriggerEnter(Collider other)
     {
         if(other.CompareTag("Player"))
         {
-            Debug.Log("다음 씬 로딩");
-            SceneManager.LoadScene(nextMapName);
+            if(!nextMap.activeSelf)
+            {
+                Debug.Log($"{nextMap} 로딩");
+                nextMap.SetActive(true);
+            }
+            other.gameObject.transform.position = loadPoint.position;
         }
     }
 }
