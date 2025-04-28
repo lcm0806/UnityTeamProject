@@ -1,15 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class EnemySpawner : MonoBehaviour
 {
-    public GameObject enemy;
+    [SerializeField] GameObject enemy;
     // Start is called before the first frame update
     void Start()
     {
         Instantiate(enemy, transform.position, Quaternion.identity);
-        DontDestroyOnLoad(enemy);
-        gameObject.SetActive(false);
     }
 }
