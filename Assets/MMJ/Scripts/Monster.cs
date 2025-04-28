@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.AI;
 
 public class Monster : MonoBehaviour
 {
@@ -10,10 +9,13 @@ public class Monster : MonoBehaviour
     public int curHealth;
     public Transform target;
     public float moveSpeed;
+    public bool isChase;
+
 
     Rigidbody rigid;
     BoxCollider boxCollider;
     Material mat;
+    Animator anime;
 
 
     private void Awake()
@@ -21,6 +23,7 @@ public class Monster : MonoBehaviour
         rigid = GetComponent<Rigidbody>();
         boxCollider = GetComponent<BoxCollider>();
         mat = GetComponentInChildren<MeshRenderer>().material;
+        anime = GetComponentInChildren<Animator>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -36,13 +39,20 @@ public class Monster : MonoBehaviour
             StartCoroutine(OnDamage(reactVec));
         }
     }
+
     private void Update()
     {
-        if (target != null)
+        if (isChase)
         {
+            anime.SetBool("isWalk", true);
             Trace();
         }
+        else
+        {
+            anime.SetBool("isWalk", false);
+        }
     }
+
 
     IEnumerator OnDamage(Vector3 reactVec)
     { 
@@ -57,6 +67,8 @@ public class Monster : MonoBehaviour
         {
             mat.color = Color.gray;
             gameObject.layer = 21;
+            isChase = false;
+            anime.SetTrigger("doDie");
 
             reactVec = reactVec.normalized;
             reactVec += Vector3.up;
@@ -69,6 +81,7 @@ public class Monster : MonoBehaviour
     {
         transform.position = Vector3.MoveTowards(transform.position, target.transform.position, moveSpeed * Time.deltaTime);
         transform.LookAt(target.transform.position);
+
     }
 
 }
