@@ -5,11 +5,12 @@ TagManager:
   serializedVersion: 2
   tags:
   - Floor
+  - Monster
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
   - 
@@ -26,8 +27,8 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
+  - Monster
+  - MonsterDied
   - 
   - 
   - 

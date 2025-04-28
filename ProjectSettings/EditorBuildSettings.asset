@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Hangil/Scenes/TestPropScene.unity
+    path: Assets/Hangil/Scenes/TestMapScene.unity
     guid: 30f6bb740c25a264ebdf3d7e5172a4dc
   - enabled: 1
     path: Assets/Hangil/Scenes/TestLoadingScene.unity
