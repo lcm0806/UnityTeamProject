@@ -2,12 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.SearchService;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 public class NextMapLoader : MonoBehaviour
 {
     [SerializeField] GameObject nextMap;
+    [SerializeField] int nextMapPos;
     [SerializeField] Transform loadPoint;
+    [SerializeField] UnityEvent OnMapMove;
     private void OnTriggerEnter(Collider other)
     {
         if(other.CompareTag("Player"))
@@ -18,6 +21,8 @@ public class NextMapLoader : MonoBehaviour
                 nextMap.SetActive(true);
             }
             other.gameObject.transform.position = loadPoint.position;
+            GameManager.currentMap = nextMapPos;
+            OnMapMove?.Invoke();
         }
     }
 }
