@@ -8,6 +8,7 @@ public class PlayerSpawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Debug.Log("플레이어 스폰");
         Instantiate(player, transform.position, Quaternion.identity);
         gameObject.SetActive(false);
         DontDestroyOnLoad(player);

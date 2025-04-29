@@ -16,17 +16,6 @@ public class NewBehaviourScript : MonoBehaviour
 
     private void Awake()
     {
-
-        
-      //  Rigidbody rb = item.GetComponent<Rigidbody>();
-        
-      //  if(rb != null)
-        {
-      //      rb.AddForce(Vector3.up * ThrowForce, ForceMode.Impulse);
-        }
-        
-
-
         player = GameObject.FindGameObjectWithTag("Player"); //플레이어 태그 설정
         animator = GetComponent<Animator>();
         IsPlayerEnter = false; //초가엔 False
