@@ -5,10 +5,10 @@ using UnityEngine;
 
 public abstract class Item
 {
-    protected string itemName;
+    public string itemName;
     protected string itemDescription;
     protected string itemSkillDescription;
-    protected itemType itemType;
+    public itemType itemType;
     protected GameObject itemPrefab;
     
     public abstract void UseItem();
