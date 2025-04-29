@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Floor
   - Monster
+  - MonsterBullet
+  - Wall
   layers:
   - Default
   - TransparentFX
@@ -29,7 +31,7 @@ TagManager:
   - 
   - Monster
   - MonsterDied
-  - 
+  - MonsterBullet
   - 
   - 
   - 
