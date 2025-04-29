@@ -17,7 +17,6 @@ public class Player : MonoBehaviour
 
     private bool wDown;
     private bool jDown;
-    private bool fDown;
 
     private bool isSide;
     private bool isJump;
@@ -61,7 +60,6 @@ public class Player : MonoBehaviour
         vAxis = Input.GetAxisRaw("Vertical");
         wDown = Input.GetButton("Walk");
         jDown = Input.GetButtonDown("Jump");
-        fDown = Input.GetButtonDown("Attack");
     }
 
     private void Move()
@@ -129,16 +127,6 @@ public class Player : MonoBehaviour
             nearObject = null;
     }
 
-    private void Interation()
-    {
-        if(nearObject != null && !isDodge)
-        {
-            if(nearObject.tag == "Weapon")
-            {
-                
-            }
-        }
-    }
 
     private void Attack()
     {
