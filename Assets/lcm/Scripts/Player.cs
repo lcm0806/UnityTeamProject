@@ -13,15 +13,19 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject[] hasitems; 
     [SerializeField] private int health;
     [SerializeField] private int Damage;
+    [SerializeField] Attack attack;
 
     private bool wDown;
     private bool jDown;
+    private bool fDown;
 
     private bool isSide;
     private bool isJump;
     private bool isDodge;
 
+
     private GameObject nearObject;
+
 
     Rigidbody rigid;
 
@@ -48,6 +52,7 @@ public class Player : MonoBehaviour
         Move();
         Turn();
         Dodge();
+        Attack();
     }
 
     private void GetInput()
@@ -56,6 +61,7 @@ public class Player : MonoBehaviour
         vAxis = Input.GetAxisRaw("Vertical");
         wDown = Input.GetButton("Walk");
         jDown = Input.GetButtonDown("Jump");
+        fDown = Input.GetButtonDown("Attack");
     }
 
     private void Move()
@@ -136,6 +142,10 @@ public class Player : MonoBehaviour
 
     private void Attack()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            attack.Fire();
+        }
     }
+    
 }
