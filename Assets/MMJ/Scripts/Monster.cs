@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Monster : MonoBehaviour
 {
-    public enum Type { A, B, C };
+    public enum Type { A, B, C, D };
     public Type monsterType;
     public int maxHealth;
     public int curHealth;
@@ -166,7 +166,6 @@ public class Monster : MonoBehaviour
     {
         transform.position = Vector3.MoveTowards(transform.position, target.transform.position, moveSpeed * Time.deltaTime);
         transform.LookAt(target.transform.position);
-
     }
 
 }
