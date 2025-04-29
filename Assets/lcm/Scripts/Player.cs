@@ -20,7 +20,12 @@ public class Player : MonoBehaviour
 
     private bool isSide;
     private bool isJump;
+
+
     private bool isDodge;
+
+    [SerializeField] private float dodgeCooldown = 1f; 
+    private float lastDodgeTime = -Mathf.Infinity;
 
 
     private GameObject nearObject;
@@ -87,7 +92,7 @@ public class Player : MonoBehaviour
 
     private void Dodge()
     {
-        if (jDown && moveVec != Vector3.zero && !isJump)
+        if (Time.time - lastDodgeTime >= dodgeCooldown && jDown && moveVec != Vector3.zero && !isDodge)
         {
             dodgeVec = moveVec;
             speed *= 2;

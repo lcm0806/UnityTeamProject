@@ -21,6 +21,7 @@ public class Attack : MonoBehaviour
     
     public void Fire()
     {
+        Debug.Log(muzzlePoint.forward);
         GameObject instance = Instantiate(bulletPrefab, muzzlePoint.position, Quaternion.LookRotation(Vector3.forward));
         Rigidbody bulletRigidbody = instance.GetComponent<Rigidbody>();
         bulletRigidbody.velocity = muzzlePoint.forward * bulletSpeed;
