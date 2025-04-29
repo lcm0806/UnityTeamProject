@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class MonsterBullet : MonoBehaviour
 {
-    [SerializeField] private int damage;
+    public int damage;
+    public bool isMelee;
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -13,6 +14,14 @@ public class MonsterBullet : MonoBehaviour
             Destroy(gameObject, 3);
         }
         else if (collision.gameObject.tag == "Wall")
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (!isMelee && other.gameObject.tag == "Wall")
         {
             Destroy(gameObject);
         }
