@@ -6,10 +6,11 @@ public class MonsterBullet : MonoBehaviour
 {
     public int damage;
     public bool isMelee;
+    public bool isrock;
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Floor")
+        if (!isrock && collision.gameObject.tag == "Floor")
         {
             Destroy(gameObject, 3);
         }
