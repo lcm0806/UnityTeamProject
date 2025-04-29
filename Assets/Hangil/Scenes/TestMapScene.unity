@@ -10175,7 +10175,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2062806179853596783, guid: 868bb3ef49becf945a7152dfa312893b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2062806179853596783, guid: 868bb3ef49becf945a7152dfa312893b, type: 3}
       propertyPath: m_LocalPosition.z
@@ -18474,7 +18474,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2062806179853596783, guid: 868bb3ef49becf945a7152dfa312893b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2062806179853596783, guid: 868bb3ef49becf945a7152dfa312893b, type: 3}
       propertyPath: m_LocalPosition.z
@@ -18516,6 +18516,42 @@ PrefabInstance:
       propertyPath: teleportPos
       value: 
       objectReference: {fileID: 80054536}
+    - target: {fileID: 5760324160938738919, guid: 868bb3ef49becf945a7152dfa312893b, type: 3}
+      propertyPath: teleportPosList.Array.size
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5760324160938738919, guid: 868bb3ef49becf945a7152dfa312893b, type: 3}
+      propertyPath: teleportPosList.Array.data[0]
+      value: 
+      objectReference: {fileID: 596084105}
+    - target: {fileID: 5760324160938738919, guid: 868bb3ef49becf945a7152dfa312893b, type: 3}
+      propertyPath: teleportPosList.Array.data[1]
+      value: 
+      objectReference: {fileID: 271857024}
+    - target: {fileID: 5760324160938738919, guid: 868bb3ef49becf945a7152dfa312893b, type: 3}
+      propertyPath: teleportPosList.Array.data[2]
+      value: 
+      objectReference: {fileID: 684691174}
+    - target: {fileID: 5760324160938738919, guid: 868bb3ef49becf945a7152dfa312893b, type: 3}
+      propertyPath: teleportPosList.Array.data[3]
+      value: 
+      objectReference: {fileID: 642502686}
+    - target: {fileID: 5760324160938738919, guid: 868bb3ef49becf945a7152dfa312893b, type: 3}
+      propertyPath: teleportPosList.Array.data[4]
+      value: 
+      objectReference: {fileID: 80054536}
+    - target: {fileID: 5760324160938738919, guid: 868bb3ef49becf945a7152dfa312893b, type: 3}
+      propertyPath: teleportPosList.Array.data[5]
+      value: 
+      objectReference: {fileID: 1276277600}
+    - target: {fileID: 5760324160938738919, guid: 868bb3ef49becf945a7152dfa312893b, type: 3}
+      propertyPath: teleportPosList.Array.data[6]
+      value: 
+      objectReference: {fileID: 817787196}
+    - target: {fileID: 5760324160938738919, guid: 868bb3ef49becf945a7152dfa312893b, type: 3}
+      propertyPath: teleportPosList.Array.data[7]
+      value: 
+      objectReference: {fileID: 277645119}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -36266,7 +36302,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2062806179853596783, guid: 868bb3ef49becf945a7152dfa312893b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2062806179853596783, guid: 868bb3ef49becf945a7152dfa312893b, type: 3}
       propertyPath: m_LocalPosition.z
@@ -36308,6 +36344,42 @@ PrefabInstance:
       propertyPath: teleportPos
       value: 
       objectReference: {fileID: 2013820878}
+    - target: {fileID: 5760324160938738919, guid: 868bb3ef49becf945a7152dfa312893b, type: 3}
+      propertyPath: teleportPosList.Array.size
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5760324160938738919, guid: 868bb3ef49becf945a7152dfa312893b, type: 3}
+      propertyPath: teleportPosList.Array.data[0]
+      value: 
+      objectReference: {fileID: 2013820878}
+    - target: {fileID: 5760324160938738919, guid: 868bb3ef49becf945a7152dfa312893b, type: 3}
+      propertyPath: teleportPosList.Array.data[1]
+      value: 
+      objectReference: {fileID: 1614461599}
+    - target: {fileID: 5760324160938738919, guid: 868bb3ef49becf945a7152dfa312893b, type: 3}
+      propertyPath: teleportPosList.Array.data[2]
+      value: 
+      objectReference: {fileID: 1717622099}
+    - target: {fileID: 5760324160938738919, guid: 868bb3ef49becf945a7152dfa312893b, type: 3}
+      propertyPath: teleportPosList.Array.data[3]
+      value: 
+      objectReference: {fileID: 988481061}
+    - target: {fileID: 5760324160938738919, guid: 868bb3ef49becf945a7152dfa312893b, type: 3}
+      propertyPath: teleportPosList.Array.data[4]
+      value: 
+      objectReference: {fileID: 391806111}
+    - target: {fileID: 5760324160938738919, guid: 868bb3ef49becf945a7152dfa312893b, type: 3}
+      propertyPath: teleportPosList.Array.data[5]
+      value: 
+      objectReference: {fileID: 97316008}
+    - target: {fileID: 5760324160938738919, guid: 868bb3ef49becf945a7152dfa312893b, type: 3}
+      propertyPath: teleportPosList.Array.data[6]
+      value: 
+      objectReference: {fileID: 1704514843}
+    - target: {fileID: 5760324160938738919, guid: 868bb3ef49becf945a7152dfa312893b, type: 3}
+      propertyPath: teleportPosList.Array.data[7]
+      value: 
+      objectReference: {fileID: 348473913}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
