@@ -6,6 +6,7 @@ using UnityEngine.Events;
 
 public class OnEnemyKilled : MonoBehaviour
 {
+    public GameObject levelManager;
     [SerializeField] UnityEvent OnKilled;
     private void OnDisable()
     {
@@ -14,6 +15,7 @@ public class OnEnemyKilled : MonoBehaviour
 
     public void Dead()
     {
-
+        LevelManager dead = levelManager.GetComponent<LevelManager>();
+        dead.EnemyCount--;
     }
 }

@@ -12,6 +12,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] List<GameObject> enemySpanwers;
     [SerializeField] List<GameObject> Doors;
     private int enemyCount;
+    public int EnemyCount { get { return enemyCount; } set { enemyCount = value; } }
     // Start is called before the first frame update
     void Start()
     {
@@ -21,18 +22,11 @@ public class LevelManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-    }
-
-    public void OnEnemyKill()
-    {
-        enemyCount--;
-        if(enemyCount == 0)
+        if (enemyCount == 0)
         {
             OpenDoors();
         }
     }
-
     public void OpenDoors()
     {
         foreach(var door in Doors)
