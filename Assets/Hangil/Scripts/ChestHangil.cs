@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Chest : MonoBehaviour
+public class ChestHangil : MonoBehaviour
 {
     // 1. 플레이어가 열쇠에 닿는다.
     // 2. 열쇠가 비활성화되고 상자도 비활성화된다
