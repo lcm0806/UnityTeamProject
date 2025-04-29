@@ -22,12 +22,12 @@ public class CameraManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        currentMap = 0;
+        currentMap = 3;
         foreach (var map in Maps)
         {
             map.gameObject.SetActive(false);
         }
-        Maps[0].SetActive(true);
+        Maps[2].SetActive(true);
     }
 
     public void MoveCamera()

@@ -2242,7 +2242,7 @@ GameObject:
   m_Component:
   - component: {fileID: 64429040}
   m_Layer: 0
-  m_Name: Level1-Center
+  m_Name: Level1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10802,7 +10802,7 @@ GameObject:
   m_Component:
   - component: {fileID: 317151548}
   m_Layer: 0
-  m_Name: Level3-Monster
+  m_Name: Level3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13094,7 +13094,7 @@ GameObject:
   m_Component:
   - component: {fileID: 371623907}
   m_Layer: 0
-  m_Name: Level5-Boss
+  m_Name: Level5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -39873,7 +39873,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1024839336}
   m_Layer: 0
-  m_Name: Level4-Trap
+  m_Name: Level4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -58904,7 +58904,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1537319060}
   m_Layer: 0
-  m_Name: Level2-Item
+  m_Name: Level2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
