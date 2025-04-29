@@ -332,8 +332,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 635508199}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalRotation: {x: 0.004345656, y: 0.9482496, z: -0.3172039, w: 0.013623581}
+  m_LocalPosition: {x: 2.648529, y: 5.014695, z: 3.246026}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -590,7 +590,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.9911746, y: 0.41, z: -3.8037162}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2.3094, y: 1, z: 3.1884}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -638,11 +638,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e1296eb32b491a4d82f81703fdacbb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  items:
-  - itemName: potion
-    itemPrefab: {fileID: 1001885385039282494, guid: 4368de87309a78f479e11c7ae46d2895, type: 3}
-  - itemName: coin
-    itemPrefab: {fileID: 7751144025104795186, guid: 2b7420e99fe635343a3a8db33978339c, type: 3}
   ItemSpawn: {fileID: 5766902}
 --- !u!65 &1333307333
 BoxCollider:
