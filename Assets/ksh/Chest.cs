@@ -74,10 +74,10 @@ public class NewBehaviourScript : MonoBehaviour
         Debug.Log("상자 열렸다!");
         int randomIndex = UnityEngine.Random.Range(0, items.Count);
         Item selectedItem = items[randomIndex];
-        currentItem = Instantiate(selectedItem.itemPrefab, ItemSpawn.position, Quaternion.identity);
+        //currentItem = Instantiate(selectedItem.itemPrefab, ItemSpawn.position, Quaternion.identity);
         Rigidbody rigid = currentItem.GetComponent<Rigidbody>();
         rigid.AddForce(Vector3.forward * 6f, ForceMode.Impulse);
-        Debug.Log($"{selectedItem.itemName} 아이템이 생성되었습니다.");
+       // Debug.Log($"{selectedItem.itemName} 아이템이 생성되었습니다.");
         Invoke("DestoryChest", 1f);
     }
 
