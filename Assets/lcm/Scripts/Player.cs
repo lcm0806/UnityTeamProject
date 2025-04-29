@@ -9,6 +9,8 @@ public class Player : MonoBehaviour
 
     [SerializeField] private float speed;
     [SerializeField] private float jumpPower;
+    [SerializeField] private GameObject[] items;
+    [SerializeField] private GameObject[] hasitems; 
     [SerializeField] private int health;
     [SerializeField] private int Damage;
 
@@ -119,5 +121,21 @@ public class Player : MonoBehaviour
     {
         if(other.tag == "Weapon")
             nearObject = null;
+    }
+
+    private void Interation()
+    {
+        if(nearObject != null && !isDodge)
+        {
+            if(nearObject.tag == "Weapon")
+            {
+                
+            }
+        }
+    }
+
+    private void Attack()
+    {
+        
     }
 }
