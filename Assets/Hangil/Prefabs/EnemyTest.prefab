@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7580038398824926453}
   - component: {fileID: 538936835707906806}
   - component: {fileID: 4381187213229214086}
-  - component: {fileID: 1073998730765995561}
+  - component: {fileID: -4344103050719755945}
   m_Layer: 0
   m_Name: EnemyTest
   m_TagString: Untagged
@@ -106,7 +106,7 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1073998730765995561
+--- !u!114 &-4344103050719755945
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -115,21 +115,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 6007515139351503787}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd369d91829630e428d32025ecd01e22, type: 3}
+  m_Script: {fileID: 11500000, guid: 60d9c01e671188449aa52aa7fbb5be5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnKilled:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1073998730765995561}
-        m_TargetAssemblyTypeName: OnEnemyKilled, Assembly-CSharp
-        m_MethodName: Dead
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
