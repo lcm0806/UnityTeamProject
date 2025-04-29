@@ -5,11 +5,11 @@ using UnityEngine;
 
 public abstract class Item
 {
-    protected string itemName;
-    protected string itemDescription;
-    protected string itemSkillDescription;
-    protected itemType itemType;
-    protected GameObject itemPrefab;
+    public string itemName;
+    public string itemDescription;
+    public string itemSkillDescription;
+    public itemType itemType;
+    public GameObject itemPrefab;
     
     public abstract void UseItem();
 }
@@ -41,7 +41,7 @@ public class TheInnerEye : Item //패시브아이템
     public TheInnerEye()
     {
         itemName = "내면의 눈";
-        itemDescription = "캐릭터의 이마에 천진반처럼 눈이 하나 더 생긴다.";
+        itemDescription = "어디선가 슬퍼보이는 눈..";
         itemSkillDescription = "Triple Shot";
         itemType = itemType.Passive;
         itemPrefab = Resources.Load<GameObject>("TheInnerEye");
@@ -355,7 +355,24 @@ public class AnarchistCookBook : Item //액티브아이템
 
     public override void UseItem()
     {
-        //방안에 랜덤으로 폭탄 소환
+        //방안에 랜덤으로 폭탄 6개 소환
+    }
+}
+
+public class TheHourglass : Item //액티브아이템
+{
+    public TheHourglass()
+    {
+        itemName = "모래시계";
+        itemDescription = "시간을 되돌리는 힘이 담긴 고대의 유물.";
+        itemSkillDescription = "Temporary enemy slowdown";
+        itemType = itemType.Active;
+        itemPrefab = Resources.Load<GameObject>("TheHourglass");
+    }
+
+    public override void UseItem()
+    {
+        //방에잇는 몬스터에게 8초간 둔화
     }
 }
 

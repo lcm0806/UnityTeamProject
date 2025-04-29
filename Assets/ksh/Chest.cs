@@ -20,7 +20,27 @@ public class NewBehaviourScript : MonoBehaviour
         animator = GetComponent<Animator>();
         IsPlayerEnter = false; //초가엔 False
         IsClosed = true;
-
+        
+        items.Add(new SadOnion());
+     // items.Add(new TheInnerEye()); 눈모양
+     // items.Add(new Pentagram()); 별
+        items.Add(new GrowthHormones());
+        items.Add(new MagicMushroom());
+     // items.Add(new SpoonBender()); 수저
+        items.Add(new BlueCap());
+     // items.Add(new CricketsState()); 조각상
+     // items.Add(new TornPhoto()); 찢어진사진
+     // items.Add(new Polyphemus()); 눈알 큰
+        items.Add(new BookOfBelial());
+        items.Add(new YumHeart());
+        items.Add(new BookOfShadow());
+     // items.Add(new ShoopDaWhoop()); 귀여운인형
+     // items.Add(new TheNail()); 못
+     // items.Add(new MrBoom()); 폭탄
+     // items.Add(new TammysBlessing()); 축복
+        items.Add(new Cross());
+        items.Add(new AnarchistCookBook());
+     // items.Add(new TheHourglass()); 모래시계
     }
 
     private void Update()
@@ -63,10 +83,10 @@ public class NewBehaviourScript : MonoBehaviour
         Debug.Log("상자 열렸다!");
         int randomIndex = UnityEngine.Random.Range(0, items.Count);
         Item selectedItem = items[randomIndex];
-        //currentItem = Instantiate(selectedItem.itemPrefab, ItemSpawn.position, Quaternion.identity);
+        currentItem = Instantiate(selectedItem.itemPrefab, ItemSpawn.position, Quaternion.identity);
         Rigidbody rigid = currentItem.GetComponent<Rigidbody>();
         rigid.AddForce(Vector3.forward * 6f, ForceMode.Impulse);
-       // Debug.Log($"{selectedItem.itemName} 아이템이 생성되었습니다.");
+       Debug.Log($"{selectedItem.itemName} 아이템이 생성되었습니다.");
         Invoke("DestoryChest", 1f);
     }
 
