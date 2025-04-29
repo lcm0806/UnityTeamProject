@@ -189,18 +189,173 @@ public class Polyphemus : Item //패시브아이템
 {
     public Polyphemus()
     {
-        itemName = "크라켓의 조각상";
-        itemDescription = "고대 생명체 ‘크라켓’을 기리기 위해 만들어진 석상.";
-        itemSkillDescription = "DMG Up";
+        itemName = "폴리페무스";
+        itemDescription = "죽은 거인의 썩지 않는 눈알.";
+        itemSkillDescription = "Mega Tears";
         itemType = itemType.Passive;
         itemPrefab = Resources.Load<GameObject>("Polyphemus");
     }
 
     public override void UseItem()
     {
-        //공격력 + 0.5
-        //공격력배율 * 1.5
-        //눈물의 크기 커짐
+        //공격력 + 4
+        //공격력배율 * 2
+        //공격속도 배율 * 0.42
+    }
+}
+
+public class BookOfBelial : Item //액티브아이템
+{
+    public BookOfBelial()
+    {
+        itemName = "벨리알의 서";
+        itemDescription = "잊혀진 마법사 벨리아가 남긴 금지된 마법서.";
+        itemSkillDescription = "Temporary DMG Up";
+        itemType = itemType.Active;
+        itemPrefab = Resources.Load<GameObject>("BookOfBelial");
+    }
+
+    public override void UseItem()
+    {
+        //사용시 데미지 +2
+    }
+}
+
+public class YumHeart : Item //액티브아이템
+{
+    public YumHeart()
+    {
+        itemName = "???심장";
+        itemDescription = "정체를 알 수 없는 심장. 이상하게도 먹으면 체력이 회복된다... 하지만, 무언가 잘못된 것 같기도?";
+        itemSkillDescription = "+1 Hearts";
+        itemType = itemType.Active;
+        itemPrefab = Resources.Load<GameObject>("YumHeart");
+    }
+
+    public override void UseItem()
+    {
+        //체력 1칸 회복
+    }
+}
+
+public class BookOfShadow : Item //액티브아이템
+{
+    public BookOfShadow()
+    {
+        itemName = "그림자의 서";
+        itemDescription = "잊혀진 고대 문명에서 만들어진 어둠의 서.";
+        itemSkillDescription = "Temporary Invencibility";
+        itemType = itemType.Active;
+        itemPrefab = Resources.Load<GameObject>("BookOfShadow");
+    }
+
+    public override void UseItem()
+    {
+        //주위에 보호막이 쳐지며 10초간 무적
+    }
+}
+
+public class ShoopDaWhoop : Item //액티브아이템
+{
+    public ShoopDaWhoop()
+    {
+        itemName = "모두 다 사라져빔!!";
+        itemDescription = "다 사라져라!!! (단, 책임은 지지 않습니다)";
+        itemSkillDescription = "BLLLARRRRGGG!";
+        itemType = itemType.Active;
+        itemPrefab = Resources.Load<GameObject>("ShoopDaWhoop");
+    }
+
+    public override void UseItem()
+    {
+        //레이저 발사(데미지 +13)
+    }
+}
+
+public class TheNail : Item //액티브아이템
+{
+    public TheNail()
+    {
+        itemName = "대못";
+        itemDescription = "죄인을 심판하기 위해 만들어진 주술용 못.";
+        itemSkillDescription = "Temporary demon form";
+        itemType = itemType.Active;
+        itemPrefab = Resources.Load<GameObject>("TheNail");
+    }
+
+    public override void UseItem()
+    {
+        //블랙하트 +0.5
+        //이동속도 -0.18
+        //공격력 +2
+    }
+}
+
+public class MrBoom : Item //액티브아이템
+{
+    public MrBoom()
+    {
+        itemName = "Mr.Boom의 폭탄";
+        itemDescription = "폭발물 전문가인 Mr. Boom이 설계한 폭탄";
+        itemSkillDescription = "bombs!";
+        itemType = itemType.Active;
+        itemPrefab = Resources.Load<GameObject>("MrBoom");
+    }
+
+    public override void UseItem()
+    {
+        //폭탄 던지기(공격력 +60)
+    }
+}
+
+public class TammysBlessing : Item //액티브아이템
+{
+    public TammysBlessing()
+    {
+        itemName = "타미의 축복";
+        itemDescription = "Tammy의 축복을 받으면, 세상이 마치 총알로 가득 찬 것처럼 느껴진다.";
+        itemSkillDescription = "8-Way Shot!";
+        itemType = itemType.Active;
+        itemPrefab = Resources.Load<GameObject>("TammysBlessing");
+    }
+
+    public override void UseItem()
+    {
+        //8방향 눈물 발사
+    }
+}
+
+public class Cross : Item //액티브아이템
+{
+    public Cross()
+    {
+        itemName = "십자가";
+        itemDescription = "이 신성한 십자가는 고대의 보호 마법을 담고 있다.";
+        itemSkillDescription = "Reusable Soul Protection";
+        itemType = itemType.Active;
+        itemPrefab = Resources.Load<GameObject>("Cross");
+    }
+
+    public override void UseItem()
+    {
+        //소울 하트 +1
+    }
+}
+
+public class AnarchistCookBook : Item //액티브아이템
+{
+    public AnarchistCookBook()
+    {
+        itemName = "무정부주의자의 요리책";
+        itemDescription = "불확실하고 혼란스러운 전술이 가득한 책. 이 책을 사용하면 강력한 폭탄을 사용할 수 있게 된다.";
+        itemSkillDescription = "Random 6-Boom!";
+        itemType = itemType.Active;
+        itemPrefab = Resources.Load<GameObject>("AnarchistCookBook");
+    }
+
+    public override void UseItem()
+    {
+        //방안에 랜덤으로 폭탄 소환
     }
 }
 
