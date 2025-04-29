@@ -15,10 +15,10 @@ public class Monster : MonoBehaviour
     public bool isAttack;
 
 
-    Rigidbody rigid;
-    BoxCollider boxCollider;
-    Material mat;
-    Animator anime;
+    public Rigidbody rigid;
+    public BoxCollider boxCollider;
+    public Material mat;
+    public Animator anime;
 
 
     private void Awake()
