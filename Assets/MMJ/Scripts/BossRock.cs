@@ -32,8 +32,8 @@ public class BossRock : MonsterBullet
         while (!isShoot)
         {
             angularPower += 0.02f;
-            scaleValue += 0.0005f;
-            transform.localScale = Vector3.one * scaleValue;
+            scaleValue += 0.65f;
+            transform.localScale = Vector3.one * scaleValue * Time.deltaTime;
             rigid.AddTorque(transform.right * angularPower, ForceMode.Acceleration);
             yield return null;
         }
