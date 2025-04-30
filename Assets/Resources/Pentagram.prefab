@@ -54,7 +54,11 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: f1ea01b49cbe7cd42a666f9722a8a4ab, type: 2}
     - target: {fileID: 919132149155446097, guid: 5139e0164226e30489a3d299aba7e4b2, type: 3}
       propertyPath: m_Name
-      value: StarGem2
+      value: Pentagram
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 5139e0164226e30489a3d299aba7e4b2, type: 3}
+      propertyPath: m_TagString
+      value: Item
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

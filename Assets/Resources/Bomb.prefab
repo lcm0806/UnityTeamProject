@@ -62,7 +62,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 4fe149b45c2d19e4b8c14b3b65d862ff, type: 3}
       propertyPath: m_Name
-      value: Bomb2
+      value: Bomb
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 4fe149b45c2d19e4b8c14b3b65d862ff, type: 3}
+      propertyPath: m_TagString
+      value: Item
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3451118302482216456, guid: 4fe149b45c2d19e4b8c14b3b65d862ff, type: 3}
