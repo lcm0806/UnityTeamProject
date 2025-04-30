@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class Attack : MonoBehaviour
 {
+    [SerializeField] private float damage;
+    public float Damage
+    {
+        get => damage;
+        set => damage = value;
+    }
 
     [SerializeField] GameObject bulletPrefab;
     [SerializeField] Transform muzzlePoint;
@@ -15,7 +21,12 @@ public class Attack : MonoBehaviour
     private float delaytime = 0.2f;
 
     [Range(10, 30)]
-    [SerializeField] float bulletSpeed;
+    [SerializeField] private float bulletSpeed;
+    public float BulletSpeed
+    {
+        get => bulletSpeed;
+        set => bulletSpeed = value;
+    }
 
     
     public void Fire(int damage)
@@ -31,7 +42,7 @@ public class Attack : MonoBehaviour
         }
         else
         {
-            Debug.LogError("»ı¼ºµÈ ÃÑ¾Ë ¿ÀºêÁ§Æ®¿¡ Bullet ½ºÅ©¸³Æ®°¡ ¾ø½À´Ï´Ù.");
+            Debug.LogError("ìƒì„±ëœ ì´ì•Œ ì˜¤ë¸Œì íŠ¸ì— Bullet ìŠ¤í¬ë¦½íŠ¸ê°€ ì—†ìŠµë‹ˆë‹¤.");
         }
 
     }

@@ -4,33 +4,87 @@ using UnityEngine;
 
 public class ItemPickup : MonoBehaviour
 {
-    public Item item; // 습득할 아이템
-
-    // Inspector 창에서 아이템 할당을 용이하게 하기 위한 방법 (선택 사항)
-    public string itemNameForEditor;
-
-    private void OnValidate()
+    public Item item; // ?????? ??????
+    
+    private void DetectionItem()
     {
-        // 에디터에서 itemNameForEditor 기반으로 아이템 생성 (간단한 예시)
-        if (!string.IsNullOrEmpty(itemNameForEditor))
+        if (CompareTag("Item"))
         {
-            switch (itemNameForEditor)
+            switch (item.itemName)
             {
-                case "SadOnion":
+                case "SadOnion": 
                     item = new SadOnion();
                     break;
-                case "TheInnerEye":
+                case "TheInnerEye": 
                     item = new TheInnerEye();
                     break;
                 case "Pentagram":
                     item = new Pentagram();
                     break;
-                // 다른 아이템 케이스 추가
+                case "GrowthHormones":
+                    item = new GrowthHormones();
+                    break;
+                case "MagicMushroom":
+                    item = new MagicMushroom();
+                    break;
+                case "SpoonBender":
+                    item = new SpoonBender();
+                    break;
+                case "BlueCap":
+                    item = new BlueCap();
+                    break;
+                case "CricketsState":
+                    item = new CricketsState();
+                    break;
+                case "TornPhoto":
+                    item = new TornPhoto();
+                    break;
+                case "Polyphemus":
+                    item = new Polyphemus();
+                    break;
+                case "BookOfBelial":
+                    item = new BookOfBelial();
+                    break;
+                case "YumHeart":
+                    item = new YumHeart();
+                    break;
+                case "BookOfShadow":
+                    item = new BookOfShadow();
+                    break;
+                case "ShoopDaWhoop":
+                    item = new ShoopDaWhoop();
+                    break;
+                case "TheNail":
+                    item = new TheNail();
+                    break;
+                case "MrBoom":
+                    item = new MrBoom();
+                    break;
+                case "TammysBlessing":
+                    item = new TammysBlessing();
+                    break;
+                case "Cross":
+                    item = new Cross();
+                    break;
+                case "AnarchistCookBook":
+                    item = new AnarchistCookBook();
+                    break;
+                case "TheHourglass":
+                    item = new TheHourglass();
+                    break;
+                case "Potion":
+                    item = new Potion();
+                    break;
+                case "GoldenKey":
+                    item = new GoldenKey();
+                    break;
+                case "Bomb":
+                    item = new Bomb();
+                    break;
                 default:
                     item = null;
                     break;
             }
-            itemNameForEditor = ""; // 값 초기화
         }
     }
 

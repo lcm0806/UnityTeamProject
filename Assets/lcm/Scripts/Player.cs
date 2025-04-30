@@ -9,10 +9,27 @@ public class Player : MonoBehaviour
     private float vAxis;
 
     [SerializeField] private float speed;
+    public float Speed
+    {
+        get => speed;
+        set => speed = value;
+    }
     [SerializeField] private List<Item> passiveItems = new List<Item>();
     [SerializeField] private List<Item> activeItems = new List<Item>();
     [SerializeField] private int health;
-    public int Health { get { return health; } set { health = value; } }
+    public int Health
+    {
+        get => health;
+        set => health = value;
+    }
+    
+    [SerializeField] private float soulhealth;
+    public float SoulHealth
+    {
+        get => soulhealth;
+        set => soulhealth = value;
+    }
+    
     [SerializeField] private int damage = 10;
     public int Damage { get { return damage; } set { damage = value; } }
     [SerializeField] Attack attack;
@@ -119,22 +136,22 @@ public class Player : MonoBehaviour
 
     public void TakeDamage(int damageAmount)
     {
-        // ¹«Àû »óÅÂ°¡ ¾Æ´Ò ¶§¸¸ µ¥¹ÌÁö¸¦ ¹ŞÀ½
+        // ë¬´ì  ìƒíƒœê°€ ì•„ë‹ ë•Œë§Œ ë°ë¯¸ì§€ë¥¼ ë°›ìŒ
         if (!isInvincible)
         {
             health -= damageAmount;
-            Debug.Log($"ÇÃ·¹ÀÌ¾î ÇÇ°İ! ¹ŞÀº µ¥¹ÌÁö: {damageAmount}, ³²Àº Ã¼·Â: {health}");
+            Debug.Log($"í”Œë ˆì´ì–´ í”¼ê²©! ë°›ì€ ë°ë¯¸ì§€: {damageAmount}, ë‚¨ì€ ì²´ë ¥: {health}");
 
-            // ÇÇ°İ ¾Ö´Ï¸ŞÀÌ¼Ç Àç»ı (¼±ÅÃ »çÇ×)
+            // í”¼ê²© ì• ë‹ˆë©”ì´ì…˜ ì¬ìƒ (ì„ íƒ ì‚¬í•­)
             //if (anim != null)
             //{
             //    anim.SetTrigger("doHit");
             //}
 
-            // ÇÇ°İ ½Ã ¹«Àû »óÅÂ ½ÃÀÛ (¼±ÅÃ »çÇ×)
+            // í”¼ê²© ì‹œ ë¬´ì  ìƒíƒœ ì‹œì‘ (ì„ íƒ ì‚¬í•­)
             StartInvincible();
 
-            // Ã¼·ÂÀÌ 0 ÀÌÇÏ·Î ¶³¾îÁ³À» ¶§ »ç¸Á Ã³¸®
+            // ì²´ë ¥ì´ 0 ì´í•˜ë¡œ ë–¨ì–´ì¡Œì„ ë•Œ ì‚¬ë§ ì²˜ë¦¬
             if (health <= 0)
             {
                 Die();
@@ -142,36 +159,36 @@ public class Player : MonoBehaviour
         }
         else
         {
-            Debug.Log("ÇÃ·¹ÀÌ¾î ¹«Àû »óÅÂ·Î µ¥¹ÌÁö¸¦ ¹ŞÁö ¾ÊÀ½!");
+            Debug.Log("í”Œë ˆì´ì–´ ë¬´ì  ìƒíƒœë¡œ ë°ë¯¸ì§€ë¥¼ ë°›ì§€ ì•ŠìŒ!");
         }
     }
 
     private void StartInvincible()
     {
         isInvincible = true;
-        // ¹«Àû ½Ã°£ ÈÄ ¹«Àû »óÅÂ ÇØÁ¦
+        // ë¬´ì  ì‹œê°„ í›„ ë¬´ì  ìƒíƒœ í•´ì œ
         Invoke("EndInvincible", invincibleDuration);
-        // ÇÊ¿äÇÏ´Ù¸é ¹«Àû »óÅÂ ½Ã ½Ã°¢Àû È¿°ú¸¦ ÁÙ ¼öµµ ÀÖ½À´Ï´Ù.
+        // í•„ìš”í•˜ë‹¤ë©´ ë¬´ì  ìƒíƒœ ì‹œ ì‹œê°ì  íš¨ê³¼ë¥¼ ì¤„ ìˆ˜ë„ ìˆìŠµë‹ˆë‹¤.
     }
 
     private void EndInvincible()
     {
         isInvincible = false;
-        // ¹«Àû »óÅÂ ÇØÁ¦ ½Ã ½Ã°¢Àû È¿°ú¸¦ Á¦°ÅÇÒ ¼ö ÀÖ½À´Ï´Ù.
+        // ë¬´ì  ìƒíƒœ í•´ì œ ì‹œ ì‹œê°ì  íš¨ê³¼ë¥¼ ì œê±°í•  ìˆ˜ ìˆìŠµë‹ˆë‹¤.
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         anim.SetBool("isJump", false);
 
-         // ¾ÆÀÌÅÛ ½Àµæ Ã³¸® (Ãæµ¹ °¨Áö)
+         // ?????? ???? ??? (?å½¹ ????)
          if (collision.gameObject.GetComponent<ItemPickup>() != null)
          {
             ItemPickup pickup = collision.gameObject.GetComponent<ItemPickup>();
             AcquireItem(pickup.item);
-            Destroy(collision.gameObject); // ½ÀµæÇÑ ¾ÆÀÌÅÛ ¿ÀºêÁ§Æ® ÆÄ±«
-            ApplyPassiveEffects(); // ½Àµæ ÈÄ ÆĞ½Ãºê È¿°ú ´Ù½Ã Àû¿ë
-            Debug.Log("¾ÆÀÌÅÛ È¹µæ: " + pickup.item.itemName);
+            Destroy(collision.gameObject); // ?????? ?????? ??????? ?ìº‡?
+            ApplyPassiveEffects(); // ???? ?? ?æˆŸ?? ??? ??? ????
+            Debug.Log("?????? ???: " + pickup.item.itemName);
          }
 
 
@@ -190,24 +207,23 @@ public class Player : MonoBehaviour
             activeItems.Add(newItem);
 
         }
-        Debug.Log("¾ÆÀÌÅÛ È¹µæ :" + newItem.itemName + " (" + newItem.itemType + ")");
+        Debug.Log("ì•„ì´í…œ íšë“ :" + newItem.itemName + " (" + newItem.itemType + ")");
     }
 
     private void ApplyPassiveEffects()
     {
-        // ÇöÀç´Â °£´ÜÇÏ°Ô ·Î±×¸¸ Ãâ·Â, ½ÇÁ¦ È¿°ú Àû¿ë ·ÎÁ÷ ±¸Çö ÇÊ¿ä
+        // í˜„ì¬ëŠ” ê°„ë‹¨í•˜ê²Œ ë¡œê·¸ë§Œ ì¶œë ¥, ì‹¤ì œ íš¨ê³¼ ì ìš© ë¡œì§ êµ¬í˜„ í•„ìš”
         foreach (Item item in passiveItems)
         {
             if (item.itemType == itemType.Passive)
             {
-                Debug.Log("ÆĞ½Ãºê ¾ÆÀÌÅÛ È¿°ú Àû¿ë: " + item.itemName);
-                item.UseItem(); // °¢ ¾ÆÀÌÅÛÀÇ UseItem() È£Ãâ (½ÇÁ¦ È¿°ú ±¸Çö)
+                Debug.Log("?æˆŸ?? ?????? ??? ????: " + item.itemName);
+                item.UseItem(); // ?? ???????? UseItem() ??? (???? ??? ????)
             }
         }
     }
 
 
-    // ¾ÆÀÌÅÛ »ç¿ë ÇÔ¼ö (ÀÎµ¦½º ±â¹İ)
     public void UseItem(int index, itemType type)
     {
         List<Item> targetList = (type == itemType.Active) ? activeItems : passiveItems;
@@ -216,38 +232,37 @@ public class Player : MonoBehaviour
         {
             if (targetList[index].itemType == type)
             {
-                Debug.Log("¾×Æ¼ºê ¾ÆÀÌÅÛ »ç¿ë: " + targetList[index].itemName);
-                targetList[index].UseItem(); // ¾×Æ¼ºê ¾ÆÀÌÅÛÀÇ UseItem() È£Ãâ (½ÇÁ¦ È¿°ú ±¸Çö)
-                // »ç¿ë ÈÄ ¾ÆÀÌÅÛ Á¦°Å ¶Ç´Â ÄğÅ¸ÀÓ Ã³¸® µî Ãß°¡ ·ÎÁ÷ ÇÊ¿ä
+                Debug.Log("ì•¡í‹°ë¸Œ ì•„ì´í…œ ì‚¬ìš©: " + targetList[index].itemName);
+                targetList[index].UseItem(); // ì•¡í‹°ë¸Œ ì•„ì´í…œì˜ UseItem() í˜¸ì¶œ (ì‹¤ì œ íš¨ê³¼ êµ¬í˜„)
+                // ì‚¬ìš© í›„ ì•„ì´í…œ ì œê±° ë˜ëŠ” ì¿¨íƒ€ì„ ì²˜ë¦¬ ë“± ì¶”ê°€ ë¡œì§ í•„ìš”
                 if (type == itemType.Active)
                 {
-                    // ¿¹½Ã: »ç¿ë ÈÄ Ã¹ ¹øÂ° ¾×Æ¼ºê ¾ÆÀÌÅÛ Á¦°Å
+                    // ì˜ˆì‹œ: ì‚¬ìš© í›„ ì²« ë²ˆì§¸ ì•¡í‹°ë¸Œ ì•„ì´í…œ ì œê±°
                     // activeItems.RemoveAt(index);
                     // UpdateActiveItemUI();
                 }
             }
             else
             {
-                Debug.Log("ÇØ´ç ½½·ÔÀº " + type + " ¾ÆÀÌÅÛÀÌ ¾Æ´Õ´Ï´Ù.");
+                Debug.Log("í•´ë‹¹ ìŠ¬ë¡¯ì€ " + type + " ì•„ì´í…œì´ ì•„ë‹™ë‹ˆë‹¤.");
             }
         }
         else
         {
-            Debug.Log("ÇØ´ç ÀÎµ¦½ºÀÇ ¾ÆÀÌÅÛÀÌ ¾ø½À´Ï´Ù.");
+            Debug.Log("??? ?ç¯????? ???????? ???????.");
         }
     }
 
-
     private void Die()
     {
-        Debug.Log("ÇÃ·¹ÀÌ¾î »ç¸Á!");
+        Debug.Log("í”Œë ˆì´ì–´ ì‚¬ë§!");
     }
 
-    // UI ¾÷µ¥ÀÌÆ® (ÀÓ½Ã)
+    // UI ì—…ë°ì´íŠ¸ (ì„ì‹œ)
     private void UpdatePassiveItemsUI()
     {
-        // ½ÇÁ¦ UI ½Ã½ºÅÛ¿¡ ¸Â°Ô ±¸ÇöÇØ¾ß ÇÔ
-        Debug.Log("ÇöÀç º¸À¯ ¾ÆÀÌÅÛ:");
+        // ì‹¤ì œ UI ì‹œìŠ¤í…œì— ë§ê²Œ êµ¬í˜„í•´ì•¼ í•¨
+        Debug.Log("í˜„ì¬ ë³´ìœ  ì•„ì´í…œ:");
         for (int i = 0; i < passiveItems.Count; i++)
         {
             Debug.Log($"{i + 1}: {passiveItems[i].itemName} ({passiveItems[i].itemType})");

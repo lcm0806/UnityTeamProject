@@ -62,7 +62,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -927199367670048503, guid: f77ab1a07531efc49a814b75f78f7e4e, type: 3}
       propertyPath: m_Name
-      value: mf_book_01
+      value: BookOfShadow
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: f77ab1a07531efc49a814b75f78f7e4e, type: 3}
+      propertyPath: m_TagString
+      value: Item
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -10,13 +10,15 @@ public abstract class Item
     public string itemSkillDescription;
     public itemType itemType;
     public GameObject itemPrefab;
+    public Attack attack;
+    public Player player;
     
     public abstract void UseItem();
 }
 
 public enum itemType
 {
-    Passive, Active
+    Passive, Active, Normal
 }
 
 public class SadOnion : Item //패시브아이템
@@ -32,7 +34,7 @@ public class SadOnion : Item //패시브아이템
 
     public override void UseItem()
     {
-        //공격 속도 0.7 증가
+        attack.BulletSpeed += 0.7f; //공격 속도 + 0.7
     }
 }
 
@@ -50,7 +52,7 @@ public class TheInnerEye : Item //패시브아이템
     public override void UseItem()
     {
         //3방향으로 날아가는 눈물 스킬
-        //공격속도 배율 * 0.51 (절반 정도 느려짐)
+        attack.BulletSpeed *= 0.51f; //공격속도 배율 * 0.51 (절반 정도 느려짐)
     }
 }
 
@@ -67,7 +69,7 @@ public class Pentagram : Item //패시브아이템
 
     public override void UseItem()
     {
-        //공격력 + 1
+        attack.Damage += 1f; //공격력 + 1
     }
 }
 
@@ -84,8 +86,8 @@ public class GrowthHormones : Item //패시브아이템
 
     public override void UseItem()
     {
-        //공격력 + 1
-        //이동속도 + 0.4
+        attack.Damage += 1f; //공격력 + 1
+        player.Speed += 0.4f; //이동속도 + 0.4
     }
 }
 
@@ -102,11 +104,11 @@ public class MagicMushroom : Item //패시브아이템
 
     public override void UseItem()
     {
-        //최대체력 +1
+        //player.Health += 1; //최대체력 +1 //맥스체력 설정
         //체력 모두 회복
-        //공격력 + 0.3
-        //이동속도 + 0.3
-        //공격력 배율 * 1.5
+        attack.Damage += 0.3f;//공격력 + 0.3
+        player.Speed += 0.3f; //이동속도 + 0.3
+        attack.Damage *= 1.5f; //공격력 배율 * 1.5
         //사거리 +2.5
     }
 }
@@ -135,16 +137,16 @@ public class BlueCap : Item //패시브아이템
     {
         itemName = "파란 환각버섯";
         itemDescription = "파란 빛을 띠는 환각 버섯. 먹으면 정신이 흐려지고, 이상한 현상이 일어난다.";
-        itemSkillDescription = "HP + Tears Up , Shot Speed Down";
+        itemSkillDescription = "HP + Tears Up, Speed Down";
         itemType = itemType.Passive;
         itemPrefab = Resources.Load<GameObject>("BlueCap");
     }
 
     public override void UseItem()
     {
-        //최대 체력 +1
-        //공격 속도 +0.7
-        //눈물 속도 -0.16
+        //player.Health += 1; //최대 체력 +1 //맥스체력설정
+        attack.BulletSpeed += 0.7f; //공격 속도 +0.7
+        player.Speed -= 0.3f; //속도 - 0.3
     }
 }
 
@@ -161,8 +163,8 @@ public class CricketsState : Item //패시브아이템
 
     public override void UseItem()
     {
-        //공격력 + 0.5
-        //공격력배율 * 1.5
+        attack.Damage += 0.5f; //공격력 + 0.5
+        attack.Damage *= 1.5f; //공격력배율 * 1.5
         //눈물의 크기 커짐
     }
 }
@@ -173,15 +175,14 @@ public class TornPhoto : Item //패시브아이템
     {
         itemName = "찢어진 사진";
         itemDescription = "오래된 기억을 떠올리게 하는 이 사진은 시간이 지나며 일부가 훼손되었다. 하지만 그 속에서 여전히 과거의 의미를 찾을 수 있다.";
-        itemSkillDescription = "Tears + Shot Speed Up";
+        itemSkillDescription = "Shot Speed Up";
         itemType = itemType.Passive;
         itemPrefab = Resources.Load<GameObject>("TornPhoto");
     }
 
     public override void UseItem()
     {
-        //공격속도 + 0.7
-        //눈물 속도 + 0.16
+        attack.BulletSpeed += 0.7f; //공격속도 + 0.7
     }
 }
 
@@ -198,9 +199,9 @@ public class Polyphemus : Item //패시브아이템
 
     public override void UseItem()
     {
-        //공격력 + 4
-        //공격력배율 * 2
-        //공격속도 배율 * 0.42
+        attack.Damage += 4f; //공격력 + 4
+        attack.Damage *= 2f; //공격력배율 * 2
+        attack.BulletSpeed *= 0.42f; //공격속도 배율 * 0.42
     }
 }
 
@@ -217,7 +218,7 @@ public class BookOfBelial : Item //액티브아이템
 
     public override void UseItem()
     {
-        //사용시 데미지 +2
+        attack.Damage += 2; //사용시 데미지 +2
     }
 }
 
@@ -234,7 +235,7 @@ public class YumHeart : Item //액티브아이템
 
     public override void UseItem()
     {
-        //체력 1칸 회복
+        player.Health += 1; //체력 1칸 회복
     }
 }
 
@@ -285,9 +286,9 @@ public class TheNail : Item //액티브아이템
 
     public override void UseItem()
     {
-        //블랙하트 +0.5
-        //이동속도 -0.18
-        //공격력 +2
+        player.SoulHealth += 0.5f;//소울하트 +0.5
+        player.Speed -= 0.18f; //이동속도 -0.18
+        attack.Damage += 2f; //공격력 +2
     }
 }
 
@@ -338,7 +339,7 @@ public class Cross : Item //액티브아이템
 
     public override void UseItem()
     {
-        //소울 하트 +1
+        player.SoulHealth += 1f; //소울 하트 +1
     }
 }
 
@@ -373,6 +374,57 @@ public class TheHourglass : Item //액티브아이템
     public override void UseItem()
     {
         //방에잇는 몬스터에게 8초간 둔화
+    }
+}
+
+public class Potion : Item //노말아이템
+{
+    public Potion()
+    {
+        itemName = "포션";
+        itemDescription = "달달한 딸기맛 체력회복템";
+        itemSkillDescription = "+ 1 HP";
+        itemType = itemType.Normal;
+        itemPrefab = Resources.Load<GameObject>("Potion");
+    }
+
+    public override void UseItem()
+    {
+        player.Health += 1; //체력이 +1 회복된다.
+    }
+}
+
+public class GoldenKey : Item //액티브아이템
+{
+    public GoldenKey()
+    {
+        itemName = "열쇠";
+        itemDescription = "황금 빛이 나는 열쇠";
+        itemSkillDescription = "Get!";
+        itemType = itemType.Normal;
+        itemPrefab = Resources.Load<GameObject>("GoldenKey");
+    }
+
+    public override void UseItem()
+    {
+        //키를 가지면 상자가 열린다.
+    }
+}
+
+public class Bomb : Item //액티브아이템
+{
+    public Bomb()
+    {
+        itemName = "폭탄";
+        itemDescription = "터진다!!";
+        itemSkillDescription = "Boom!";
+        itemType = itemType.Normal;
+        itemPrefab = Resources.Load<GameObject>("Bomb");
+    }
+
+    public override void UseItem()
+    {
+        //폭팔
     }
 }
 
