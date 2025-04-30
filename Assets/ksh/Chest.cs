@@ -16,22 +16,31 @@ public class NewBehaviourScript : MonoBehaviour
 
     private void Awake()
     {
-
-        
-      //  Rigidbody rb = item.GetComponent<Rigidbody>();
-        
-      //  if(rb != null)
-        {
-      //      rb.AddForce(Vector3.up * ThrowForce, ForceMode.Impulse);
-        }
-        
-
-
         player = GameObject.FindGameObjectWithTag("Player"); //플레이어 태그 설정
         animator = GetComponent<Animator>();
         IsPlayerEnter = false; //초가엔 False
         IsClosed = true;
-
+        
+        items.Add(new SadOnion());
+        items.Add(new TheInnerEye());
+        items.Add(new Pentagram()); 
+        items.Add(new GrowthHormones());
+        items.Add(new MagicMushroom());
+        items.Add(new SpoonBender());
+        items.Add(new BlueCap());
+        items.Add(new CricketsState()); 
+        items.Add(new TornPhoto());
+        items.Add(new Polyphemus());
+        items.Add(new BookOfBelial());
+        items.Add(new YumHeart());
+        items.Add(new BookOfShadow());
+        items.Add(new ShoopDaWhoop());
+        items.Add(new TheNail()); //오늘
+        items.Add(new MrBoom()); //오늘
+        items.Add(new TammysBlessing());
+        items.Add(new Cross());
+        items.Add(new AnarchistCookBook());
+        items.Add(new TheHourglass());
     }
 
     private void Update()
@@ -77,7 +86,7 @@ public class NewBehaviourScript : MonoBehaviour
         currentItem = Instantiate(selectedItem.itemPrefab, ItemSpawn.position, Quaternion.identity);
         Rigidbody rigid = currentItem.GetComponent<Rigidbody>();
         rigid.AddForce(Vector3.forward * 6f, ForceMode.Impulse);
-        Debug.Log($"{selectedItem.itemName} 아이템이 생성되었습니다.");
+       Debug.Log($"{selectedItem.itemName} 아이템이 생성되었습니다.");
         Invoke("DestoryChest", 1f);
     }
 
