@@ -9,9 +9,38 @@ public class Player : MonoBehaviour
     private float vAxis;
 
     [SerializeField] private float speed;
-    [SerializeField] private List<Item> acquiredItems = new List<Item>();
-    [SerializeField] private int health;
-    [SerializeField] private int Damage;
+public float Speed
+{
+    get => speed;
+    set => speed = value;
+}
+
+[SerializeField] private float speed;
+
+[SerializeField] private List<Item> acquiredItems = new List<Item>();
+[SerializeField] private List<Item> passiveItems = new List<Item>();
+[SerializeField] private List<Item> activeItems = new List<Item>();
+
+[SerializeField] private int health;
+public int Health
+{
+    get => health;
+    set => health = value;
+}
+
+[SerializeField] private float soulhealth;
+public float SoulHealth
+{
+    get => soulhealth;
+    set => soulhealth = value;
+}
+
+[SerializeField] private int damage = 10;
+public int Damage
+{
+    get => damage;
+    set => damage = value;
+}
     [SerializeField] Attack attack;
 
     private bool wDown;
@@ -19,6 +48,9 @@ public class Player : MonoBehaviour
 
     private bool isSide;
     private bool isDodge;
+
+    private bool isInvincible = false;
+    [SerializeField] private float invincibleDuration = 0.5f;
 
     private GameObject nearObject;
 
@@ -107,22 +139,58 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            attack.Fire();
+attack.Fire(damage);
+    }
+}
+
+public void TakeDamage(int damageAmount)
+{
+    // ë¬´ì  ìƒíƒœê°€ ì•„ë‹ ë•Œë§Œ ë°ë¯¸ì§€ë¥¼ ë°›ìŒ
+    if (!isInvincible)
+    {
+        health -= damageAmount;
+        Debug.Log($"í”Œë ˆì´ì–´ í”¼ê²©! ë°›ì€ ë°ë¯¸ì§€: {damageAmount}, ë‚¨ì€ ì²´ë ¥: {health}");
+
+        // í”¼ê²© ì• ë‹ˆë©”ì´ì…˜ ì¬ìƒ (ì„ íƒ ì‚¬í•­)
+        // if (anim != null) anim.SetTrigger("doHit");
+
+        // ë¬´ì  ìƒíƒœ ì§„ì… (ì„ íƒ ì‚¬í•­)
+        StartInvincible();
+
+        // ì²´ë ¥ì´ 0 ì´í•˜ë¡œ ë–¨ì–´ì¡Œì„ ë•Œ ì‚¬ë§ ì²˜ë¦¬
+        if (health <= 0)
+        {
+            Die();
         }
     }
+    else
+    {
+        Debug.Log("í”Œë ˆì´ì–´ ë¬´ì  ìƒíƒœë¡œ ë°ë¯¸ì§€ë¥¼ ë°›ì§€ ì•ŠìŒ!");
+    }
+}
 
+private void StartInvincible()
+{
+    isInvincible = true;
+    Invoke("EndInvincible", invincibleDuration);
+}
+
+private void EndInvincible()
+{
+    isInvincible = false;
+}
     private void OnCollisionEnter(Collision collision)
     {
         anim.SetBool("isJump", false);
 
-         // ¾ÆÀÌÅÛ ½Àµæ Ã³¸® (Ãæµ¹ °¨Áö)
+
          if (collision.gameObject.GetComponent<ItemPickup>() != null)
          {
             ItemPickup pickup = collision.gameObject.GetComponent<ItemPickup>();
             AcquireItem(pickup.item);
-            Destroy(collision.gameObject); // ½ÀµæÇÑ ¾ÆÀÌÅÛ ¿ÀºêÁ§Æ® ÆÄ±«
-            ApplyPassiveEffects(); // ½Àµæ ÈÄ ÆĞ½Ãºê È¿°ú ´Ù½Ã Àû¿ë
-            Debug.Log("¾ÆÀÌÅÛ È¹µæ: " + pickup.item.itemName);
+Destroy(collision.gameObject); // ëª¬ìŠ¤í„° ì˜¤ë¸Œì íŠ¸ ì œê±°
+ApplyPassiveEffects();         // ì•„ì´í…œ ìŠµë“ ì‹œ íš¨ê³¼ ì ìš©
+Debug.Log("ì•„ì´í…œ íšë“: " + pickup.item.itemName);
          }
 
 
@@ -131,63 +199,126 @@ public class Player : MonoBehaviour
 
     public void AcquireItem(Item newItem)
     {
-        acquiredItems.Add(newItem);
-        // UI ¾÷µ¥ÀÌÆ® (hasitems ¹è¿­ È°¿ë - ½ÇÁ¦ UI ·ÎÁ÷¿¡ ¸Â°Ô ¼öÁ¤ ÇÊ¿ä)
-        UpdateHasItemsUI();
+public void AcquireItem(Item newItem)
+{
+    acquiredItems.Add(newItem); // ì „ì²´ ì•„ì´í…œ ëª©ë¡ ìœ ì§€
+    Debug.Log("ì•„ì´í…œ íšë“: " + newItem.itemName + " (" + newItem.itemType + ")");
+
+    // íƒ€ì…ë³„ ë¦¬ìŠ¤íŠ¸ ë¶„ë¥˜
+    if (newItem.itemType == itemType.Passive)
+    {
+        passiveItems.Add(newItem);
+        ApplyPassiveEffects();
+    }
+    else if (newItem.itemType == itemType.Active)
+    {
+        activeItems.Add(newItem);
+        // í•„ìš”í•˜ë©´ UI ì—…ë°ì´íŠ¸ ë¡œì§ ì¶”ê°€
     }
 
-    private void ApplyPassiveEffects()
+    UpdateHasItemsUI(); // UI ì—…ë°ì´íŠ¸
+}
+
+private void ApplyPassiveEffects()
+{
+    // íšë“í•œ íŒ¨ì‹œë¸Œ ì•„ì´í…œ íš¨ê³¼ ì ìš©
+    foreach (Item item in passiveItems)
     {
-        // ÇöÀç´Â °£´ÜÇÏ°Ô ·Î±×¸¸ Ãâ·Â, ½ÇÁ¦ È¿°ú Àû¿ë ·ÎÁ÷ ±¸Çö ÇÊ¿ä
-        foreach (Item item in acquiredItems)
+        if (item.itemType == itemType.Passive)
         {
-            if (item.itemType == itemType.Passive)
-            {
-                Debug.Log("ÆĞ½Ãºê ¾ÆÀÌÅÛ È¿°ú Àû¿ë: " + item.itemName);
-                item.UseItem(); // °¢ ¾ÆÀÌÅÛÀÇ UseItem() È£Ãâ (½ÇÁ¦ È¿°ú ±¸Çö)
-            }
+            Debug.Log("íŒ¨ì‹œë¸Œ ì•„ì´í…œ íš¨ê³¼ ì ìš©: " + item.itemName);
+            item.UseItem();
         }
     }
+}
 
-    private void UseActiveItemInput()
+// ìˆ«ìí‚¤ ì…ë ¥ ë°©ì‹ (1ë²ˆ í‚¤ ë“±)
+private void UseActiveItemInput()
+{
+    if (Input.GetKeyDown(KeyCode.Alpha1) && activeItems.Count > 0)
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1) && acquiredItems.Count > 0)
-        {
-            UseItem(0); // Ã¹ ¹øÂ° ¾ÆÀÌÅÛ »ç¿ë
-        }
-        
+        UseItem(0, itemType.Active); // ì²« ë²ˆì§¸ ì•¡í‹°ë¸Œ ì•„ì´í…œ ì‚¬ìš©
     }
+}
 
-    // ¾ÆÀÌÅÛ »ç¿ë ÇÔ¼ö (ÀÎµ¦½º ±â¹İ)
-    public void UseItem(int index)
+// ì•„ì´í…œ ì‚¬ìš© (ê¸°ì¡´ ë°©ì‹ ìœ ì§€)
+public void UseItem(int index)
+{
+    if (index >= 0 && index < acquiredItems.Count)
     {
-        if (index >= 0 && index < acquiredItems.Count)
+        if (acquiredItems[index].itemType == itemType.Active)
         {
-            if (acquiredItems[index].itemType == itemType.Active)
+            Debug.Log("ì•¡í‹°ë¸Œ ì•„ì´í…œ ì‚¬ìš©: " + acquiredItems[index].itemName);
+            acquiredItems[index].UseItem();
+        }
+        else
+        {
+            Debug.Log("í•´ë‹¹ ì•„ì´í…œì€ ì•¡í‹°ë¸Œ íƒ€ì…ì´ ì•„ë‹™ë‹ˆë‹¤.");
+        }
+    }
+}
+
+// ì˜¤ë²„ë¡œë“œ: íƒ€ì…ë³„ ì•„ì´í…œ ì‚¬ìš©
+public void UseItem(int index, itemType type)
+{
+    List<Item> targetList = (type == itemType.Active) ? activeItems : passiveItems;
+
+    if (index >= 0 && index < targetList.Count)
+    {
+        if (targetList[index].itemType == type)
+        {
+            Debug.Log($"[{type}] ì•„ì´í…œ ì‚¬ìš©: {targetList[index].itemName}");
+            targetList[index].UseItem();
+
+            // ì˜ˆì‹œ: ì‚¬ìš© í›„ ì œê±° ë¡œì§
+            if (type == itemType.Active)
             {
-                Debug.Log("¾×Æ¼ºê ¾ÆÀÌÅÛ »ç¿ë: " + acquiredItems[index].itemName);
-                acquiredItems[index].UseItem(); // ¾×Æ¼ºê ¾ÆÀÌÅÛÀÇ UseItem() È£Ãâ (½ÇÁ¦ È¿°ú ±¸Çö)
-                // »ç¿ë ÈÄ ¾ÆÀÌÅÛ Á¦°Å ¶Ç´Â ÄğÅ¸ÀÓ Ã³¸® µî Ãß°¡ ·ÎÁ÷ ÇÊ¿ä
-            }
-            else
-            {
-                Debug.Log("ÇØ´ç ½½·ÔÀº ¾×Æ¼ºê ¾ÆÀÌÅÛÀÌ ¾Æ´Õ´Ï´Ù.");
+                // activeItems.RemoveAt(index);
+                // UpdateActiveItemUI();
             }
         }
         else
         {
-            Debug.Log("ÇØ´ç ÀÎµ¦½ºÀÇ ¾ÆÀÌÅÛÀÌ ¾ø½À´Ï´Ù.");
+            Debug.Log($"ì„ íƒëœ ì•„ì´í…œì€ {type} íƒ€ì…ì´ ì•„ë‹™ë‹ˆë‹¤.");
+        }
+    }
+}
+
+            }
+        }
+        else
+        {
+        else
+        {
+            Debug.Log("í•´ë‹¹ ì¸ë±ìŠ¤ì˜ ì•„ì´í…œì€ ì‚¬ìš©í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤.");
         }
     }
 
-    // UI ¾÷µ¥ÀÌÆ® (ÀÓ½Ã)
+    private void Die()
+    {
+        Debug.Log("í”Œë ˆì´ì–´ ì‚¬ë§!");
+    }
+
+    // ì „ì²´ ì•„ì´í…œ UI ë””ë²„ê·¸ ì¶œë ¥ (ì˜ˆì‹œ)
     private void UpdateHasItemsUI()
     {
-        // ½ÇÁ¦ UI ½Ã½ºÅÛ¿¡ ¸Â°Ô ±¸ÇöÇØ¾ß ÇÔ
-        Debug.Log("ÇöÀç º¸À¯ ¾ÆÀÌÅÛ:");
+        Debug.Log("ë³´ìœ í•œ ì „ì²´ ì•„ì´í…œ ëª©ë¡:");
         for (int i = 0; i < acquiredItems.Count; i++)
         {
             Debug.Log($"{i + 1}: {acquiredItems[i].itemName} ({acquiredItems[i].itemType})");
+        }
+    }
+
+    // íŒ¨ì‹œë¸Œ ì•„ì´í…œë§Œ ì¶œë ¥ (ì˜ˆì‹œ)
+    private void UpdatePassiveItemsUI()
+    {
+        Debug.Log("ë³´ìœ í•œ íŒ¨ì‹œë¸Œ ì•„ì´í…œ ëª©ë¡:");
+        for (int i = 0; i < passiveItems.Count; i++)
+        {
+            Debug.Log($"{i + 1}: {passiveItems[i].itemName} ({passiveItems[i].itemType})");
+        }
+    }
+
         }
     }
 

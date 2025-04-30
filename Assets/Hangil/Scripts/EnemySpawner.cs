@@ -5,10 +5,38 @@ using UnityEngine.Events;
 
 public class EnemySpawner : MonoBehaviour
 {
-    [SerializeField] GameObject enemy;
-    // Start is called before the first frame update
-    void Start()
+    public GameObject enemyPrefab;
+    private EnemyDeath spawnedEnemy;
+
+    private void OnEnable()
     {
-        Instantiate(enemy, transform.position, Quaternion.identity);
+        SpawnEnemy();
+    }
+
+    public void SpawnEnemy()
+    {
+        GameObject enemyObj = Instantiate(enemyPrefab, transform.position, Quaternion.identity);
+        spawnedEnemy = enemyObj.GetComponent<EnemyDeath>();
+
+        if (spawnedEnemy != null)
+        {
+            spawnedEnemy.OnDeath += HandleEnemyDeath;
+        }
+    }
+
+    public void OnDestroy()
+    {
+        if (spawnedEnemy != null)
+        {
+            spawnedEnemy.OnDeath -= HandleEnemyDeath;
+        }
+    }
+
+    private void HandleEnemyDeath()
+    {
+        if (LevelManager.Instance != null)
+        {
+            LevelManager.Instance.OnEnemyKilled();
+        }
     }
 }

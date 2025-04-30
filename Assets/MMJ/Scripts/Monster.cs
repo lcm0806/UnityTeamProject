@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
+
 public class Monster : MonoBehaviour
 {
     public enum Type { A, B, C, D };
@@ -14,11 +15,14 @@ public class Monster : MonoBehaviour
     public bool isChase;
     public bool isAttack;
 
+    public bool isDead;
 
-    Rigidbody rigid;
-    BoxCollider boxCollider;
-    Material mat;
-    Animator anime;
+
+
+    public Rigidbody rigid;
+    public BoxCollider boxCollider;
+    public Material mat;
+    public Animator anime;
 
 
     private void Awake()
@@ -31,13 +35,13 @@ public class Monster : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "°ø°Ý¼ö´Ü") //todo
+        if (other.tag == "ï¿½ï¿½ï¿½Ý¼ï¿½ï¿½ï¿½") //todo
         {
-            //°ø°Ý¼ö´Ü(ÅÂ±×ÁöÁ¤) °ø°Ý¼ö´ÜÀÌ¸§ = other.GetComponent<°ø°Ý¼ö´Ü>();
-            //curHealth -= °ø°Ý¼ö´Ü°ø°Ý·Â;
+            //ï¿½ï¿½ï¿½Ý¼ï¿½ï¿½ï¿½(ï¿½Â±ï¿½ï¿½ï¿½ï¿½ï¿½) ï¿½ï¿½ï¿½Ý¼ï¿½ï¿½ï¿½ï¿½Ì¸ï¿½ = other.GetComponent<ï¿½ï¿½ï¿½Ý¼ï¿½ï¿½ï¿½>();
+            //curHealth -= ï¿½ï¿½ï¿½Ý¼ï¿½ï¿½Ü°ï¿½ï¿½Ý·ï¿½;
             Vector3 reactVec = transform.position - other.transform.position;
 
-            //Destroy(other.gameObject); //(ÃÑ¾Ë °°Àº Åõ»çÃ¼ÀÏ°æ¿ì ¸Â¾ÒÀ»¶§ »èÁ¦)
+            //Destroy(other.gameObject); //(ï¿½Ñ¾ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ã¼ï¿½Ï°ï¿½ï¿½ ï¿½Â¾ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
 
             StartCoroutine(OnDamage(reactVec));
         }
@@ -66,27 +70,31 @@ public class Monster : MonoBehaviour
         float targetRadius = 0;
         float targetRange = 0;
 
-        switch (monsterType)
-        {
-            case Type.A:
-                targetRadius = 1.5f;
-                targetRange = 3f;
-                break;
-            case Type.B:
-                targetRadius = 1f;
-                targetRange = 12f;
-                break;
-            case Type.C:
-                targetRadius = 0.5f;
-                targetRange = 25f;
-                break;
-        }
+if (!isDead)
+{
+    switch (monsterType)
+    {
+        case Type.A:
+            targetRadius = 1.5f;
+            targetRange = 3f;
+            break;
+        case Type.B:
+            targetRadius = 1f;
+            targetRange = 12f;
+            break;
+        case Type.C:
+            targetRadius = 0.5f;
+            targetRange = 25f;
+            break;
+    }
 
-        RaycastHit[] rayHits = Physics.SphereCastAll(transform.position, targetRadius, transform.forward, targetRange, LayerMask.GetMask("Player"));
+    RaycastHit[] rayHits = Physics.SphereCastAll(transform.position, targetRadius, transform.forward, targetRange, LayerMask.GetMask("Player"));
 
-        if (rayHits.Length > 0 && !isAttack)
-        {
-            StartCoroutine(Attack());
+    if (rayHits.Length > 0 && !isAttack)
+    {
+        StartCoroutine(Attack());
+    }
+}
         }
     }
 
@@ -152,6 +160,7 @@ public class Monster : MonoBehaviour
         {
             mat.color = Color.gray;
             gameObject.layer = 21;
+            isDead = true;
             isChase = false;
             anime.SetTrigger("doDie");
 
