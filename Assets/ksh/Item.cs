@@ -10,9 +10,10 @@ public abstract class Item
     public string itemSkillDescription;
     public itemType itemType;
     public GameObject itemPrefab;
+
     public Attack attack;
     public Player player;
-    
+
     public abstract void UseItem();
 }
 
@@ -21,7 +22,9 @@ public enum itemType
     Passive, Active, Normal
 }
 
-public class SadOnion : Item //패시브아이템
+// 아래는 각 아이템 클래스들
+
+public class SadOnion : Item
 {
     public SadOnion()
     {
@@ -34,11 +37,11 @@ public class SadOnion : Item //패시브아이템
 
     public override void UseItem()
     {
-        attack.BulletSpeed += 0.7f; //공격 속도 + 0.7
+        attack.BulletSpeed += 0.7f;
     }
 }
 
-public class TheInnerEye : Item //패시브아이템
+public class TheInnerEye : Item
 {
     public TheInnerEye()
     {
@@ -51,12 +54,11 @@ public class TheInnerEye : Item //패시브아이템
 
     public override void UseItem()
     {
-        //3방향으로 날아가는 눈물 스킬
-        attack.BulletSpeed *= 0.51f; //공격속도 배율 * 0.51 (절반 정도 느려짐)
+        attack.BulletSpeed *= 0.51f;
     }
 }
 
-public class Pentagram : Item //패시브아이템
+public class Pentagram : Item
 {
     public Pentagram()
     {
@@ -69,11 +71,11 @@ public class Pentagram : Item //패시브아이템
 
     public override void UseItem()
     {
-        attack.Damage += 1f; //공격력 + 1
+        attack.Damage += 1f;
     }
 }
 
-public class GrowthHormones : Item //패시브아이템
+public class GrowthHormones : Item
 {
     public GrowthHormones()
     {
@@ -86,12 +88,12 @@ public class GrowthHormones : Item //패시브아이템
 
     public override void UseItem()
     {
-        attack.Damage += 1f; //공격력 + 1
-        player.Speed += 0.4f; //이동속도 + 0.4
+        attack.Damage += 1f;
+        player.Speed += 0.4f;
     }
 }
 
-public class MagicMushroom : Item //패시브아이템
+public class MagicMushroom : Item
 {
     public MagicMushroom()
     {
@@ -104,16 +106,13 @@ public class MagicMushroom : Item //패시브아이템
 
     public override void UseItem()
     {
-        //player.Health += 1; //최대체력 +1 //맥스체력 설정
-        //체력 모두 회복
-        attack.Damage += 0.3f;//공격력 + 0.3
-        player.Speed += 0.3f; //이동속도 + 0.3
-        attack.Damage *= 1.5f; //공격력 배율 * 1.5
-        //사거리 +2.5
+        attack.Damage += 0.3f;
+        player.Speed += 0.3f;
+        attack.Damage *= 1.5f;
     }
 }
 
-public class SpoonBender : Item //패시브아이템
+public class SpoonBender : Item
 {
     public SpoonBender()
     {
@@ -126,12 +125,11 @@ public class SpoonBender : Item //패시브아이템
 
     public override void UseItem()
     {
-        //눈물 유도 스킬
-        //눈물 보라색으로 변하기
+        // 눈물 유도 스킬
     }
 }
 
-public class BlueCap : Item //패시브아이템
+public class BlueCap : Item
 {
     public BlueCap()
     {
@@ -144,13 +142,12 @@ public class BlueCap : Item //패시브아이템
 
     public override void UseItem()
     {
-        //player.Health += 1; //최대 체력 +1 //맥스체력설정
-        attack.BulletSpeed += 0.7f; //공격 속도 +0.7
-        player.Speed -= 0.3f; //속도 - 0.3
+        attack.BulletSpeed += 0.7f;
+        player.Speed -= 0.3f;
     }
 }
 
-public class CricketsState : Item //패시브아이템
+public class CricketsState : Item
 {
     public CricketsState()
     {
@@ -163,18 +160,17 @@ public class CricketsState : Item //패시브아이템
 
     public override void UseItem()
     {
-        attack.Damage += 0.5f; //공격력 + 0.5
-        attack.Damage *= 1.5f; //공격력배율 * 1.5
-        //눈물의 크기 커짐
+        attack.Damage += 0.5f;
+        attack.Damage *= 1.5f;
     }
 }
 
-public class TornPhoto : Item //패시브아이템
+public class TornPhoto : Item
 {
     public TornPhoto()
     {
         itemName = "찢어진 사진";
-        itemDescription = "오래된 기억을 떠올리게 하는 이 사진은 시간이 지나며 일부가 훼손되었다. 하지만 그 속에서 여전히 과거의 의미를 찾을 수 있다.";
+        itemDescription = "오래된 기억을 떠올리게 하는 이 사진은 시간이 지나며 일부가 훼손되었다.";
         itemSkillDescription = "Shot Speed Up";
         itemType = itemType.Passive;
         itemPrefab = Resources.Load<GameObject>("TornPhoto");
@@ -182,11 +178,11 @@ public class TornPhoto : Item //패시브아이템
 
     public override void UseItem()
     {
-        attack.BulletSpeed += 0.7f; //공격속도 + 0.7
+        attack.BulletSpeed += 0.7f;
     }
 }
 
-public class Polyphemus : Item //패시브아이템
+public class Polyphemus : Item
 {
     public Polyphemus()
     {
@@ -199,13 +195,15 @@ public class Polyphemus : Item //패시브아이템
 
     public override void UseItem()
     {
-        attack.Damage += 4f; //공격력 + 4
-        attack.Damage *= 2f; //공격력배율 * 2
-        attack.BulletSpeed *= 0.42f; //공격속도 배율 * 0.42
+        attack.Damage += 4f;
+        attack.Damage *= 2f;
+        attack.BulletSpeed *= 0.42f;
     }
 }
 
-public class BookOfBelial : Item //액티브아이템
+// === 액티브 아이템 ===
+
+public class BookOfBelial : Item
 {
     public BookOfBelial()
     {
@@ -218,16 +216,16 @@ public class BookOfBelial : Item //액티브아이템
 
     public override void UseItem()
     {
-        attack.Damage += 2; //사용시 데미지 +2
+        attack.Damage += 2;
     }
 }
 
-public class YumHeart : Item //액티브아이템
+public class YumHeart : Item
 {
     public YumHeart()
     {
         itemName = "???심장";
-        itemDescription = "정체를 알 수 없는 심장. 이상하게도 먹으면 체력이 회복된다... 하지만, 무언가 잘못된 것 같기도?";
+        itemDescription = "정체를 알 수 없는 심장. 먹으면 체력이 회복된다.";
         itemSkillDescription = "+1 Hearts";
         itemType = itemType.Active;
         itemPrefab = Resources.Load<GameObject>("YumHeart");
@@ -235,33 +233,33 @@ public class YumHeart : Item //액티브아이템
 
     public override void UseItem()
     {
-        player.Health += 1; //체력 1칸 회복
+        player.Health += 1;
     }
 }
 
-public class BookOfShadow : Item //액티브아이템
+public class BookOfShadow : Item
 {
     public BookOfShadow()
     {
         itemName = "그림자의 서";
         itemDescription = "잊혀진 고대 문명에서 만들어진 어둠의 서.";
-        itemSkillDescription = "Temporary Invencibility";
+        itemSkillDescription = "Temporary Invincibility";
         itemType = itemType.Active;
         itemPrefab = Resources.Load<GameObject>("BookOfShadow");
     }
 
     public override void UseItem()
     {
-        //주위에 보호막이 쳐지며 10초간 무적
+        // 10초 무적
     }
 }
 
-public class ShoopDaWhoop : Item //액티브아이템
+public class ShoopDaWhoop : Item
 {
     public ShoopDaWhoop()
     {
         itemName = "모두 다 사라져빔!!";
-        itemDescription = "다 사라져라!!! (단, 책임은 지지 않습니다)";
+        itemDescription = "다 사라져라!!!";
         itemSkillDescription = "BLLLARRRRGGG!";
         itemType = itemType.Active;
         itemPrefab = Resources.Load<GameObject>("ShoopDaWhoop");
@@ -269,11 +267,11 @@ public class ShoopDaWhoop : Item //액티브아이템
 
     public override void UseItem()
     {
-        //레이저 발사(데미지 +13)
+        // 레이저
     }
 }
 
-public class TheNail : Item //액티브아이템
+public class TheNail : Item
 {
     public TheNail()
     {
@@ -286,18 +284,18 @@ public class TheNail : Item //액티브아이템
 
     public override void UseItem()
     {
-        player.SoulHealth += 0.5f;//소울하트 +0.5
-        player.Speed -= 0.18f; //이동속도 -0.18
-        attack.Damage += 2f; //공격력 +2
+        player.SoulHealth += 0.5f;
+        player.Speed -= 0.18f;
+        attack.Damage += 2f;
     }
 }
 
-public class MrBoom : Item //액티브아이템
+public class MrBoom : Item
 {
     public MrBoom()
     {
         itemName = "Mr.Boom의 폭탄";
-        itemDescription = "폭발물 전문가인 Mr. Boom이 설계한 폭탄";
+        itemDescription = "폭발물 전문가 Mr. Boom이 설계한 폭탄.";
         itemSkillDescription = "bombs!";
         itemType = itemType.Active;
         itemPrefab = Resources.Load<GameObject>("MrBoom");
@@ -305,16 +303,16 @@ public class MrBoom : Item //액티브아이템
 
     public override void UseItem()
     {
-        //폭탄 던지기(공격력 +60)
+        // 폭탄 설치
     }
 }
 
-public class TammysBlessing : Item //액티브아이템
+public class TammysBlessing : Item
 {
     public TammysBlessing()
     {
         itemName = "타미의 축복";
-        itemDescription = "Tammy의 축복을 받으면, 세상이 마치 총알로 가득 찬 것처럼 느껴진다.";
+        itemDescription = "세상이 총알로 가득 찬 것처럼 느껴진다.";
         itemSkillDescription = "8-Way Shot!";
         itemType = itemType.Active;
         itemPrefab = Resources.Load<GameObject>("TammysBlessing");
@@ -322,16 +320,16 @@ public class TammysBlessing : Item //액티브아이템
 
     public override void UseItem()
     {
-        //8방향 눈물 발사
+        // 8방향 공격
     }
 }
 
-public class Cross : Item //액티브아이템
+public class Cross : Item
 {
     public Cross()
     {
         itemName = "십자가";
-        itemDescription = "이 신성한 십자가는 고대의 보호 마법을 담고 있다.";
+        itemDescription = "고대의 보호 마법을 담고 있다.";
         itemSkillDescription = "Reusable Soul Protection";
         itemType = itemType.Active;
         itemPrefab = Resources.Load<GameObject>("Cross");
@@ -339,16 +337,16 @@ public class Cross : Item //액티브아이템
 
     public override void UseItem()
     {
-        player.SoulHealth += 1f; //소울 하트 +1
+        player.SoulHealth += 1f;
     }
 }
 
-public class AnarchistCookBook : Item //액티브아이템
+public class AnarchistCookBook : Item
 {
     public AnarchistCookBook()
     {
         itemName = "무정부주의자의 요리책";
-        itemDescription = "불확실하고 혼란스러운 전술이 가득한 책. 이 책을 사용하면 강력한 폭탄을 사용할 수 있게 된다.";
+        itemDescription = "혼란의 전술이 담긴 폭탄책";
         itemSkillDescription = "Random 6-Boom!";
         itemType = itemType.Active;
         itemPrefab = Resources.Load<GameObject>("AnarchistCookBook");
@@ -356,16 +354,16 @@ public class AnarchistCookBook : Item //액티브아이템
 
     public override void UseItem()
     {
-        //방안에 랜덤으로 폭탄 6개 소환
+        // 폭탄 6개 생성
     }
 }
 
-public class TheHourglass : Item //액티브아이템
+public class TheHourglass : Item
 {
     public TheHourglass()
     {
         itemName = "모래시계";
-        itemDescription = "시간을 되돌리는 힘이 담긴 고대의 유물.";
+        itemDescription = "시간을 되돌리는 고대 유물";
         itemSkillDescription = "Temporary enemy slowdown";
         itemType = itemType.Active;
         itemPrefab = Resources.Load<GameObject>("TheHourglass");
@@ -373,28 +371,30 @@ public class TheHourglass : Item //액티브아이템
 
     public override void UseItem()
     {
-        //방에잇는 몬스터에게 8초간 둔화
+        // 몬스터 둔화
     }
 }
 
-public class Potion : Item //노말아이템
+// === Normal ===
+
+public class Potion : Item
 {
     public Potion()
     {
         itemName = "포션";
         itemDescription = "달달한 딸기맛 체력회복템";
-        itemSkillDescription = "+ 1 HP";
+        itemSkillDescription = "+1 HP";
         itemType = itemType.Normal;
         itemPrefab = Resources.Load<GameObject>("Potion");
     }
 
     public override void UseItem()
     {
-        player.Health += 1; //체력이 +1 회복된다.
+        player.Health += 1;
     }
 }
 
-public class GoldenKey : Item //액티브아이템
+public class GoldenKey : Item
 {
     public GoldenKey()
     {
@@ -407,11 +407,11 @@ public class GoldenKey : Item //액티브아이템
 
     public override void UseItem()
     {
-        //키를 가지면 상자가 열린다.
+        // 열쇠 효과
     }
 }
 
-public class Bomb : Item //액티브아이템
+public class Bomb : Item
 {
     public Bomb()
     {
@@ -424,10 +424,6 @@ public class Bomb : Item //액티브아이템
 
     public override void UseItem()
     {
-        //폭팔
+        // 폭발
     }
 }
-
-
-
-

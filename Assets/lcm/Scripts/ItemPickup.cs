@@ -4,18 +4,20 @@ using UnityEngine;
 
 public class ItemPickup : MonoBehaviour
 {
-    public Item item; // ?????? ??????
-    
-    private void DetectionItem()
+    public Item item; // 습득할 아이템
+    public string itemNameForEditor; // 에디터에서 이름으로 아이템 생성
+
+    private void OnValidate()
     {
-        if (CompareTag("Item"))
+        // itemNameForEditor를 기반으로 아이템 객체 생성
+        if (!string.IsNullOrEmpty(itemNameForEditor))
         {
-            switch (item.itemName)
+            switch (itemNameForEditor)
             {
-                case "SadOnion": 
+                case "SadOnion":
                     item = new SadOnion();
                     break;
-                case "TheInnerEye": 
+                case "TheInnerEye":
                     item = new TheInnerEye();
                     break;
                 case "Pentagram":
@@ -85,7 +87,9 @@ public class ItemPickup : MonoBehaviour
                     item = null;
                     break;
             }
+
+            // 입력 후 초기화
+            itemNameForEditor = "";
         }
     }
-
 }

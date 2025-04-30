@@ -14,24 +14,32 @@ public class Player : MonoBehaviour
         get => speed;
         set => speed = value;
     }
+
+    [SerializeField] private List<Item> acquiredItems = new List<Item>();
     [SerializeField] private List<Item> passiveItems = new List<Item>();
     [SerializeField] private List<Item> activeItems = new List<Item>();
+
     [SerializeField] private int health;
     public int Health
     {
         get => health;
         set => health = value;
     }
-    
+
     [SerializeField] private float soulhealth;
     public float SoulHealth
     {
         get => soulhealth;
         set => soulhealth = value;
     }
-    
+
     [SerializeField] private int damage = 10;
-    public int Damage { get { return damage; } set { damage = value; } }
+    public int Damage
+    {
+        get => damage;
+        set => damage = value;
+    }
+
     [SerializeField] Attack attack;
 
     private bool wDown;
@@ -45,20 +53,19 @@ public class Player : MonoBehaviour
 
     private GameObject nearObject;
 
-
     Rigidbody rigid;
-
     Vector3 moveVec;
     Vector3 sideVec;
     Vector3 dodgeVec;
 
     Animator anim;
+
     private void Awake()
     {
         rigid = GetComponent<Rigidbody>();
         anim = GetComponentInChildren<Animator>();
     }
-    // Start is called before the first frame update
+
     void Start()
     {
         AcquireItem(new SadOnion());
@@ -66,7 +73,6 @@ public class Player : MonoBehaviour
         ApplyPassiveEffects();
     }
 
-    // Update is called once per frame
     private void Update()
     {
         GetInput();
@@ -74,6 +80,7 @@ public class Player : MonoBehaviour
         Turn();
         Dodge();
         Attack();
+        UseActiveItemInput();
     }
 
     private void GetInput()
@@ -105,8 +112,6 @@ public class Player : MonoBehaviour
         transform.LookAt(transform.position + moveVec);
     }
 
-    
-
     private void Dodge()
     {
         if (jDown && moveVec != Vector3.zero && !isDodge)
@@ -136,22 +141,13 @@ public class Player : MonoBehaviour
 
     public void TakeDamage(int damageAmount)
     {
-        // 무적 상태가 아닐 때만 데미지를 받음
         if (!isInvincible)
         {
             health -= damageAmount;
             Debug.Log($"플레이어 피격! 받은 데미지: {damageAmount}, 남은 체력: {health}");
 
-            // 피격 애니메이션 재생 (선택 사항)
-            //if (anim != null)
-            //{
-            //    anim.SetTrigger("doHit");
-            //}
-
-            // 피격 시 무적 상태 시작 (선택 사항)
             StartInvincible();
 
-            // 체력이 0 이하로 떨어졌을 때 사망 처리
             if (health <= 0)
             {
                 Die();
@@ -166,63 +162,90 @@ public class Player : MonoBehaviour
     private void StartInvincible()
     {
         isInvincible = true;
-        // 무적 시간 후 무적 상태 해제
         Invoke("EndInvincible", invincibleDuration);
-        // 필요하다면 무적 상태 시 시각적 효과를 줄 수도 있습니다.
     }
 
     private void EndInvincible()
     {
         isInvincible = false;
-        // 무적 상태 해제 시 시각적 효과를 제거할 수 있습니다.
+    }
+
+    private void Die()
+    {
+        Debug.Log("플레이어 사망!");
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         anim.SetBool("isJump", false);
 
-         // ?????? ???? ??? (?役 ????)
-         if (collision.gameObject.GetComponent<ItemPickup>() != null)
-         {
+        if (collision.gameObject.GetComponent<ItemPickup>() != null)
+        {
             ItemPickup pickup = collision.gameObject.GetComponent<ItemPickup>();
             AcquireItem(pickup.item);
-            Destroy(collision.gameObject); // ?????? ?????? ??????? ?캇?
-            ApplyPassiveEffects(); // ???? ?? ?戟?? ??? ??? ????
-            Debug.Log("?????? ???: " + pickup.item.itemName);
-         }
-
-
-
+            Destroy(collision.gameObject);
+            ApplyPassiveEffects();
+            Debug.Log("아이템 획득: " + pickup.item.itemName);
+        }
     }
 
     public void AcquireItem(Item newItem)
     {
-        if(newItem.itemType == itemType.Passive)
+        acquiredItems.Add(newItem);
+        Debug.Log("아이템 획득: " + newItem.itemName + " (" + newItem.itemType + ")");
+
+        if (newItem.itemType == itemType.Passive)
         {
             passiveItems.Add(newItem);
             ApplyPassiveEffects();
         }
-        else if(newItem.itemType == itemType.Active)
+        else if (newItem.itemType == itemType.Active)
         {
             activeItems.Add(newItem);
-
         }
-        Debug.Log("아이템 획득 :" + newItem.itemName + " (" + newItem.itemType + ")");
+
+        UpdateHasItemsUI();
     }
 
     private void ApplyPassiveEffects()
     {
-        // 현재는 간단하게 로그만 출력, 실제 효과 적용 로직 구현 필요
         foreach (Item item in passiveItems)
         {
             if (item.itemType == itemType.Passive)
             {
-                Debug.Log("?戟?? ?????? ??? ????: " + item.itemName);
-                item.UseItem(); // ?? ???????? UseItem() ??? (???? ??? ????)
+                Debug.Log("패시브 아이템 효과 적용: " + item.itemName);
+                item.UseItem();
             }
         }
     }
 
+    private void UseActiveItemInput()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1) && activeItems.Count > 0)
+        {
+            UseItem(0, itemType.Active);
+        }
+    }
+
+    public void UseItem(int index)
+    {
+        if (index >= 0 && index < acquiredItems.Count)
+        {
+            if (acquiredItems[index].itemType == itemType.Active)
+            {
+                Debug.Log("액티브 아이템 사용: " + acquiredItems[index].itemName);
+                acquiredItems[index].UseItem();
+            }
+            else
+            {
+                Debug.Log("해당 아이템은 액티브 타입이 아닙니다.");
+            }
+        }
+        else
+        {
+            Debug.Log("해당 인덱스의 아이템은 사용할 수 없습니다.");
+        }
+    }
 
     public void UseItem(int index, itemType type)
     {
@@ -232,41 +255,31 @@ public class Player : MonoBehaviour
         {
             if (targetList[index].itemType == type)
             {
-                Debug.Log("액티브 아이템 사용: " + targetList[index].itemName);
-                targetList[index].UseItem(); // 액티브 아이템의 UseItem() 호출 (실제 효과 구현)
-                // 사용 후 아이템 제거 또는 쿨타임 처리 등 추가 로직 필요
-                if (type == itemType.Active)
-                {
-                    // 예시: 사용 후 첫 번째 액티브 아이템 제거
-                    // activeItems.RemoveAt(index);
-                    // UpdateActiveItemUI();
-                }
+                Debug.Log($"[{type}] 아이템 사용: {targetList[index].itemName}");
+                targetList[index].UseItem();
             }
             else
             {
-                Debug.Log("해당 슬롯은 " + type + " 아이템이 아닙니다.");
+                Debug.Log($"선택된 아이템은 {type} 타입이 아닙니다.");
             }
         }
-        else
+    }
+
+    private void UpdateHasItemsUI()
+    {
+        Debug.Log("보유한 전체 아이템 목록:");
+        for (int i = 0; i < acquiredItems.Count; i++)
         {
-            Debug.Log("??? ?琯????? ???????? ???????.");
+            Debug.Log($"{i + 1}: {acquiredItems[i].itemName} ({acquiredItems[i].itemType})");
         }
     }
 
-    private void Die()
-    {
-        Debug.Log("플레이어 사망!");
-    }
-
-    // UI 업데이트 (임시)
     private void UpdatePassiveItemsUI()
     {
-        // 실제 UI 시스템에 맞게 구현해야 함
-        Debug.Log("현재 보유 아이템:");
+        Debug.Log("보유한 패시브 아이템 목록:");
         for (int i = 0; i < passiveItems.Count; i++)
         {
             Debug.Log($"{i + 1}: {passiveItems[i].itemName} ({passiveItems[i].itemType})");
         }
     }
-
 }
