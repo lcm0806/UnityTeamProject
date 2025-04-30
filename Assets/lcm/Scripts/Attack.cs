@@ -5,7 +5,13 @@ using UnityEngine;
 public class Attack : MonoBehaviour
 {
     public enum Type { Book_of_Belial , Shoop_da_Whoop, The_Nail, Bobs_Rotten_Head, Tammys_Head, Book_of_Revelations, Anarchist_Cookbook, Vampiric_Fang }
-    [SerializeField] private int damage;
+    [SerializeField] private float damage;
+    public float Damage
+    {
+        get => damage;
+        set => damage = value;
+    }
+        
     [SerializeField] GameObject bulletPrefab;
     [SerializeField] Transform muzzlePoint;
 
@@ -16,7 +22,12 @@ public class Attack : MonoBehaviour
     private float delaytime = 0.2f;
 
     [Range(10, 30)]
-    [SerializeField] float bulletSpeed;
+    [SerializeField] private float bulletSpeed;
+    public float BulletSpeed
+    {
+        get => bulletSpeed;
+        set => bulletSpeed = value;
+    }
 
     
     public void Fire()

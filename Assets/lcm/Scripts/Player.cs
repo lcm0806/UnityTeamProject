@@ -9,8 +9,27 @@ public class Player : MonoBehaviour
     private float vAxis;
 
     [SerializeField] private float speed;
+    public float Speed
+    {
+        get => speed;
+        set => speed = value;
+    }
+
     [SerializeField] private List<Item> acquiredItems = new List<Item>();
     [SerializeField] private int health;
+    public int Health
+    {
+        get => health;
+        set => health = value;
+    }
+    
+    [SerializeField] private float soulhealth;
+    public float SoulHealth
+    {
+        get => soulhealth;
+        set => soulhealth = value;
+    }
+    
     [SerializeField] private int Damage;
     [SerializeField] Attack attack;
 
@@ -115,14 +134,14 @@ public class Player : MonoBehaviour
     {
         anim.SetBool("isJump", false);
 
-         // æ∆¿Ã≈€ Ω¿µÊ √≥∏Æ (√Êµπ ∞®¡ˆ)
+         // ?????? ???? ??? (?Êµπ ????)
          if (collision.gameObject.GetComponent<ItemPickup>() != null)
          {
             ItemPickup pickup = collision.gameObject.GetComponent<ItemPickup>();
             AcquireItem(pickup.item);
-            Destroy(collision.gameObject); // Ω¿µÊ«— æ∆¿Ã≈€ ø¿∫Í¡ß∆Æ ∆ƒ±´
-            ApplyPassiveEffects(); // Ω¿µÊ »ƒ ∆–Ω√∫Í »ø∞˙ ¥ŸΩ√ ¿˚øÎ
-            Debug.Log("æ∆¿Ã≈€ »πµÊ: " + pickup.item.itemName);
+            Destroy(collision.gameObject); // ?????? ?????? ??????? ?ƒ±?
+            ApplyPassiveEffects(); // ???? ?? ?–Ω?? ??? ??? ????
+            Debug.Log("?????? ???: " + pickup.item.itemName);
          }
 
 
@@ -132,19 +151,19 @@ public class Player : MonoBehaviour
     public void AcquireItem(Item newItem)
     {
         acquiredItems.Add(newItem);
-        // UI æ˜µ•¿Ã∆Æ (hasitems πËø≠ »∞øÎ - Ω«¡¶ UI ∑Œ¡˜ø° ∏¬∞‘ ºˆ¡§ « ø‰)
+        // UI ??????? (hasitems ?Ëø≠ ??? - ???? UI ?????? ?¬∞? ???? ???)
         UpdateHasItemsUI();
     }
 
     private void ApplyPassiveEffects()
     {
-        // «ˆ¿Á¥¬ ∞£¥‹«œ∞‘ ∑Œ±◊∏∏ √‚∑¬, Ω«¡¶ »ø∞˙ ¿˚øÎ ∑Œ¡˜ ±∏«ˆ « ø‰
+        // ????? ??????? ?Œ±?? ???, ???? ??? ???? ???? ???? ???
         foreach (Item item in acquiredItems)
         {
             if (item.itemType == itemType.Passive)
             {
-                Debug.Log("∆–Ω√∫Í æ∆¿Ã≈€ »ø∞˙ ¿˚øÎ: " + item.itemName);
-                item.UseItem(); // ∞¢ æ∆¿Ã≈€¿« UseItem() »£√‚ (Ω«¡¶ »ø∞˙ ±∏«ˆ)
+                Debug.Log("?–Ω?? ?????? ??? ????: " + item.itemName);
+                item.UseItem(); // ?? ???????? UseItem() ??? (???? ??? ????)
             }
         }
     }
@@ -153,38 +172,38 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Alpha1) && acquiredItems.Count > 0)
         {
-            UseItem(0); // √π π¯¬∞ æ∆¿Ã≈€ ªÁøÎ
+            UseItem(0); // ? ??¬∞ ?????? ???
         }
         
     }
 
-    // æ∆¿Ã≈€ ªÁøÎ «‘ºˆ (¿Œµ¶Ω∫ ±‚π›)
+    // ?????? ??? ??? (?Œµ??? ???)
     public void UseItem(int index)
     {
         if (index >= 0 && index < acquiredItems.Count)
         {
             if (acquiredItems[index].itemType == itemType.Active)
             {
-                Debug.Log("æ◊∆º∫Í æ∆¿Ã≈€ ªÁøÎ: " + acquiredItems[index].itemName);
-                acquiredItems[index].UseItem(); // æ◊∆º∫Í æ∆¿Ã≈€¿« UseItem() »£√‚ (Ω«¡¶ »ø∞˙ ±∏«ˆ)
-                // ªÁøÎ »ƒ æ∆¿Ã≈€ ¡¶∞≈ ∂«¥¬ ƒ≈∏¿” √≥∏Æ µÓ √ﬂ∞° ∑Œ¡˜ « ø‰
+                Debug.Log("????? ?????? ???: " + acquiredItems[index].itemName);
+                acquiredItems[index].UseItem(); // ????? ???????? UseItem() ??? (???? ??? ????)
+                // ??? ?? ?????? ???? ??? ????? ??? ?? ??? ???? ???
             }
             else
             {
-                Debug.Log("«ÿ¥Á ΩΩ∑‘¿∫ æ◊∆º∫Í æ∆¿Ã≈€¿Ã æ∆¥’¥œ¥Ÿ.");
+                Debug.Log("??? ?????? ????? ???????? ?????.");
             }
         }
         else
         {
-            Debug.Log("«ÿ¥Á ¿Œµ¶Ω∫¿« æ∆¿Ã≈€¿Ã æ¯Ω¿¥œ¥Ÿ.");
+            Debug.Log("??? ?Œµ????? ???????? ???????.");
         }
     }
 
-    // UI æ˜µ•¿Ã∆Æ (¿”Ω√)
+    // UI ??????? (???)
     private void UpdateHasItemsUI()
     {
-        // Ω«¡¶ UI Ω√Ω∫≈€ø° ∏¬∞‘ ±∏«ˆ«ÿæﬂ «‘
-        Debug.Log("«ˆ¿Á ∫∏¿Ø æ∆¿Ã≈€:");
+        // ???? UI ?????? ?¬∞? ??????? ??
+        Debug.Log("???? ???? ??????:");
         for (int i = 0; i < acquiredItems.Count; i++)
         {
             Debug.Log($"{i + 1}: {acquiredItems[i].itemName} ({acquiredItems[i].itemType})");
