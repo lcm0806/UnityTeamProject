@@ -8,7 +8,7 @@ public class EnemySpawner : MonoBehaviour
     public GameObject enemyPrefab;
     private EnemyDeath spawnedEnemy;
 
-    private void Start()
+    private void OnEnable()
     {
         SpawnEnemy();
     }
@@ -24,8 +24,19 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
+    public void OnDestroy()
+    {
+        if (spawnedEnemy != null)
+        {
+            spawnedEnemy.OnDeath -= HandleEnemyDeath;
+        }
+    }
+
     private void HandleEnemyDeath()
     {
-        LevelManager.Instance.OnEnemyKilled();
+        if (LevelManager.Instance != null)
+        {
+            LevelManager.Instance.OnEnemyKilled();
+        }
     }
 }
