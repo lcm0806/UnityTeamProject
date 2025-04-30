@@ -237,19 +237,6 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void TakeDamage(int damageAmount)
-    {
-        if (!isDodge)
-        {
-            health -= damageAmount;
-            Debug.Log("플레이어 피격! 남은 체력: " + health);
-
-            if(health <= 0)
-            {
-                Die();
-            }
-        }
-    }
 
     private void Die()
     {
