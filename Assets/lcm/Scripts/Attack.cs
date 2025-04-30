@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class Attack : MonoBehaviour
 {
-    public enum Type { Book_of_Belial , Shoop_da_Whoop, The_Nail, Bobs_Rotten_Head, Tammys_Head, Book_of_Revelations, Anarchist_Cookbook, Vampiric_Fang }
-    [SerializeField] private int damage;
+
     [SerializeField] GameObject bulletPrefab;
     [SerializeField] Transform muzzlePoint;
 
@@ -19,13 +18,21 @@ public class Attack : MonoBehaviour
     [SerializeField] float bulletSpeed;
 
     
-    public void Fire()
+    public void Fire(int damage)
     {
-        muzzlePoint.rotation = Quaternion.Euler(0f, 0f, 0f);
-        Debug.Log(muzzlePoint.forward);
         GameObject instance = Instantiate(bulletPrefab, muzzlePoint.position, Quaternion.LookRotation(Vector3.forward));
         Rigidbody bulletRigidbody = instance.GetComponent<Rigidbody>();
         bulletRigidbody.velocity = muzzlePoint.forward * bulletSpeed;
+
+        Bullet bulletComponent = instance.GetComponent<Bullet>();
+        if (bulletComponent != null)
+        {
+            bulletComponent.SetDamage(damage);
+        }
+        else
+        {
+            Debug.LogError("생성된 총알 오브젝트에 Bullet 스크립트가 없습니다.");
+        }
 
     }
 
