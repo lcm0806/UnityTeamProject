@@ -498,6 +498,10 @@ MonoBehaviour:
   bullet: {fileID: 0}
   isChase: 0
   isAttack: 0
+  rigid: {fileID: 0}
+  boxCollider: {fileID: 0}
+  mat: {fileID: 0}
+  anime: {fileID: 0}
 --- !u!4 &308448527 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4462523135328065168, guid: 464cc7c4f7ea10b47a36d7848aa9ca9a, type: 3}
@@ -1306,6 +1310,10 @@ MonoBehaviour:
   bullet: {fileID: 4005118072708448221, guid: a9d02a5334dc4964a91c468476fefca1, type: 3}
   isChase: 0
   isAttack: 0
+  rigid: {fileID: 0}
+  boxCollider: {fileID: 0}
+  mat: {fileID: 0}
+  anime: {fileID: 0}
 --- !u!65 &776918596
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1504,6 +1512,35 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
+--- !u!114 &1012746173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1012746169}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d7c9cb6909e6df45b6d96eb4f92ee70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  monsterType: 0
+  maxHealth: 200
+  curHealth: 200
+  target: {fileID: 483858159}
+  moveSpeed: 3
+  meleeArea: {fileID: 2044452107}
+  bullet: {fileID: 9094526157573967305, guid: f44b0031a2a45e146a71b9bfd96e651c, type: 3}
+  isChase: 0
+  isAttack: 0
+  rigid: {fileID: 0}
+  boxCollider: {fileID: 0}
+  mat: {fileID: 0}
+  anime: {fileID: 0}
+  missile: {fileID: 6588574633023880281, guid: a44276642f302034da3a257f885d7bf1, type: 3}
+  missilePortA: {fileID: 1628636949}
+  missilePortB: {fileID: 1752478087}
+  isLook: 0
 --- !u!1 &1138872167 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3763568185796318628, guid: 4198e2587d1fcca4cb87c16c3cfed34d, type: 3}
@@ -2130,6 +2167,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7988094277207216310, guid: 83dab506297948d4d8d34c4fe12431ee, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1012746171}
+    - targetCorrespondingSourceObject: {fileID: 7988094277207216310, guid: 83dab506297948d4d8d34c4fe12431ee, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1012746173}
     - targetCorrespondingSourceObject: {fileID: 3773346728750375572, guid: 83dab506297948d4d8d34c4fe12431ee, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1824578487}
@@ -2254,6 +2294,10 @@ MonoBehaviour:
   bullet: {fileID: 0}
   isChase: 0
   isAttack: 0
+  rigid: {fileID: 0}
+  boxCollider: {fileID: 0}
+  mat: {fileID: 0}
+  anime: {fileID: 0}
 --- !u!54 &1960746823
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2317,6 +2361,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2044452106}
   - component: {fileID: 2044452107}
+  - component: {fileID: 2044452108}
   m_Layer: 20
   m_Name: Melee Area
   m_TagString: MonsterBullet
@@ -2360,6 +2405,21 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 3.5, y: 0.5, z: 3.5}
   m_Center: {x: 0, y: 0.32, z: 0}
+--- !u!114 &2044452108
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2044452105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9e5d776cee79a1489376e3a14013824, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 60
+  isMelee: 1
+  isrock: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
