@@ -8,7 +8,7 @@ public class EnemySpawner : MonoBehaviour
     public GameObject enemyPrefab;
     private EnemyDeath spawnedEnemy;
 
-    private void OnEnable()
+    private void Start()
     {
         SpawnEnemy();
     }
