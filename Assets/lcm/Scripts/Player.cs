@@ -15,6 +15,7 @@ public class Player : MonoBehaviour
     public int Health { get { return health; } set { health = value; } }
     [SerializeField] private int damage = 10;
     public int Damage { get { return damage; } set { damage = value; } }
+
     [SerializeField] Attack attack;
 
     private bool wDown;
@@ -162,8 +163,6 @@ public class Player : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        anim.SetBool("isJump", false);
-
          // 아이템 습득 처리 (충돌 감지)
          if (collision.gameObject.GetComponent<ItemPickup>() != null)
          {
@@ -201,7 +200,7 @@ public class Player : MonoBehaviour
             if (item.itemType == itemType.Passive)
             {
                 Debug.Log("패시브 아이템 효과 적용: " + item.itemName);
-                item.UseItem(); // 각 아이템의 UseItem() 호출 (실제 효과 구현)
+                
             }
         }
     }
