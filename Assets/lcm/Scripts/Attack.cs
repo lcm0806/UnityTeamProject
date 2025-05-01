@@ -8,12 +8,6 @@ public class Attack : MonoBehaviour
     [SerializeField] GameObject bulletPrefab;
     [SerializeField] Transform muzzlePoint;
 
-    private Camera mainCamera;
-    private Vector3 mousePos;
-    private bool isFire = true;
-    private float timer;
-    private float delaytime = 0.2f;
-
     [Range(10, 30)]
     [SerializeField] float bulletSpeed;
 
