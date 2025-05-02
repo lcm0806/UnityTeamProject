@@ -146,7 +146,6 @@ public class Monster : MonoBehaviour
         {
             mat.color = Color.gray;
             gameObject.layer = 21;
-            isDead = true;
             isChase = false;
             anime.SetTrigger("doDie");
 
