@@ -10,6 +10,8 @@ public abstract class Item
     public string itemSkillDescription;
     public itemType itemType;
     public GameObject itemPrefab;
+
+    
     
     public abstract void UseItem();
 }
@@ -252,6 +254,23 @@ public class BookOfShadow : Item //액티브아이템
     public override void UseItem()
     {
         //주위에 보호막이 쳐지며 10초간 무적
+        if (Player.Instance != null)
+        {
+            Invincible invincible = Player.Instance.GetComponent<Invincible>();
+            if (invincible != null)
+            {
+                invincible.Activate_Sheild();
+                Debug.Log($"{itemName} 사용! 10초 동안 무적 상태가 됩니다.");
+            }
+            else
+            {
+                Debug.LogError("플레이어 오브젝트에 Invincible 스크립트가 없습니다.");
+            }
+        }
+        else
+        {
+            Debug.LogError("플레이어 싱글톤 인스턴스를 찾을 수 없습니다.");
+        }
     }
 }
 

@@ -17,6 +17,8 @@ public class Player : MonoBehaviour
     [SerializeField] private float damage = 10f;
     public float Damage { get { return damage; } set { damage = value; } }
 
+    
+
     [SerializeField] Attack attack;
     [SerializeField] private float attackRate = 0.5f; //공격속도
     private float nextAttackTime = 0f;
@@ -28,10 +30,10 @@ public class Player : MonoBehaviour
     private bool isDodge;
     private bool isDamage = false;
 
-    private bool isInvincible = false;
-    [SerializeField] private float invincibleDuration = 0.5f;
+    
 
     private GameObject nearObject;
+    private Invincible invincibleScript;
 
 
     Rigidbody rigid;
@@ -41,12 +43,43 @@ public class Player : MonoBehaviour
     Vector3 sideVec;
     Vector3 dodgeVec;
 
+    private static Player instance = null;
+
+    public static Player Instance
+    {
+        get
+        {
+            if(instance == null)
+            {
+                instance = FindObjectOfType<Player>();
+
+                if(instance != null)
+                {
+                    Debug.LogError("Player 오브젝트가 씬에 없습니다.");
+                }
+            }
+
+            return instance;
+        }
+    }
+
     Animator anim;
     private void Awake()
     {
+        if(instance != null && instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        instance = this;
+
+
+
         rigid = GetComponent<Rigidbody>();
         anim = GetComponentInChildren<Animator>();
         meshs = GetComponentsInChildren<MeshRenderer>();
+        invincibleScript = GetComponent<Invincible>();
     }
     // Start is called before the first frame update
     void Start()
@@ -133,13 +166,13 @@ public class Player : MonoBehaviour
     public void TakeDamage(int damageAmount)
     {
         // 무적 상태가 아닐 때만 데미지를 받음
-        if (!isInvincible)
+        if (invincibleScript != null && !invincibleScript.isInvincible)
         {
             CulHealth -= damageAmount;
             Debug.Log($"플레이어 피격! 받은 데미지: {damageAmount}, 남은 체력: {CulHealth}");
 
             // 피격 시 무적 상태 시작 (선택 사항)
-            StartInvincible();
+            invincibleScript.StartInvincible();
 
             if (CulHealth <= 0)
             {
@@ -152,18 +185,6 @@ public class Player : MonoBehaviour
         }
     }
 
-
-    private void StartInvincible()
-    {
-        isInvincible = true;
-        // 무적 시간 후 무적 상태 해제
-        Invoke("EndInvincible", invincibleDuration);
-    }
-
-    private void EndInvincible()
-    {
-        isInvincible = false;
-    }
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -182,7 +203,12 @@ public class Player : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        
+        if(other.tag == "EnemyBullet")
+        {
+            MonsterBullet enemyBullet = other.GetComponent<MonsterBullet>();
+            CulHealth -= enemyBullet.damage;
+            StartCoroutine(OnDamage());
+        }
     }
 
     IEnumerator OnDamage()
@@ -245,7 +271,7 @@ public class Player : MonoBehaviour
                 if (type == itemType.Active)
                 {
                     // 예시: 사용 후 첫 번째 액티브 아이템 제거
-                    // activeItems.RemoveAt(index);
+                    activeItems.RemoveAt(index);
                     // UpdateActiveItemUI();
                 }
             }
