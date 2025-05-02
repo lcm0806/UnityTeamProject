@@ -5,10 +5,12 @@ using UnityEngine.UIElements;
 
 public class Bullet : MonoBehaviour
 {
+
     [SerializeField] private float damageAmount;
+
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Floor") || collision.gameObject.CompareTag("Wall"))
+        if (collision.gameObject.tag == "Floor" || collision.gameObject.tag == "Wall")
         {
             Destroy(gameObject); // 바닥이나 벽에 부딪히면 총알을 파괴합니다.
         }
@@ -17,7 +19,7 @@ public class Bullet : MonoBehaviour
             Monster monster = collision.gameObject.GetComponent<Monster>();
             if (monster != null)
             {
-                
+
                 //monster.TakeDamage(damage);
                 Destroy(gameObject);
                 
