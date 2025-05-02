@@ -4,55 +4,73 @@ using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
-    public static LevelManager Instance;
-
-    public List<GameObject> spawnerList;
-
-    public List<GameObject> doorList;
-    public List<GameObject> loadpointList; 
+    [Header("해당 맵의 적 스포너 프리팹 갯수")]
+    [SerializeField] List<GameObject> spawnerList;
+    [Header("해당 맵의 문 갯수")]
+    [SerializeField] List<GameObject> doorList;
+    [Header("해당 맵의 로딩포인트 갯수")]
+    [SerializeField] List<GameObject> loadpointList; 
     private int listLength;
 
-    private void Awake()
+    private void Start()
     {
-        listLength = spawnerList.Count;
-        if(doorList != null)
+        if(gameObject.activeSelf == true)
         {
-            foreach (var door in doorList)
+            if (spawnerList != null)
             {
-                door.SetActive(true);
+                listLength = spawnerList.Count;
+                ActivateAllSpawners();
+            }
+            if (doorList != null)
+            {
+                foreach (var door in doorList)
+                {
+                    if (door != null) { door.SetActive(true); }
+                }
+            }
+            if (loadpointList != null)
+            {
+                foreach (var loadpoint in loadpointList)
+                {
+                    if (loadpoint != null) { loadpoint.SetActive(false); }
+                }
             }
         }
-        if(doorList != null)
+        else
         {
-            foreach (var loadpoint in loadpointList)
-            {
-                loadpoint.SetActive(false);
-            }
+            Debug.Log($"{gameObject.name} 비활성화");
         }
     }
 
+    public void ActivateAllSpawners()
+    {
+        foreach (var spawner in spawnerList)
+        {
+            if (spawner != null) { spawner.SetActive(true); }
+        }
+    }
     public void OnEnemyKilled()
     {
         Debug.Log("적 처치");
         listLength--;
         if(listLength == 0 )
         {
-
             Debug.Log("모든 적 처치!");
             if (doorList != null)
             {
                 foreach (var door in doorList)
                 {
-                    door.SetActive(false);
+                    if (door != null) { door.SetActive(false); }
                 }
             }
-            if (doorList != null)
+            if (loadpointList != null)
             {
                 foreach (var loadpoint in loadpointList)
                 {
-                    loadpoint.SetActive(true);
+                    if (loadpoint != null) { loadpoint.SetActive(true); }
                 }
             }
         }
     }
+
 }

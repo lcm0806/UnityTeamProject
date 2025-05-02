@@ -34,7 +34,7 @@ public class SadOnion : Item //패시브아이템
 
     public override void UseItem()
     {
-        attack.BulletSpeed += 0.7f; //공격 속도 + 0.7
+        Player.Instance.BulletSpeed += 0.7f;
     }
 }
 
@@ -51,8 +51,7 @@ public class TheInnerEye : Item //패시브아이템
 
     public override void UseItem()
     {
-        //3방향으로 날아가는 눈물 스킬
-        attack.BulletSpeed *= 0.51f; //공격속도 배율 * 0.51 (절반 정도 느려짐)
+        Player.Instance.BulletSpeed *= 0.51f;
     }
 }
 
@@ -69,7 +68,7 @@ public class Pentagram : Item //패시브아이템
 
     public override void UseItem()
     {
-        player.Damage += 1f; //공격력 + 1
+        Player.Instance.Damage += 1f;
     }
 }
 
@@ -86,8 +85,8 @@ public class GrowthHormones : Item //패시브아이템
 
     public override void UseItem()
     {
-        player.Damage += 1f; //공격력 + 1
-        player.Speed += 0.4f; //이동속도 + 0.4
+        Player.Instance.Damage += 1f;
+        Player.Instance.Speed += 0.4f;
     }
 }
 
@@ -104,11 +103,11 @@ public class MagicMushroom : Item //패시브아이템
 
     public override void UseItem()
     {
-        player.MaxHealth += 1; //최대체력 +1 //맥스체력 설정
-        player.Health = player.MaxHealth; //모두회복
-        player.Damage += 0.3f;//공격력 + 0.3
-        player.Speed += 0.3f; //이동속도 + 0.3
-        player.Damage *= 1.5f; //공격력 배율 * 1.5
+        Player.Instance.Damage += 0.3f;
+        Player.Instance.Speed += 0.3f;
+        Player.Instance.Damage *= 1.5f;
+        Player.Instance.MaxHealth += 1; //최대체력 +1 //맥스체력 설정
+        Player.Instance.CulHealth = Player.Instance.MaxHealth; //모두회복
     }
 }
 
@@ -142,10 +141,10 @@ public class BlueCap : Item //패시브아이템
     }
 
     public override void UseItem()
-    { 
-        player.MaxHealth += 1; //최대 체력 +1 //맥스체력설정
-        attack.BulletSpeed += 0.7f; //공격 속도 +0.7
-        player.Speed -= 0.3f; //속도 - 0.3
+    {
+        Player.Instance.MaxHealth += 1; //최대 체력 +1 //맥스체력설정
+        Player.Instance.BulletSpeed += 0.7f;
+        Player.Instance.Speed -= 0.3f;
     }
 }
 
@@ -162,9 +161,9 @@ public class CricketsState : Item //패시브아이템
 
     public override void UseItem()
     {
-        player.Damage += 0.5f; //공격력 + 0.5
-        player.Damage *= 1.5f; //공격력배율 * 1.5
-        //눈물의 크기 커짐
+        Player.Instance.Damage += 0.5f;
+        Player.Instance.Damage *= 1.5f;
+        //눈물의 크기가 커짐짐
     }
 }
 
@@ -181,7 +180,7 @@ public class TornPhoto : Item //패시브아이템
 
     public override void UseItem()
     {
-        attack.BulletSpeed += 0.7f; //공격속도 + 0.7
+        Player.Instance.BulletSpeed += 0.7f;
     }
 }
 
@@ -198,9 +197,9 @@ public class Polyphemus : Item //패시브아이템
 
     public override void UseItem()
     {
-        player.Damage += 4f; //공격력 + 4
-        player.Damage *= 2f; //공격력배율 * 2
-        attack.BulletSpeed *= 0.42f; //공격속도 배율 * 0.42
+        Player.Instance.Damage += 4f;
+        Player.Instance.Damage *= 2f;
+        Player.Instance.BulletSpeed *= 0.42f;
     }
 }
 
@@ -217,7 +216,7 @@ public class BookOfBelial : Item //액티브아이템
 
     public override void UseItem()
     {
-        attack.Damage += 2; //사용시 데미지 +2
+        Player.Instance.Damage += 2;
     }
 }
 
@@ -234,7 +233,11 @@ public class YumHeart : Item //액티브아이템
 
     public override void UseItem()
     {
-        player.Health += 1; //체력 1칸 회복
+        Player.Instance.CulHealth += 1;
+        if(Player.Instance.CulHealth > Player.Instance.MaxHealth)
+        {
+            Player.Instance.CulHealth = Player.Instance.MaxHealth;
+        }
     }
 }
 
@@ -252,6 +255,23 @@ public class BookOfShadow : Item //액티브아이템
     public override void UseItem()
     {
         //주위에 보호막이 쳐지며 10초간 무적
+        if (Player.Instance != null)
+        {
+            Invincible invincible = Player.Instance.GetComponent<Invincible>();
+            if (invincible != null)
+            {
+                invincible.Activate_Sheild();
+                Debug.Log($"{itemName} 사용! 10초 동안 무적 상태가 됩니다.");
+            }
+            else
+            {
+                Debug.LogError("플레이어 오브젝트에 Invincible 스크립트가 없습니다.");
+            }
+        }
+        else
+        {
+            Debug.LogError("플레이어 싱글톤 인스턴스를 찾을 수 없습니다.");
+        }
     }
 }
 
@@ -285,9 +305,9 @@ public class TheNail : Item //액티브아이템
 
     public override void UseItem()
     {
-        player.SoulHealth += 0.5f;//소울하트 +0.5
-        player.Speed -= 0.18f; //이동속도 -0.18
-        attack.Damage += 2f; //공격력 +2
+        Player.Instance.SoulHealth += 0.5f;
+        Player.Instance.Speed -= 0.18f;
+        Player.Instance.Damage += 2f;
     }
 }
 
@@ -338,7 +358,7 @@ public class Cross : Item //액티브아이템
 
     public override void UseItem()
     {
-        player.SoulHealth += 1f; //소울 하트 +1
+        Player.Instance.SoulHealth += 1f;
     }
 }
 
@@ -389,7 +409,11 @@ public class Potion : Item //노말아이템
 
     public override void UseItem()
     {
-        player.Health += 1; //체력이 +1 회복된다.
+        Player.Instance.CulHealth += 1;
+        if (Player.Instance.CulHealth > Player.Instance.MaxHealth)
+        {
+            Player.Instance.CulHealth = Player.Instance.MaxHealth;
+        }
     }
 }
 
