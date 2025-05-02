@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 8224478072866222589}
   - component: {fileID: 5914556204569952936}
   - component: {fileID: 7064166856163365430}
+  - component: {fileID: -6611558010808621284}
+  - component: {fileID: 8366991402431633420}
   m_Layer: 0
   m_Name: ShoopDaWhoop
   m_TagString: Item
@@ -135,3 +137,27 @@ CapsuleCollider:
   m_Height: 0.6678001
   m_Direction: 1
   m_Center: {x: -0.006841739, y: 0.28995046, z: 0.10423756}
+--- !u!114 &-6611558010808621284
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3208068139932872837}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c7358c8fb67e0b49ace67b9b5cdbf7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8366991402431633420
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3208068139932872837}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11674fa767072294d94f1e798b2ee974, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

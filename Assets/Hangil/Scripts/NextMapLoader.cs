@@ -21,7 +21,7 @@ public class NextMapLoader : MonoBehaviour
                 nextMap.SetActive(true);
             }
             other.gameObject.transform.position = loadPoint.position;
-            CameraManager.currentMap = nextMapPos;
+            MapManager.currentMap = nextMapPos;
             OnMapMove?.Invoke();
         }
     }

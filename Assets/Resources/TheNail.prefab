@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 8679283877089666003}
   - component: {fileID: 319265845421898531}
   - component: {fileID: 2976754159770458658}
+  - component: {fileID: 5276348389773035694}
+  - component: {fileID: 7296676153507902105}
   m_Layer: 0
   m_Name: TheNail
   m_TagString: Item
@@ -30,7 +32,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.00000003774895, y: 0, z: -0, w: 1}
   m_LocalPosition: {x: 3.9718566, y: 2.942, z: 0.109}
-  m_LocalScale: {x: 14, y: 14, z: 14}
+  m_LocalScale: {x: 20, y: 20, z: 20}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -133,3 +135,27 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.027510878, y: 0.021914007, z: 0.09174325}
   m_Center: {x: -0.002798433, y: 9.313226e-10, z: 0}
+--- !u!114 &5276348389773035694
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7383678792239770617}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c7358c8fb67e0b49ace67b9b5cdbf7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7296676153507902105
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7383678792239770617}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11674fa767072294d94f1e798b2ee974, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
