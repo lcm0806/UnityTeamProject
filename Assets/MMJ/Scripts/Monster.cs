@@ -17,6 +17,7 @@ public class Monster : MonoBehaviour
 
     public bool isChase;
     public bool isAttack;
+    public bool isDead;
 
     public Rigidbody rigid;
     public BoxCollider boxCollider;
