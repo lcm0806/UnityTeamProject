@@ -62,23 +62,68 @@ public class Boss : Monster
     IEnumerator MissileShot()
     {
         anime.SetTrigger("doShot");
-        yield return new WaitForSeconds(2.5f);
 
+        yield return new WaitForSeconds(0.2f);
+        GameObject instantMissileA = Instantiate(missile, missilePortA.position, missilePortA.rotation);
+        BossMonsterMissile bossMonsterMissileA = instantMissileA.GetComponent<BossMonsterMissile>();
+        bossMonsterMissileA.target = target;
+
+        yield return new WaitForSeconds(0.3f);
+        GameObject instantMissileB = Instantiate(missile, missilePortB.position, missilePortB.rotation);
+        BossMonsterMissile bossMonsterMissileB = instantMissileB.GetComponent<BossMonsterMissile>();
+        bossMonsterMissileB.target = target;
+
+        yield return new WaitForSeconds(2f);
         StartCoroutine(Think());
     }
 
     IEnumerator RockShot()
     {
         anime.SetTrigger("doBigShot");
+        Instantiate(bullet, transform.position, transform.rotation);
+
         yield return new WaitForSeconds(3f);
 
+        isLook = true;
         StartCoroutine(Think());
     }
 
     IEnumerator Taunt()
     {
+        isLook = false;
         anime.SetTrigger("doTaunt");
-        yield return new WaitForSeconds(3f);
+
+        tauntVec = target.position;
+
+        Vector3 startPos = transform.position;
+        Vector3 endPos = tauntVec;
+
+        float jumpTime = 1.0f;
+        float elapsed = 0f;
+        boxCollider.enabled = false;
+        while (elapsed < jumpTime)
+        {
+            elapsed += Time.deltaTime;
+            float t = elapsed / jumpTime;
+
+
+            float height = 5f;
+            float parabola = 4 * height * (t - t * t);
+
+            transform.position = Vector3.Lerp(startPos, endPos, t) + Vector3.up * parabola;
+
+            yield return null;
+        }
+
+        transform.position = endPos;
+
+        meleeArea.enabled = true;
+        boxCollider.enabled = true;
+        yield return new WaitForSeconds(0.5f);
+        meleeArea.enabled = false;
+
+        yield return new WaitForSeconds(1f);
+        isLook = true;
 
         StartCoroutine(Think());
     }
