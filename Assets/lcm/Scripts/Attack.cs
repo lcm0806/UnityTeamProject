@@ -12,7 +12,7 @@ public class Attack : MonoBehaviour
     [SerializeField] float bulletSpeed;
 
     
-    public void Fire(int damage)
+    public void Fire(float damage)
     {
         GameObject instance = Instantiate(bulletPrefab, muzzlePoint.position, Quaternion.LookRotation(Vector3.forward));
         Rigidbody bulletRigidbody = instance.GetComponent<Rigidbody>();

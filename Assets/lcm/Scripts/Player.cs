@@ -11,18 +11,22 @@ public class Player : MonoBehaviour
     [SerializeField] private float speed;
     [SerializeField] private List<Item> passiveItems = new List<Item>();
     [SerializeField] private List<Item> activeItems = new List<Item>();
-    [SerializeField] private int health;
-    public int Health { get { return health; } set { health = value; } }
-    [SerializeField] private int damage = 10;
-    public int Damage { get { return damage; } set { damage = value; } }
+    [SerializeField] private int maxhealth;
+    private int culhealth;
+    public int CulHealth { get { return culhealth; } set { culhealth = value; } }
+    [SerializeField] private float damage = 10f;
+    public float Damage { get { return damage; } set { damage = value; } }
 
     [SerializeField] Attack attack;
+    [SerializeField] private float attackRate = 0.5f; //공격속도
+    private float nextAttackTime = 0f;
 
     private bool wDown;
     private bool jDown;
 
     private bool isSide;
     private bool isDodge;
+    private bool isDamage = false;
 
     private bool isInvincible = false;
     [SerializeField] private float invincibleDuration = 0.5f;
@@ -31,6 +35,7 @@ public class Player : MonoBehaviour
 
 
     Rigidbody rigid;
+    MeshRenderer[] meshs; 
 
     Vector3 moveVec;
     Vector3 sideVec;
@@ -41,12 +46,11 @@ public class Player : MonoBehaviour
     {
         rigid = GetComponent<Rigidbody>();
         anim = GetComponentInChildren<Animator>();
+        meshs = GetComponentsInChildren<MeshRenderer>();
     }
     // Start is called before the first frame update
     void Start()
     {
-        AcquireItem(new SadOnion());
-        AcquireItem(new Pentagram());
         ApplyPassiveEffects();
     }
 
@@ -116,6 +120,14 @@ public class Player : MonoBehaviour
         {
             attack.Fire(damage);
         }
+        else if (Input.GetKey(KeyCode.Q))
+        {
+            if (Time.time >= nextAttackTime)
+            {
+                attack.Fire(damage);
+                nextAttackTime = Time.time + 1f / attackRate;
+            }
+        }
     }
 
     public void TakeDamage(int damageAmount)
@@ -123,20 +135,13 @@ public class Player : MonoBehaviour
         // 무적 상태가 아닐 때만 데미지를 받음
         if (!isInvincible)
         {
-            health -= damageAmount;
-            Debug.Log($"플레이어 피격! 받은 데미지: {damageAmount}, 남은 체력: {health}");
-
-            // 피격 애니메이션 재생 (선택 사항)
-            //if (anim != null)
-            //{
-            //    anim.SetTrigger("doHit");
-            //}
+            CulHealth -= damageAmount;
+            Debug.Log($"플레이어 피격! 받은 데미지: {damageAmount}, 남은 체력: {CulHealth}");
 
             // 피격 시 무적 상태 시작 (선택 사항)
             StartInvincible();
 
-            // 체력이 0 이하로 떨어졌을 때 사망 처리
-            if (health <= 0)
+            if (CulHealth <= 0)
             {
                 Die();
             }
@@ -147,18 +152,17 @@ public class Player : MonoBehaviour
         }
     }
 
+
     private void StartInvincible()
     {
         isInvincible = true;
         // 무적 시간 후 무적 상태 해제
         Invoke("EndInvincible", invincibleDuration);
-        // 필요하다면 무적 상태 시 시각적 효과를 줄 수도 있습니다.
     }
 
     private void EndInvincible()
     {
         isInvincible = false;
-        // 무적 상태 해제 시 시각적 효과를 제거할 수 있습니다.
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -175,6 +179,26 @@ public class Player : MonoBehaviour
 
 
 
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        
+    }
+
+    IEnumerator OnDamage()
+    {
+        isDamage = true;
+        foreach(MeshRenderer mesh in meshs)
+        {
+            mesh.material.color= Color.red;
+        }
+        yield return new WaitForSeconds(1f);
+
+        isDamage = false;
+        foreach (MeshRenderer mesh in meshs)
+        {
+            mesh.material.color = Color.white;
+        }
     }
 
     public void AcquireItem(Item newItem)
