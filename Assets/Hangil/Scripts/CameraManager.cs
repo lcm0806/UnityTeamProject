@@ -9,6 +9,7 @@ public class CameraManager : MonoBehaviour
         int currentMap;
     [SerializeField] Camera mainCamera;
     public List<GameObject> Maps;
+    public int startMapPos;
     [SerializeField] List<Transform> cameraPos;
     // Start is called before the first frame update
     void Start()
@@ -22,12 +23,12 @@ public class CameraManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        currentMap = 0;
+        currentMap = startMapPos;
         foreach (var map in Maps)
         {
             map.gameObject.SetActive(false);
         }
-        Maps[0].SetActive(true);
+        Maps[startMapPos-1].SetActive(true);
     }
 
     public void MoveCamera()

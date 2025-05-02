@@ -181,6 +181,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   teleportPos: {fileID: 0}
+  teleportYPosPadding: 2.8
   OnHazardFall:
     m_PersistentCalls:
       m_Calls: []

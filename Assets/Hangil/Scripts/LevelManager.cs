@@ -4,40 +4,55 @@ using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
-    // 각각의 레벨 내 적들의 존재를 관리하는 컴포넌트
-    // 적 스포너 갯수를 보유해야 함
-    // 적이 0명이 되면 문 오브젝트를 비활성화
-    // 적 갯수 = 스포너 갯수로 설정
+    public static LevelManager Instance;
 
-    [SerializeField] List<GameObject> enemySpanwers;
-    [SerializeField] List<GameObject> Doors;
-    private int enemyCount;
-    // Start is called before the first frame update
-    void Start()
-    {
-        enemyCount = enemySpanwers.Count;
-    }
+    public List<GameObject> spawnerList;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public List<GameObject> doorList;
+    public List<GameObject> loadpointList; 
+    private int listLength;
 
-    public void OnEnemyKill()
+    private void Awake()
     {
-        enemyCount--;
-        if(enemyCount == 0)
+        listLength = spawnerList.Count;
+        if(doorList != null)
         {
-            OpenDoors();
+            foreach (var door in doorList)
+            {
+                door.SetActive(true);
+            }
+        }
+        if(doorList != null)
+        {
+            foreach (var loadpoint in loadpointList)
+            {
+                loadpoint.SetActive(false);
+            }
         }
     }
 
-    public void OpenDoors()
+    public void OnEnemyKilled()
     {
-        foreach(var door in Doors)
+        Debug.Log("적 처치");
+        listLength--;
+        if(listLength == 0 )
         {
-            door.SetActive(false);
+
+            Debug.Log("모든 적 처치!");
+            if (doorList != null)
+            {
+                foreach (var door in doorList)
+                {
+                    door.SetActive(false);
+                }
+            }
+            if (doorList != null)
+            {
+                foreach (var loadpoint in loadpointList)
+                {
+                    loadpoint.SetActive(true);
+                }
+            }
         }
     }
 }
