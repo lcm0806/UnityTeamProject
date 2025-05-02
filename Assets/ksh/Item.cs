@@ -10,7 +10,6 @@ public abstract class Item
     public string itemSkillDescription;
     public itemType itemType;
     public GameObject itemPrefab;
-
     public abstract void UseItem();
 }
 
@@ -161,7 +160,7 @@ public class CricketsState : Item //패시브아이템
     {
         Player.Instance.Damage += 0.5f;
         Player.Instance.Damage *= 1.5f;
-        //눈물의 크기 커짐
+        //눈물의 크기가 커짐짐
     }
 }
 
