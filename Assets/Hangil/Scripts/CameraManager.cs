@@ -5,13 +5,14 @@ using UnityEngine;
 public class CameraManager : MonoBehaviour
 {
     public static CameraManager instance;
-    public static int currentMap;
+    public static 
+        int currentMap;
     [SerializeField] Camera mainCamera;
     public List<GameObject> Maps;
     public int startMapPos;
     [SerializeField] List<Transform> cameraPos;
     // Start is called before the first frame update
-    void Awake()
+    void Start()
     {
         if (instance == null)
         {
