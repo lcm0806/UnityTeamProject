@@ -15,12 +15,6 @@ public class Attack : MonoBehaviour
     [SerializeField] GameObject bulletPrefab;
     [SerializeField] Transform muzzlePoint;
 
-    private Camera mainCamera;
-    private Vector3 mousePos;
-    private bool isFire = true;
-    private float timer;
-    private float delaytime = 0.2f;
-
     [Range(10, 30)]
     [SerializeField] private float bulletSpeed;
     public float BulletSpeed
@@ -29,7 +23,8 @@ public class Attack : MonoBehaviour
         set => bulletSpeed = value;
     }
 
-    public void Fire(int damage)
+    
+    public void Fire(float damage)
     {
         muzzlePoint.rotation = Quaternion.Euler(0f, 0f, 0f);
         Debug.Log(muzzlePoint.forward);

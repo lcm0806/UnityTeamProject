@@ -19,12 +19,11 @@ public class Player : MonoBehaviour
     [SerializeField] private List<Item> passiveItems = new List<Item>();
     [SerializeField] private List<Item> activeItems = new List<Item>();
 
-    [SerializeField] private int health;
-    public int Health
-    {
-        get => health;
-        set => health = value;
-    }
+    [SerializeField] private int maxhealth;
+    private int culhealth;
+    public int CulHealth { get { return culhealth; } set { culhealth = value; } }
+    [SerializeField] private float damage = 10f;
+    public float Damage { get { return damage; } set { damage = value; } }
 
     [SerializeField] private float soulhealth;
     public float SoulHealth
@@ -33,20 +32,17 @@ public class Player : MonoBehaviour
         set => soulhealth = value;
     }
 
-    [SerializeField] private int damage = 10;
-    public int Damage
-    {
-        get => damage;
-        set => damage = value;
-    }
 
     [SerializeField] Attack attack;
+    [SerializeField] private float attackRate = 0.5f; //���ݼӵ�
+    private float nextAttackTime = 0f;
 
     private bool wDown;
     private bool jDown;
 
     private bool isSide;
     private bool isDodge;
+    private bool isDamage = false;
 
     private bool isInvincible = false;
     [SerializeField] private float invincibleDuration = 0.5f;
@@ -54,6 +50,8 @@ public class Player : MonoBehaviour
     private GameObject nearObject;
 
     Rigidbody rigid;
+    MeshRenderer[] meshs; 
+
     Vector3 moveVec;
     Vector3 sideVec;
     Vector3 dodgeVec;
@@ -64,12 +62,11 @@ public class Player : MonoBehaviour
     {
         rigid = GetComponent<Rigidbody>();
         anim = GetComponentInChildren<Animator>();
+        meshs = GetComponentsInChildren<MeshRenderer>();
     }
 
     void Start()
     {
-        AcquireItem(new SadOnion());
-        AcquireItem(new Pentagram());
         ApplyPassiveEffects();
     }
 
@@ -137,18 +134,28 @@ public class Player : MonoBehaviour
         {
             attack.Fire(damage);
         }
+        else if (Input.GetKey(KeyCode.Q))
+        {
+            if (Time.time >= nextAttackTime)
+            {
+                attack.Fire(damage);
+                nextAttackTime = Time.time + 1f / attackRate;
+            }
+        }
     }
 
     public void TakeDamage(int damageAmount)
     {
         if (!isInvincible)
         {
-            health -= damageAmount;
+            CulHealth -= damageAmount;
             Debug.Log($"플레이어 피격! 받은 데미지: {damageAmount}, 남은 체력: {health}");
+
 
             StartInvincible();
 
-            if (health <= 0)
+
+            if (CulHealth <= 0)
             {
                 Die();
             }
@@ -159,6 +166,7 @@ public class Player : MonoBehaviour
         }
     }
 
+
     private void StartInvincible()
     {
         isInvincible = true;
@@ -168,24 +176,39 @@ public class Player : MonoBehaviour
     private void EndInvincible()
     {
         isInvincible = false;
-    }
 
-    private void Die()
-    {
-        Debug.Log("플레이어 사망!");
+
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        anim.SetBool("isJump", false);
-
-        if (collision.gameObject.GetComponent<ItemPickup>() != null)
-        {
+         if (collision.gameObject.GetComponent<ItemPickup>() != null)
+         {
             ItemPickup pickup = collision.gameObject.GetComponent<ItemPickup>();
             AcquireItem(pickup.item);
             Destroy(collision.gameObject);
             ApplyPassiveEffects();
             Debug.Log("아이템 획득: " + pickup.item.itemName);
+        }
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        
+    }
+
+    IEnumerator OnDamage()
+    {
+        isDamage = true;
+        foreach(MeshRenderer mesh in meshs)
+        {
+            mesh.material.color= Color.red;
+        }
+        yield return new WaitForSeconds(1f);
+
+        isDamage = false;
+        foreach (MeshRenderer mesh in meshs)
+        {
+            mesh.material.color = Color.white;
         }
     }
 
@@ -214,7 +237,6 @@ public class Player : MonoBehaviour
             if (item.itemType == itemType.Passive)
             {
                 Debug.Log("패시브 아이템 효과 적용: " + item.itemName);
-                item.UseItem();
             }
         }
     }

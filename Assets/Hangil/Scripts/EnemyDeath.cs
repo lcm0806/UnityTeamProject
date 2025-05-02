@@ -9,13 +9,11 @@ public class EnemyDeath : MonoBehaviour
 
     public void OnDisable()
     {
-        
-        Die();
+        if(OnDeath != null) { Die(); }
     }
 
     public void Die()
     {
-        OnDeath?.Invoke(); // 이벤트 호출
-        Destroy(gameObject);
+        OnDeath?.Invoke();
     }
 }
