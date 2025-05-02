@@ -16,6 +16,7 @@ public class OpeningUIManager : MonoBehaviour
     public Slider soundSlider;
     public TextMeshProUGUI percentDisplay;
     public RectTransform panelParent; // AllPanelWrapper를 연결할 것
+    public Camera renderCamera;
 
     private int currentIndex = 0;
     private bool isGameActive = false;
@@ -34,8 +35,14 @@ public class OpeningUIManager : MonoBehaviour
         isPaused = false;
         Time.timeScale = 1f;
 
-        if (gameUIWrapper != null) gameUIWrapper.SetActive(false);
-        if (settingPanel != null) settingPanel.SetActive(false);
+        if (renderCamera != null)
+            renderCamera.enabled = false; // 게임 시작 전에 카메라 꺼둠
+
+        if (gameUIWrapper != null)
+            gameUIWrapper.SetActive(false);
+
+        if (settingPanel != null)
+            settingPanel.SetActive(false);
 
         targetPosition = panelParent.anchoredPosition;
         UpdatePanels();
@@ -151,39 +158,54 @@ public class OpeningUIManager : MonoBehaviour
         if (settingPanel != null)
             settingPanel.SetActive(false);
 
+        if (renderCamera != null)
+            renderCamera.enabled = true;
+
         if (gameUIWrapper != null)
+        {
             gameUIWrapper.SetActive(true);
+
+            Canvas canvas = gameUIWrapper.GetComponent<Canvas>();
+            if (canvas != null && canvas.renderMode == RenderMode.ScreenSpaceCamera)
+            {
+                if (renderCamera != null)
+                    canvas.worldCamera = renderCamera;
+                else
+                    Debug.LogWarning("RenderCamera가 연결되지 않았습니다.");
+            }
+        }
     }
+
 
     private void PauseGame()
     {
-        if (gameUIWrapper != null && gameUIWrapper.activeSelf)
+        if (isGameActive && !isPaused)
         {
-            // HealthUI가 켜져있으면 HealthUI를 끄고 Menu로 돌아간다
-            gameUIWrapper.SetActive(false);
+            isGameActive = false;
+            isPaused = false;
+
+            if (gameUIWrapper != null)
+                gameUIWrapper.SetActive(false);
 
             if (panelParent != null)
                 panelParent.gameObject.SetActive(true);
 
-            currentIndex = 2; // MenuPanel 인덱스
-            UpdatePanels();
 
-            isGameActive = false; // ★ 추가: 게임 비활성화 상태로 바꿔야 한다
-            isPaused = false; // ★ 추가: 일시정지도 아니다
-        }
-        else
-        {
-            // 일반 Pause (게임이 진행중일 때 ESC)
-            isPaused = true;
-
-            if (panelParent != null)
-                panelParent.gameObject.SetActive(false);
-
-            if (panels.Length > 2)
+            if (panels.Length > 2 && panels[2] != null)
                 panels[2].SetActive(true);
 
-            if (gameUIWrapper != null)
-                gameUIWrapper.SetActive(false);
+            currentIndex = 2;
+            UpdatePanels();
+
+
+            if (renderCamera != null)
+                renderCamera.enabled = false;
+
+            Camera mainCam = GameObject.Find("Main Camera")?.GetComponent<Camera>();
+            if (mainCam != null)
+                mainCam.enabled = true;
+
+            Debug.Log("ESC → Opening 화면으로 복귀");
         }
     }
 
