@@ -22,25 +22,25 @@ public class NewBehaviourScript : MonoBehaviour
         IsClosed = true;
         
         items.Add(new SadOnion());
-     // items.Add(new TheInnerEye()); 눈모양
-     // items.Add(new Pentagram()); 별
+        items.Add(new TheInnerEye());
+        items.Add(new Pentagram()); 
         items.Add(new GrowthHormones());
         items.Add(new MagicMushroom());
-     // items.Add(new SpoonBender()); 수저
+        items.Add(new SpoonBender());
         items.Add(new BlueCap());
-     // items.Add(new CricketsState()); 조각상
-     // items.Add(new TornPhoto()); 찢어진사진
-     // items.Add(new Polyphemus()); 눈알 큰
+        items.Add(new CricketsState()); 
+        items.Add(new TornPhoto());
+        items.Add(new Polyphemus());
         items.Add(new BookOfBelial());
         items.Add(new YumHeart());
         items.Add(new BookOfShadow());
-     // items.Add(new ShoopDaWhoop()); 귀여운인형
-     // items.Add(new TheNail()); 못
-     // items.Add(new MrBoom()); 폭탄
-     // items.Add(new TammysBlessing()); 축복
+        items.Add(new ShoopDaWhoop());
+        items.Add(new TheNail()); //오늘
+        items.Add(new MrBoom()); //오늘
+        items.Add(new TammysBlessing());
         items.Add(new Cross());
         items.Add(new AnarchistCookBook());
-     // items.Add(new TheHourglass()); 모래시계
+        items.Add(new TheHourglass());
     }
 
     private void Update()

@@ -4,16 +4,31 @@ using UnityEngine;
 
 public class Attack : MonoBehaviour
 {
+    public enum Type { Book_of_Belial, Shoop_da_Whoop, The_Nail, Bobs_Rotten_Head, Tammys_Head, Book_of_Revelations, Anarchist_Cookbook, Vampiric_Fang }
+    [SerializeField] private float damage;
+    public float Damage
+    {
+        get => damage;
+        set => damage = value;
+    }
 
     [SerializeField] GameObject bulletPrefab;
     [SerializeField] Transform muzzlePoint;
 
     [Range(10, 30)]
-    [SerializeField] float bulletSpeed;
+    [SerializeField] private float bulletSpeed;
+    public float BulletSpeed
+    {
+        get => bulletSpeed;
+        set => bulletSpeed = value;
+    }
 
     
     public void Fire(float damage)
     {
+        muzzlePoint.rotation = Quaternion.Euler(0f, 0f, 0f);
+        Debug.Log(muzzlePoint.forward);
+
         GameObject instance = Instantiate(bulletPrefab, muzzlePoint.position, Quaternion.LookRotation(Vector3.forward));
         Rigidbody bulletRigidbody = instance.GetComponent<Rigidbody>();
         bulletRigidbody.velocity = muzzlePoint.forward * bulletSpeed;
@@ -25,11 +40,7 @@ public class Attack : MonoBehaviour
         }
         else
         {
-            Debug.LogError("»ı¼ºµÈ ÃÑ¾Ë ¿ÀºêÁ§Æ®¿¡ Bullet ½ºÅ©¸³Æ®°¡ ¾ø½À´Ï´Ù.");
+            Debug.LogError("ìƒì„±ëœ ì´ì•Œ ì˜¤ë¸Œì íŠ¸ì— Bullet ìŠ¤í¬ë¦½íŠ¸ê°€ ì—†ìŠµë‹ˆë‹¤.");
         }
-
     }
-
-    
-
 }

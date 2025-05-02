@@ -14,22 +14,20 @@ public class LevelManager : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
         listLength = spawnerList.Count;
-        foreach(var door in doorList) 
+        if(doorList != null)
         {
-            door.SetActive(true);
+            foreach (var door in doorList)
+            {
+                door.SetActive(true);
+            }
         }
-        foreach(var loadpoint in loadpointList)
+        if(loadpointList != null)
         {
-            loadpoint.SetActive(false);
+            foreach (var loadpoint in loadpointList)
+            {
+                loadpoint.SetActive(false);
+            }
         }
     }
 
@@ -39,14 +37,21 @@ public class LevelManager : MonoBehaviour
         listLength--;
         if(listLength == 0 )
         {
+
             Debug.Log("모든 적 처치!");
-            foreach(var door in doorList)
+            if (doorList != null)
             {
-                door.SetActive(false);
+                foreach (var door in doorList)
+                {
+                    door.SetActive(false);
+                }
             }
-            foreach (var loadpoint in loadpointList)
+            if (loadpointList != null)
             {
-                loadpoint.SetActive(true);
+                foreach (var loadpoint in loadpointList)
+                {
+                    loadpoint.SetActive(true);
+                }
             }
         }
     }

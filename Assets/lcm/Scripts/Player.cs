@@ -9,16 +9,32 @@ public class Player : MonoBehaviour
     private float vAxis;
 
     [SerializeField] private float speed;
+    public float Speed
+    {
+        get => speed;
+        set => speed = value;
+    }
+
+    [SerializeField] private List<Item> acquiredItems = new List<Item>();
     [SerializeField] private List<Item> passiveItems = new List<Item>();
     [SerializeField] private List<Item> activeItems = new List<Item>();
+
     [SerializeField] private int maxhealth;
     private int culhealth;
     public int CulHealth { get { return culhealth; } set { culhealth = value; } }
     [SerializeField] private float damage = 10f;
     public float Damage { get { return damage; } set { damage = value; } }
 
+    [SerializeField] private float soulhealth;
+    public float SoulHealth
+    {
+        get => soulhealth;
+        set => soulhealth = value;
+    }
+
+
     [SerializeField] Attack attack;
-    [SerializeField] private float attackRate = 0.5f; //°ø°İ¼Óµµ
+    [SerializeField] private float attackRate = 0.5f; //ï¿½ï¿½ï¿½İ¼Óµï¿½
     private float nextAttackTime = 0f;
 
     private bool wDown;
@@ -33,7 +49,6 @@ public class Player : MonoBehaviour
 
     private GameObject nearObject;
 
-
     Rigidbody rigid;
     MeshRenderer[] meshs; 
 
@@ -42,19 +57,19 @@ public class Player : MonoBehaviour
     Vector3 dodgeVec;
 
     Animator anim;
+
     private void Awake()
     {
         rigid = GetComponent<Rigidbody>();
         anim = GetComponentInChildren<Animator>();
         meshs = GetComponentsInChildren<MeshRenderer>();
     }
-    // Start is called before the first frame update
+
     void Start()
     {
         ApplyPassiveEffects();
     }
 
-    // Update is called once per frame
     private void Update()
     {
         GetInput();
@@ -62,6 +77,7 @@ public class Player : MonoBehaviour
         Turn();
         Dodge();
         Attack();
+        UseActiveItemInput();
     }
 
     private void GetInput()
@@ -92,8 +108,6 @@ public class Player : MonoBehaviour
     {
         transform.LookAt(transform.position + moveVec);
     }
-
-    
 
     private void Dodge()
     {
@@ -132,14 +146,14 @@ public class Player : MonoBehaviour
 
     public void TakeDamage(int damageAmount)
     {
-        // ¹«Àû »óÅÂ°¡ ¾Æ´Ò ¶§¸¸ µ¥¹ÌÁö¸¦ ¹ŞÀ½
         if (!isInvincible)
         {
             CulHealth -= damageAmount;
-            Debug.Log($"ÇÃ·¹ÀÌ¾î ÇÇ°İ! ¹ŞÀº µ¥¹ÌÁö: {damageAmount}, ³²Àº Ã¼·Â: {CulHealth}");
+            Debug.Log($"í”Œë ˆì´ì–´ í”¼ê²©! ë°›ì€ ë°ë¯¸ì§€: {damageAmount}, ë‚¨ì€ ì²´ë ¥: {health}");
 
-            // ÇÇ°İ ½Ã ¹«Àû »óÅÂ ½ÃÀÛ (¼±ÅÃ »çÇ×)
+
             StartInvincible();
+
 
             if (CulHealth <= 0)
             {
@@ -148,7 +162,7 @@ public class Player : MonoBehaviour
         }
         else
         {
-            Debug.Log("ÇÃ·¹ÀÌ¾î ¹«Àû »óÅÂ·Î µ¥¹ÌÁö¸¦ ¹ŞÁö ¾ÊÀ½!");
+            Debug.Log("í”Œë ˆì´ì–´ ë¬´ì  ìƒíƒœë¡œ ë°ë¯¸ì§€ë¥¼ ë°›ì§€ ì•ŠìŒ!");
         }
     }
 
@@ -156,29 +170,26 @@ public class Player : MonoBehaviour
     private void StartInvincible()
     {
         isInvincible = true;
-        // ¹«Àû ½Ã°£ ÈÄ ¹«Àû »óÅÂ ÇØÁ¦
         Invoke("EndInvincible", invincibleDuration);
     }
 
     private void EndInvincible()
     {
         isInvincible = false;
+
+
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-         // ¾ÆÀÌÅÛ ½Àµæ Ã³¸® (Ãæµ¹ °¨Áö)
          if (collision.gameObject.GetComponent<ItemPickup>() != null)
          {
             ItemPickup pickup = collision.gameObject.GetComponent<ItemPickup>();
             AcquireItem(pickup.item);
-            Destroy(collision.gameObject); // ½ÀµæÇÑ ¾ÆÀÌÅÛ ¿ÀºêÁ§Æ® ÆÄ±«
-            ApplyPassiveEffects(); // ½Àµæ ÈÄ ÆĞ½Ãºê È¿°ú ´Ù½Ã Àû¿ë
-            Debug.Log("¾ÆÀÌÅÛ È¹µæ: " + pickup.item.itemName);
-         }
-
-
-
+            Destroy(collision.gameObject);
+            ApplyPassiveEffects();
+            Debug.Log("ì•„ì´í…œ íšë“: " + pickup.item.itemName);
+        }
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -203,34 +214,61 @@ public class Player : MonoBehaviour
 
     public void AcquireItem(Item newItem)
     {
-        if(newItem.itemType == itemType.Passive)
+        acquiredItems.Add(newItem);
+        Debug.Log("ì•„ì´í…œ íšë“: " + newItem.itemName + " (" + newItem.itemType + ")");
+
+        if (newItem.itemType == itemType.Passive)
         {
             passiveItems.Add(newItem);
             ApplyPassiveEffects();
         }
-        else if(newItem.itemType == itemType.Active)
+        else if (newItem.itemType == itemType.Active)
         {
             activeItems.Add(newItem);
-
         }
-        Debug.Log("¾ÆÀÌÅÛ È¹µæ :" + newItem.itemName + " (" + newItem.itemType + ")");
+
+        UpdateHasItemsUI();
     }
 
     private void ApplyPassiveEffects()
     {
-        // ÇöÀç´Â °£´ÜÇÏ°Ô ·Î±×¸¸ Ãâ·Â, ½ÇÁ¦ È¿°ú Àû¿ë ·ÎÁ÷ ±¸Çö ÇÊ¿ä
         foreach (Item item in passiveItems)
         {
             if (item.itemType == itemType.Passive)
             {
-                Debug.Log("ÆĞ½Ãºê ¾ÆÀÌÅÛ È¿°ú Àû¿ë: " + item.itemName);
-                
+                Debug.Log("íŒ¨ì‹œë¸Œ ì•„ì´í…œ íš¨ê³¼ ì ìš©: " + item.itemName);
             }
         }
     }
 
+    private void UseActiveItemInput()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1) && activeItems.Count > 0)
+        {
+            UseItem(0, itemType.Active);
+        }
+    }
 
-    // ¾ÆÀÌÅÛ »ç¿ë ÇÔ¼ö (ÀÎµ¦½º ±â¹İ)
+    public void UseItem(int index)
+    {
+        if (index >= 0 && index < acquiredItems.Count)
+        {
+            if (acquiredItems[index].itemType == itemType.Active)
+            {
+                Debug.Log("ì•¡í‹°ë¸Œ ì•„ì´í…œ ì‚¬ìš©: " + acquiredItems[index].itemName);
+                acquiredItems[index].UseItem();
+            }
+            else
+            {
+                Debug.Log("í•´ë‹¹ ì•„ì´í…œì€ ì•¡í‹°ë¸Œ íƒ€ì…ì´ ì•„ë‹™ë‹ˆë‹¤.");
+            }
+        }
+        else
+        {
+            Debug.Log("í•´ë‹¹ ì¸ë±ìŠ¤ì˜ ì•„ì´í…œì€ ì‚¬ìš©í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤.");
+        }
+    }
+
     public void UseItem(int index, itemType type)
     {
         List<Item> targetList = (type == itemType.Active) ? activeItems : passiveItems;
@@ -239,42 +277,31 @@ public class Player : MonoBehaviour
         {
             if (targetList[index].itemType == type)
             {
-                Debug.Log("¾×Æ¼ºê ¾ÆÀÌÅÛ »ç¿ë: " + targetList[index].itemName);
-                targetList[index].UseItem(); // ¾×Æ¼ºê ¾ÆÀÌÅÛÀÇ UseItem() È£Ãâ (½ÇÁ¦ È¿°ú ±¸Çö)
-                // »ç¿ë ÈÄ ¾ÆÀÌÅÛ Á¦°Å ¶Ç´Â ÄğÅ¸ÀÓ Ã³¸® µî Ãß°¡ ·ÎÁ÷ ÇÊ¿ä
-                if (type == itemType.Active)
-                {
-                    // ¿¹½Ã: »ç¿ë ÈÄ Ã¹ ¹øÂ° ¾×Æ¼ºê ¾ÆÀÌÅÛ Á¦°Å
-                    // activeItems.RemoveAt(index);
-                    // UpdateActiveItemUI();
-                }
+                Debug.Log($"[{type}] ì•„ì´í…œ ì‚¬ìš©: {targetList[index].itemName}");
+                targetList[index].UseItem();
             }
             else
             {
-                Debug.Log("ÇØ´ç ½½·ÔÀº " + type + " ¾ÆÀÌÅÛÀÌ ¾Æ´Õ´Ï´Ù.");
+                Debug.Log($"ì„ íƒëœ ì•„ì´í…œì€ {type} íƒ€ì…ì´ ì•„ë‹™ë‹ˆë‹¤.");
             }
         }
-        else
+    }
+
+    private void UpdateHasItemsUI()
+    {
+        Debug.Log("ë³´ìœ í•œ ì „ì²´ ì•„ì´í…œ ëª©ë¡:");
+        for (int i = 0; i < acquiredItems.Count; i++)
         {
-            Debug.Log("ÇØ´ç ÀÎµ¦½ºÀÇ ¾ÆÀÌÅÛÀÌ ¾ø½À´Ï´Ù.");
+            Debug.Log($"{i + 1}: {acquiredItems[i].itemName} ({acquiredItems[i].itemType})");
         }
     }
 
-
-    private void Die()
-    {
-        Debug.Log("ÇÃ·¹ÀÌ¾î »ç¸Á!");
-    }
-
-    // UI ¾÷µ¥ÀÌÆ® (ÀÓ½Ã)
     private void UpdatePassiveItemsUI()
     {
-        // ½ÇÁ¦ UI ½Ã½ºÅÛ¿¡ ¸Â°Ô ±¸ÇöÇØ¾ß ÇÔ
-        Debug.Log("ÇöÀç º¸À¯ ¾ÆÀÌÅÛ:");
+        Debug.Log("ë³´ìœ í•œ íŒ¨ì‹œë¸Œ ì•„ì´í…œ ëª©ë¡:");
         for (int i = 0; i < passiveItems.Count; i++)
         {
             Debug.Log($"{i + 1}: {passiveItems[i].itemName} ({passiveItems[i].itemType})");
         }
     }
-
 }

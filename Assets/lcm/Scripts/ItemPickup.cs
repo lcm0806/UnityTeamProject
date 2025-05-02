@@ -4,14 +4,12 @@ using UnityEngine;
 
 public class ItemPickup : MonoBehaviour
 {
-    public Item item; // ½ÀµæÇÒ ¾ÆÀÌÅÛ
-
-    // Inspector Ã¢¿¡¼­ ¾ÆÀÌÅÛ ÇÒ´çÀ» ¿ëÀÌÇÏ°Ô ÇÏ±â À§ÇÑ ¹æ¹ı (¼±ÅÃ »çÇ×)
-    public string itemNameForEditor;
+    public Item item; // ìŠµë“í•  ì•„ì´í…œ
+    public string itemNameForEditor; // ì—ë””í„°ì—ì„œ ì´ë¦„ìœ¼ë¡œ ì•„ì´í…œ ìƒì„±
 
     private void OnValidate()
     {
-        // ¿¡µğÅÍ¿¡¼­ itemNameForEditor ±â¹İÀ¸·Î ¾ÆÀÌÅÛ »ı¼º (°£´ÜÇÑ ¿¹½Ã)
+        // itemNameForEditorë¥¼ ê¸°ë°˜ìœ¼ë¡œ ì•„ì´í…œ ê°ì²´ ìƒì„±
         if (!string.IsNullOrEmpty(itemNameForEditor))
         {
             switch (itemNameForEditor)
@@ -25,13 +23,73 @@ public class ItemPickup : MonoBehaviour
                 case "Pentagram":
                     item = new Pentagram();
                     break;
-                // ´Ù¸¥ ¾ÆÀÌÅÛ ÄÉÀÌ½º Ãß°¡
+                case "GrowthHormones":
+                    item = new GrowthHormones();
+                    break;
+                case "MagicMushroom":
+                    item = new MagicMushroom();
+                    break;
+                case "SpoonBender":
+                    item = new SpoonBender();
+                    break;
+                case "BlueCap":
+                    item = new BlueCap();
+                    break;
+                case "CricketsState":
+                    item = new CricketsState();
+                    break;
+                case "TornPhoto":
+                    item = new TornPhoto();
+                    break;
+                case "Polyphemus":
+                    item = new Polyphemus();
+                    break;
+                case "BookOfBelial":
+                    item = new BookOfBelial();
+                    break;
+                case "YumHeart":
+                    item = new YumHeart();
+                    break;
+                case "BookOfShadow":
+                    item = new BookOfShadow();
+                    break;
+                case "ShoopDaWhoop":
+                    item = new ShoopDaWhoop();
+                    break;
+                case "TheNail":
+                    item = new TheNail();
+                    break;
+                case "MrBoom":
+                    item = new MrBoom();
+                    break;
+                case "TammysBlessing":
+                    item = new TammysBlessing();
+                    break;
+                case "Cross":
+                    item = new Cross();
+                    break;
+                case "AnarchistCookBook":
+                    item = new AnarchistCookBook();
+                    break;
+                case "TheHourglass":
+                    item = new TheHourglass();
+                    break;
+                case "Potion":
+                    item = new Potion();
+                    break;
+                case "GoldenKey":
+                    item = new GoldenKey();
+                    break;
+                case "Bomb":
+                    item = new Bomb();
+                    break;
                 default:
                     item = null;
                     break;
             }
-            itemNameForEditor = ""; // °ª ÃÊ±âÈ­
+
+            // ì…ë ¥ í›„ ì´ˆê¸°í™”
+            itemNameForEditor = "";
         }
     }
-
 }
