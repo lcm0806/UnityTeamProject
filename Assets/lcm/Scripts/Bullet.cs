@@ -5,9 +5,9 @@ using UnityEngine.UIElements;
 
 public class Bullet : MonoBehaviour
 {
+
     [SerializeField] private float damageAmount;
     Player player;
-
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "Floor" || collision.gameObject.tag == "Wall")
@@ -25,7 +25,7 @@ public class Bullet : MonoBehaviour
             }
             else
             {
-                Debug.LogError("'Monster' ÅÂ±×°¡ ºÙ¾úÁö¸¸ Monster ½ºÅ©¸³Æ®°¡ ¾ø´Â ¿ÀºêÁ§Æ®¿Í Ãæµ¹Çß½À´Ï´Ù!");
+                Debug.LogError("'Monster' íƒœê·¸ê°€ ë¶™ì—ˆì§€ë§Œ Monster ìŠ¤í¬ë¦½íŠ¸ê°€ ì—†ëŠ” ì˜¤ë¸Œì íŠ¸ì™€ ì¶©ëŒí–ˆìŠµë‹ˆë‹¤!");
                 Destroy(gameObject);
             }
         }
@@ -35,4 +35,5 @@ public class Bullet : MonoBehaviour
     {
         damageAmount = damage;
     }
+
 }

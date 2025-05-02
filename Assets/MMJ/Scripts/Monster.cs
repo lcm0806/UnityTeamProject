@@ -5,21 +5,24 @@ public class Monster : MonoBehaviour
 {
     public enum Type { A, B, C, D };
     public Type monsterType;
+
     public int maxHealth;
     public int curHealth;
+
     public Transform target;
     public float moveSpeed;
+
     public BoxCollider meleeArea;
     public GameObject bullet;
+
     public bool isChase;
     public bool isAttack;
+    public bool isDead;
 
-
-    Rigidbody rigid;
-    BoxCollider boxCollider;
-    Material mat;
-    Animator anime;
-
+    public Rigidbody rigid;
+    public BoxCollider boxCollider;
+    public Material mat;
+    public Animator anime;
 
     private void Awake()
     {
@@ -31,14 +34,9 @@ public class Monster : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "공격수단") //todo
+        if (other.tag == "Bullet")
         {
-            //공격수단(태그지정) 공격수단이름 = other.GetComponent<공격수단>();
-            //curHealth -= 공격수단공격력;
             Vector3 reactVec = transform.position - other.transform.position;
-
-            //Destroy(other.gameObject); //(총알 같은 투사체일경우 맞았을때 삭제)
-
             StartCoroutine(OnDamage(reactVec));
         }
     }
@@ -50,10 +48,6 @@ public class Monster : MonoBehaviour
             anime.SetBool("isWalk", true);
             Trace();
         }
-        //  else
-        //  {
-        //      anime.SetBool("isWalk", false);
-        //  }
     }
 
     private void FixedUpdate()
@@ -63,6 +57,8 @@ public class Monster : MonoBehaviour
 
     void Targeting()
     {
+        if (isDead) return;
+
         float targetRadius = 0;
         float targetRange = 0;
 
@@ -99,7 +95,6 @@ public class Monster : MonoBehaviour
         switch (monsterType)
         {
             case Type.A:
-
                 yield return new WaitForSeconds(0.2f);
                 meleeArea.enabled = true;
 
@@ -107,10 +102,9 @@ public class Monster : MonoBehaviour
                 meleeArea.enabled = false;
 
                 yield return new WaitForSeconds(1f);
-
                 break;
-            case Type.B:
 
+            case Type.B:
                 yield return new WaitForSeconds(0.1f);
                 rigid.AddForce(transform.forward * 20, ForceMode.Impulse);
                 meleeArea.enabled = true;
@@ -120,8 +114,8 @@ public class Monster : MonoBehaviour
                 meleeArea.enabled = false;
 
                 yield return new WaitForSeconds(2f);
-
                 break;
+
             case Type.C:
                 yield return new WaitForSeconds(0.5f);
                 GameObject instantBullet = Instantiate(bullet, transform.position, transform.rotation);
@@ -129,10 +123,8 @@ public class Monster : MonoBehaviour
                 rigidBullet.velocity = transform.forward * 20;
 
                 yield return new WaitForSeconds(2f);
-
                 break;
         }
-
 
         isChase = true;
         isAttack = false;
@@ -144,6 +136,8 @@ public class Monster : MonoBehaviour
         mat.color = Color.red;
         yield return new WaitForSeconds(0.1f);
 
+        curHealth -= 1;
+
         if (curHealth > 0)
         {
             mat.color = Color.white;
@@ -152,20 +146,21 @@ public class Monster : MonoBehaviour
         {
             mat.color = Color.gray;
             gameObject.layer = 21;
+            isDead = true;
             isChase = false;
             anime.SetTrigger("doDie");
 
             reactVec = reactVec.normalized;
             reactVec += Vector3.up;
             rigid.AddForce(reactVec * 5, ForceMode.Impulse);
+
             Destroy(gameObject, 4);
         }
     }
 
     private void Trace()
     {
-        transform.position = Vector3.MoveTowards(transform.position, target.transform.position, moveSpeed * Time.deltaTime);
-        transform.LookAt(target.transform.position);
+        transform.position = Vector3.MoveTowards(transform.position, target.position, moveSpeed * Time.deltaTime);
+        transform.LookAt(target.position);
     }
-
 }

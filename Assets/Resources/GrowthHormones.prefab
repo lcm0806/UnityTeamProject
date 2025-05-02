@@ -66,7 +66,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -927199367670048503, guid: 5c991873bb16996489a69492afd3962f, type: 3}
       propertyPath: m_Name
-      value: Syringe (1)
+      value: GrowthHormones
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 5c991873bb16996489a69492afd3962f, type: 3}
+      propertyPath: m_TagString
+      value: Item
       objectReference: {fileID: 0}
     - target: {fileID: 6029593547577436418, guid: 5c991873bb16996489a69492afd3962f, type: 3}
       propertyPath: m_Materials.Array.data[0]
