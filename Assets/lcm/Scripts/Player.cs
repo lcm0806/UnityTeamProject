@@ -264,11 +264,6 @@ public class Player : MonoBehaviour
     }
 
 
-    private void Die()
-    {
-
-    }
-
     public void UseItem(int index, itemType type)
     {
         List<Item> targetList = (type == itemType.Active) ? activeItems : passiveItems;

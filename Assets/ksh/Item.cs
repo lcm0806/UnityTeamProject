@@ -10,6 +10,9 @@ public abstract class Item
     public string itemSkillDescription;
     public itemType itemType;
     public GameObject itemPrefab;
+    public Attack attack;
+    public Player player;
+    
     public abstract void UseItem();
 }
 
@@ -103,8 +106,8 @@ public class MagicMushroom : Item //패시브아이템
         Player.Instance.Damage += 0.3f;
         Player.Instance.Speed += 0.3f;
         Player.Instance.Damage *= 1.5f;
-        player.MaxHealth += 1; //최대체력 +1 //맥스체력 설정
-        player.Health = player.MaxHealth; //모두회복
+        Player.Instance.MaxHealth += 1; //최대체력 +1 //맥스체력 설정
+        Player.Instance.CulHealth = Player.Instance.MaxHealth; //모두회복
     }
 }
 
@@ -139,9 +142,9 @@ public class BlueCap : Item //패시브아이템
 
     public override void UseItem()
     {
+        Player.Instance.MaxHealth += 1; //최대 체력 +1 //맥스체력설정
         Player.Instance.BulletSpeed += 0.7f;
         Player.Instance.Speed -= 0.3f;
-        player.MaxHealth += 1; //최대 체력 +1 //맥스체력설정
     }
 }
 
@@ -160,7 +163,7 @@ public class CricketsState : Item //패시브아이템
     {
         Player.Instance.Damage += 0.5f;
         Player.Instance.Damage *= 1.5f;
-         //눈물의 크기 커짐
+        //눈물의 크기가 커짐짐
     }
 }
 
@@ -302,7 +305,7 @@ public class TheNail : Item //액티브아이템
 
     public override void UseItem()
     {
-        //Player.Instance.SoulHealth += 0.5f;
+        Player.Instance.SoulHealth += 0.5f;
         Player.Instance.Speed -= 0.18f;
         Player.Instance.Damage += 2f;
     }
@@ -355,7 +358,7 @@ public class Cross : Item //액티브아이템
 
     public override void UseItem()
     {
-        //player.SoulHealth += 1f;
+        Player.Instance.SoulHealth += 1f;
     }
 }
 
