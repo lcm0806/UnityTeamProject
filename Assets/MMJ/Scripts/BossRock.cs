@@ -33,11 +33,12 @@ public class BossRock : MonsterBullet
         {
             angularPower += 0.02f;
 
-scaleValue += 0.5f * Time.deltaTime;  // 초당 0.5씩 증가
-transform.localScale = Vector3.one * scaleValue;
 
-            scaleValue += 0.0005f;
+            scaleValue += 0.5f * Time.deltaTime;  // 초당 0.5씩 증가
             transform.localScale = Vector3.one * scaleValue;
+
+
+
 
             rigid.AddTorque(transform.right * angularPower, ForceMode.Acceleration);
             yield return null;
