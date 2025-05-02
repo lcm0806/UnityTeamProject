@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraManager : MonoBehaviour
+public class MapManager : MonoBehaviour
 {
-    public static CameraManager instance;
+    public static MapManager instance;
     public static int currentMap;
     [SerializeField] Camera mainCamera;
     public List<GameObject> Maps;
