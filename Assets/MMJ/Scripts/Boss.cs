@@ -7,6 +7,7 @@ public class Boss : Monster
     public GameObject missile;
     public Transform missilePortA;
     public Transform missilePortB;
+    [SerializeField] BossBullet_ObjectPool bulletPool;
 
     Vector3 lookVec;
     Vector3 tauntVec;
@@ -64,13 +65,13 @@ public class Boss : Monster
         anime.SetTrigger("doShot");
 
         yield return new WaitForSeconds(0.2f);
-        GameObject instantMissileA = Instantiate(missile, missilePortA.position, missilePortA.rotation);
-        BossMonsterMissile bossMonsterMissileA = instantMissileA.GetComponent<BossMonsterMissile>();
+        PooledObject instanceA = bulletPool.GetPool(missilePortA.position, missilePortA.rotation);
+        BossMonsterMissile bossMonsterMissileA = instanceA.GetComponent<BossMonsterMissile>();
         bossMonsterMissileA.target = target;
 
         yield return new WaitForSeconds(0.3f);
-        GameObject instantMissileB = Instantiate(missile, missilePortB.position, missilePortB.rotation);
-        BossMonsterMissile bossMonsterMissileB = instantMissileB.GetComponent<BossMonsterMissile>();
+        PooledObject instanceB = bulletPool.GetPool(missilePortB.position, missilePortB.rotation);
+        BossMonsterMissile bossMonsterMissileB = instanceB.GetComponent<BossMonsterMissile>();
         bossMonsterMissileB.target = target;
 
         yield return new WaitForSeconds(2f);

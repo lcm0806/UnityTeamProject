@@ -4842,6 +4842,7 @@ GameObject:
   - component: {fileID: 6973791256682410685}
   - component: {fileID: 7448516283324106896}
   - component: {fileID: 6680725829168211919}
+  - component: {fileID: 5526812104307456553}
   m_Layer: 22
   m_Name: BossMisslie
   m_TagString: MonsterBullet
@@ -4930,7 +4931,21 @@ MonoBehaviour:
   isMelee: 0
   isrock: 0
   target: {fileID: 0}
-  moveSpeed: 3
+  moveSpeed: 5
+--- !u!114 &5526812104307456553
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6588574633023880281}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1e7145a9d401874c9ee565d18b5496f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  returnPool: {fileID: 0}
+  returnTime: 10
 --- !u!1 &8467690127110679270
 GameObject:
   m_ObjectHideFlags: 0
