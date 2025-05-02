@@ -4,92 +4,116 @@ using UnityEngine;
 
 public class ItemPickup : MonoBehaviour
 {
-    public Item item; // ÏäµÎìùÌï† ÏïÑÏù¥ÌÖú
-    public string itemNameForEditor; // ÏóêÎîîÌÑ∞ÏóêÏÑú Ïù¥Î¶ÑÏúºÎ°ú ÏïÑÏù¥ÌÖú ÏÉùÏÑ±
+    public Item item; // ?????? ??????
 
-    private void OnValidate()
+    private void Awake()
     {
-        // itemNameForEditorÎ•º Í∏∞Î∞òÏúºÎ°ú ÏïÑÏù¥ÌÖú Í∞ùÏ≤¥ ÏÉùÏÑ±
-        if (!string.IsNullOrEmpty(itemNameForEditor))
+        DetectionItem();
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
         {
-            switch (itemNameForEditor)
+            Debug.Log("√Êµπ∞®¡ˆ");
+            
+            if (item != null)
             {
-                case "SadOnion":
+                collision.gameObject.GetComponent<Player>().AcquireItem(item);
+                Destroy(gameObject);
+                Debug.Log(item.itemName + "»πµÊ");
+            }
+            else
+            {
+                Debug.Log("null");
+            }
+        }
+    }
+    
+    private void DetectionItem()
+    {
+        Debug.Log("æ∆¿Ã≈€√ ±‚»≠Ω√¿€" + gameObject.name);
+        if (CompareTag("Item") && item == null)
+        {
+                switch (gameObject.name)
+                {
+                case "SadOnion(Clone)": 
                     item = new SadOnion();
                     break;
-                case "TheInnerEye":
+                case "TheInnerEye(Clone)": 
                     item = new TheInnerEye();
                     break;
-                case "Pentagram":
+                case "Pentagram(Clone)":
                     item = new Pentagram();
                     break;
-                case "GrowthHormones":
+                case "GrowthHormones(Clone)":
                     item = new GrowthHormones();
                     break;
-                case "MagicMushroom":
+                case "MagicMushroom(Clone)":
                     item = new MagicMushroom();
                     break;
-                case "SpoonBender":
+                case "SpoonBender(Clone)":
                     item = new SpoonBender();
                     break;
-                case "BlueCap":
+                case "BlueCap(Clone)":
                     item = new BlueCap();
                     break;
-                case "CricketsState":
+                case "CricketsState(Clone)":
                     item = new CricketsState();
                     break;
-                case "TornPhoto":
+                case "TornPhoto(Clone)":
                     item = new TornPhoto();
                     break;
-                case "Polyphemus":
+                case "Polyphemus(Clone)":
                     item = new Polyphemus();
                     break;
-                case "BookOfBelial":
+                case "BookOfBelial(Clone)":
                     item = new BookOfBelial();
                     break;
-                case "YumHeart":
+                case "YumHeart(Clone)":
                     item = new YumHeart();
                     break;
-                case "BookOfShadow":
+                case "BookOfShadow(Clone)":
                     item = new BookOfShadow();
                     break;
-                case "ShoopDaWhoop":
+                case "ShoopDaWhoop(Clone)":
                     item = new ShoopDaWhoop();
                     break;
-                case "TheNail":
+                case "TheNail(Clone)":
                     item = new TheNail();
                     break;
-                case "MrBoom":
+                case "MrBoom(Clone)":
                     item = new MrBoom();
                     break;
-                case "TammysBlessing":
+                case "TammysBlessing(Clone)":
                     item = new TammysBlessing();
                     break;
-                case "Cross":
+                case "Cross(Clone)":
                     item = new Cross();
                     break;
-                case "AnarchistCookBook":
+                case "AnarchistCookBook(Clone)":
                     item = new AnarchistCookBook();
                     break;
-                case "TheHourglass":
+                case "TheHourglass(Clone)":
                     item = new TheHourglass();
                     break;
-                case "Potion":
+                case "Potion(Clone)":
                     item = new Potion();
                     break;
-                case "GoldenKey":
+                case "GoldenKey(Clone)":
                     item = new GoldenKey();
                     break;
-                case "Bomb":
+                case "Bomb(Clone)":
                     item = new Bomb();
                     break;
                 default:
                     item = null;
                     break;
+                 }
+                Debug.Log("æ∆¿Ã≈€√ ±‚»≠øœ∑·");
             }
-
-            // ÏûÖÎ†• ÌõÑ Ï¥àÍ∏∞Ìôî
-            itemNameForEditor = "";
+            
         }
     }
-}
+
+

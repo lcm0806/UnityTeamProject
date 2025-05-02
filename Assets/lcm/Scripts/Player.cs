@@ -14,27 +14,28 @@ public class Player : MonoBehaviour
         get => speed;
         set => speed = value;
     }
-
-    [SerializeField] private List<Item> acquiredItems = new List<Item>();
     [SerializeField] private List<Item> passiveItems = new List<Item>();
     [SerializeField] private List<Item> activeItems = new List<Item>();
-
-    [SerializeField] private int maxhealth;
+    [Range(10, 30)]
+    [SerializeField] private float bulletSpeed;
+    public float BulletSpeed { get => bulletSpeed; set => bulletSpeed = value;}
+    private int maxhealth;
+    public int MaxHealth { get { return maxhealth; } set { maxhealth = value; } }
     private int culhealth;
     public int CulHealth { get { return culhealth; } set { culhealth = value; } }
     [SerializeField] private float damage = 10f;
     public float Damage { get { return damage; } set { damage = value; } }
 
+
+    
     [SerializeField] private float soulhealth;
     public float SoulHealth
     {
         get => soulhealth;
         set => soulhealth = value;
     }
-
-
     [SerializeField] Attack attack;
-    [SerializeField] private float attackRate = 0.5f; //���ݼӵ�
+    [SerializeField] private float attackRate = 0.5f;
     private float nextAttackTime = 0f;
 
     private bool wDown;
@@ -44,32 +45,66 @@ public class Player : MonoBehaviour
     private bool isDodge;
     private bool isDamage = false;
 
-    private bool isInvincible = false;
-    [SerializeField] private float invincibleDuration = 0.5f;
+    
 
     private GameObject nearObject;
+    private Invincible invincibleScript;
+
 
     Rigidbody rigid;
     MeshRenderer[] meshs; 
+
 
     Vector3 moveVec;
     Vector3 sideVec;
     Vector3 dodgeVec;
 
-    Animator anim;
+    private static Player instance = null;
 
-    private void Awake()
+    public static Player Instance
     {
-        rigid = GetComponent<Rigidbody>();
-        anim = GetComponentInChildren<Animator>();
-        meshs = GetComponentsInChildren<MeshRenderer>();
+        get
+        {
+            if(instance == null)
+            {
+                instance = FindObjectOfType<Player>();
+
+                if(instance != null)
+                {
+                    Debug.LogError("Player ������Ʈ�� ���� �����ϴ�.");
+                }
+            }
+
+            return instance;
+        }
     }
 
-    void Start()
+    Animator anim;
+    private void Awake()
+    {
+        if(instance != null && instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        instance = this;
+
+
+
+        rigid = GetComponent<Rigidbody>();
+        anim = GetComponentInChildren<Animator>();
+        attack = GetComponent<Attack>();
+        meshs = GetComponentsInChildren<MeshRenderer>();
+        invincibleScript = GetComponent<Invincible>();
+    }
+
+    private void Start()
     {
         ApplyPassiveEffects();
     }
 
+    // Update is called once per frame
     private void Update()
     {
         GetInput();
@@ -77,7 +112,6 @@ public class Player : MonoBehaviour
         Turn();
         Dodge();
         Attack();
-        UseActiveItemInput();
     }
 
     private void GetInput()
@@ -108,6 +142,8 @@ public class Player : MonoBehaviour
     {
         transform.LookAt(transform.position + moveVec);
     }
+
+    
 
     private void Dodge()
     {
@@ -146,13 +182,12 @@ public class Player : MonoBehaviour
 
     public void TakeDamage(int damageAmount)
     {
-        if (!isInvincible)
+        if (invincibleScript != null && !invincibleScript.isInvincible)
         {
             CulHealth -= damageAmount;
-            Debug.Log($"플레이어 피격! 받은 데미지: {damageAmount}, 남은 체력: {health}");
+            Debug.Log($"플레이어 피격! 받은 데미지: {damageAmount}, 남은 체력: {CulHealth}");
 
-
-            StartInvincible();
+            invincibleScript.StartInvincible();
 
 
             if (CulHealth <= 0)
@@ -164,20 +199,6 @@ public class Player : MonoBehaviour
         {
             Debug.Log("플레이어 무적 상태로 데미지를 받지 않음!");
         }
-    }
-
-
-    private void StartInvincible()
-    {
-        isInvincible = true;
-        Invoke("EndInvincible", invincibleDuration);
-    }
-
-    private void EndInvincible()
-    {
-        isInvincible = false;
-
-
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -193,7 +214,12 @@ public class Player : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        
+        if(other.tag == "EnemyBullet")
+        {
+            MonsterBullet enemyBullet = other.GetComponent<MonsterBullet>();
+            CulHealth -= enemyBullet.damage;
+            StartCoroutine(OnDamage());
+        }
     }
 
     IEnumerator OnDamage()
@@ -214,24 +240,24 @@ public class Player : MonoBehaviour
 
     public void AcquireItem(Item newItem)
     {
-        acquiredItems.Add(newItem);
-        Debug.Log("아이템 획득: " + newItem.itemName + " (" + newItem.itemType + ")");
-
-        if (newItem.itemType == itemType.Passive)
+        if(newItem.itemType == itemType.Passive)
         {
+            newItem.attack = this.attack;
+            newItem.player = this;
             passiveItems.Add(newItem);
             ApplyPassiveEffects();
         }
-        else if (newItem.itemType == itemType.Active)
+        else if(newItem.itemType == itemType.Active)
         {
             activeItems.Add(newItem);
-        }
 
-        UpdateHasItemsUI();
+        }
+        Debug.Log("아이템 획득 :" + newItem.itemName + " (" + newItem.itemType + ")");
     }
 
     private void ApplyPassiveEffects()
     {
+        // 현재는 간단하게 로그만 출력, 실제 효과 적용 로직 구현 필요
         foreach (Item item in passiveItems)
         {
             if (item.itemType == itemType.Passive)
@@ -241,32 +267,10 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void UseActiveItemInput()
-    {
-        if (Input.GetKeyDown(KeyCode.Alpha1) && activeItems.Count > 0)
-        {
-            UseItem(0, itemType.Active);
-        }
-    }
 
-    public void UseItem(int index)
+    private void Die()
     {
-        if (index >= 0 && index < acquiredItems.Count)
-        {
-            if (acquiredItems[index].itemType == itemType.Active)
-            {
-                Debug.Log("액티브 아이템 사용: " + acquiredItems[index].itemName);
-                acquiredItems[index].UseItem();
-            }
-            else
-            {
-                Debug.Log("해당 아이템은 액티브 타입이 아닙니다.");
-            }
-        }
-        else
-        {
-            Debug.Log("해당 인덱스의 아이템은 사용할 수 없습니다.");
-        }
+
     }
 
     public void UseItem(int index, itemType type)
@@ -277,31 +281,41 @@ public class Player : MonoBehaviour
         {
             if (targetList[index].itemType == type)
             {
-                Debug.Log($"[{type}] 아이템 사용: {targetList[index].itemName}");
-                targetList[index].UseItem();
+                Debug.Log("액티브 아이템 사용: " + targetList[index].itemName);
+                targetList[index].UseItem(); // 액티브 아이템의 UseItem() 호출 (실제 효과 구현)
+                // 사용 후 아이템 제거 또는 쿨타임 처리 등 추가 로직 필요
+                if (type == itemType.Active)
+                {
+                    // 예시: 사용 후 첫 번째 액티브 아이템 제거
+                    // activeItems.RemoveAt(index);
+                    // UpdateActiveItemUI();
+                }
             }
             else
             {
-                Debug.Log($"선택된 아이템은 {type} 타입이 아닙니다.");
+                Debug.Log("해당 슬롯은 " + type + " 아이템이 아닙니다.");
             }
         }
-    }
-
-    private void UpdateHasItemsUI()
-    {
-        Debug.Log("보유한 전체 아이템 목록:");
-        for (int i = 0; i < acquiredItems.Count; i++)
+        else
         {
-            Debug.Log($"{i + 1}: {acquiredItems[i].itemName} ({acquiredItems[i].itemType})");
+            Debug.Log("??? ?琯????? ???????? ???????.");
         }
     }
 
+    private void Die()
+    {
+        Debug.Log("플레이어 사망!");
+    }
+
+    // UI 업데이트 (임시)
     private void UpdatePassiveItemsUI()
     {
-        Debug.Log("보유한 패시브 아이템 목록:");
+        // 실제 UI 시스템에 맞게 구현해야 함
+        Debug.Log("현재 보유 아이템:");
         for (int i = 0; i < passiveItems.Count; i++)
         {
             Debug.Log($"{i + 1}: {passiveItems[i].itemName} ({passiveItems[i].itemType})");
         }
     }
+
 }
