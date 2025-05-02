@@ -10,6 +10,9 @@ public abstract class Item
     public string itemSkillDescription;
     public itemType itemType;
     public GameObject itemPrefab;
+    public Attack attack;
+    public Player player;
+    
     public abstract void UseItem();
 }
 
@@ -104,7 +107,7 @@ public class MagicMushroom : Item //패시브아이템
         Player.Instance.Speed += 0.3f;
         Player.Instance.Damage *= 1.5f;
         Player.Instance.MaxHealth += 1; //최대체력 +1 //맥스체력 설정
-        Player.Instance.culhealth = Player.instance.MaxHealth; //모두회복
+        Player.Instance.CulHealth = Player.Instance.MaxHealth; //모두회복
     }
 }
 
