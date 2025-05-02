@@ -5,32 +5,35 @@ using UnityEngine.UIElements;
 
 public class Bullet : MonoBehaviour
 {
-    [SerializeField] private int damageAmount;
 
+    [SerializeField] private float damageAmount;
+    Player player;
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Floor") || collision.gameObject.CompareTag("Wall"))
+        if (collision.gameObject.tag == "Floor" || collision.gameObject.tag == "Wall")
         {
-            Destroy(gameObject); // ¹Ù´ÚÀÌ³ª º®¿¡ ºÎµúÈ÷¸é ÃÑ¾ËÀ» ÆÄ±«ÇÕ´Ï´Ù.
+            Destroy(gameObject, 3);
         }
         else if (collision.gameObject.tag == "Monster")
         {
             Monster monster = collision.gameObject.GetComponent<Monster>();
             if (monster != null)
             {
+
                 //monster.TakeDamage(damage);
                 Destroy(gameObject);
             }
             else
             {
-                Debug.LogError("'Monster' ÅÂ±×°¡ ºÙ¾úÁö¸¸ Monster ½ºÅ©¸³Æ®°¡ ¾ø´Â ¿ÀºêÁ§Æ®¿Í Ãæµ¹Çß½À´Ï´Ù!");
+                Debug.LogError("'Monster' íƒœê·¸ê°€ ë¶™ì—ˆì§€ë§Œ Monster ìŠ¤í¬ë¦½íŠ¸ê°€ ì—†ëŠ” ì˜¤ë¸Œì íŠ¸ì™€ ì¶©ëŒí–ˆìŠµë‹ˆë‹¤!");
                 Destroy(gameObject);
             }
         }
     }
 
-    public void SetDamage(int damage)
+    public void SetDamage(float damage)
     {
         damageAmount = damage;
     }
+
 }
