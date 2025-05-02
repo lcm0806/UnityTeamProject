@@ -7,8 +7,8 @@ public class EnemySpawner : MonoBehaviour
 {
     public GameObject enemyPrefab;
     private EnemyDeath spawnedEnemy;
-
-    private void OnEnable()
+    public UnityEvent OnEnemyKilled;
+    private void Start()
     {
         SpawnEnemy();
     }
@@ -34,9 +34,6 @@ public class EnemySpawner : MonoBehaviour
 
     private void HandleEnemyDeath()
     {
-        if (LevelManager.Instance != null)
-        {
-            LevelManager.Instance.OnEnemyKilled();
-        }
+        OnEnemyKilled?.Invoke();
     }
 }

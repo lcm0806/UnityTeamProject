@@ -22,7 +22,7 @@ public class LevelManager : MonoBehaviour
                 door.SetActive(true);
             }
         }
-        if(doorList != null)
+        if(loadpointList != null)
         {
             foreach (var loadpoint in loadpointList)
             {
@@ -46,7 +46,7 @@ public class LevelManager : MonoBehaviour
                     door.SetActive(false);
                 }
             }
-            if (doorList != null)
+            if (loadpointList != null)
             {
                 foreach (var loadpoint in loadpointList)
                 {

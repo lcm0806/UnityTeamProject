@@ -9,7 +9,6 @@ public class EnemyDeath : MonoBehaviour
 
     public void OnDisable()
     {
-        
         Die();
     }
 
