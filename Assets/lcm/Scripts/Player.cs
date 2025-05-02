@@ -11,6 +11,12 @@ public class Player : MonoBehaviour
     [SerializeField] private float jumpPower;
     [SerializeField] private int health;
     [SerializeField] private int Damage;
+    [SerializeField] private int coin;
+    [SerializeField] private int hasGrenades;
+
+    [SerializeField] private int maxHasGrenades;
+    [SerializeField] private int maxHealth;
+    [SerializeField] private int maxCoin;
 
     private bool wDown;
     private bool jDown;
