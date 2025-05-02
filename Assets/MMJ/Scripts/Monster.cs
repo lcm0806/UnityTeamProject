@@ -10,6 +10,8 @@ public class Monster : MonoBehaviour
     public Transform target;
     public float moveSpeed;
     public bool isChase;
+    public bool isAttack;
+    public bool isDead;
 
 
     Rigidbody rigid;
@@ -28,13 +30,13 @@ public class Monster : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "°ø°Ý¼ö´Ü") //todo
+        if (other.tag == "ï¿½ï¿½ï¿½Ý¼ï¿½ï¿½ï¿½") //todo
         {
-            //°ø°Ý¼ö´Ü(ÅÂ±×ÁöÁ¤) °ø°Ý¼ö´ÜÀÌ¸§ = other.GetComponent<°ø°Ý¼ö´Ü>();
-            //curHealth -= °ø°Ý¼ö´Ü°ø°Ý·Â;
+            //ï¿½ï¿½ï¿½Ý¼ï¿½ï¿½ï¿½(ï¿½Â±ï¿½ï¿½ï¿½ï¿½ï¿½) ï¿½ï¿½ï¿½Ý¼ï¿½ï¿½ï¿½ï¿½Ì¸ï¿½ = other.GetComponent<ï¿½ï¿½ï¿½Ý¼ï¿½ï¿½ï¿½>();
+            //curHealth -= ï¿½ï¿½ï¿½Ý¼ï¿½ï¿½Ü°ï¿½ï¿½Ý·ï¿½;
             Vector3 reactVec = transform.position - other.transform.position;
 
-            //Destroy(other.gameObject); //(ÃÑ¾Ë °°Àº Åõ»çÃ¼ÀÏ°æ¿ì ¸Â¾ÒÀ»¶§ »èÁ¦)
+            //Destroy(other.gameObject); //(ï¿½Ñ¾ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ã¼ï¿½Ï°ï¿½ï¿½ ï¿½Â¾ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
 
             StartCoroutine(OnDamage(reactVec));
         }
