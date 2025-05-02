@@ -16,18 +16,17 @@ public class Player : MonoBehaviour
     }
     [SerializeField] private List<Item> passiveItems = new List<Item>();
     [SerializeField] private List<Item> activeItems = new List<Item>();
-    [SerializeField] private int maxhealth;
+    [Range(10, 30)]
+    [SerializeField] private float bulletSpeed;
+    public float BulletSpeed { get => bulletSpeed; set => bulletSpeed = value;}
+    private int maxhealth;
+    public int MaxHealth { get { return maxhealth; } set { maxhealth = value; } }
     private int culhealth;
     public int CulHealth { get { return culhealth; } set { culhealth = value; } }
     [SerializeField] private float damage = 10f;
     public float Damage { get { return damage; } set { damage = value; } }
 
 
-    public int MaxHealth
-    {
-        get => maxHealth;
-        set => maxHealth = value;
-    }
     
     [SerializeField] private float soulhealth;
     public float SoulHealth
@@ -46,10 +45,10 @@ public class Player : MonoBehaviour
     private bool isDodge;
     private bool isDamage = false;
 
-    private bool isInvincible = false;
-    [SerializeField] private float invincibleDuration = 0.5f;
+    
 
     private GameObject nearObject;
+    private Invincible invincibleScript;
 
 
     Rigidbody rigid;
@@ -60,13 +59,44 @@ public class Player : MonoBehaviour
     Vector3 sideVec;
     Vector3 dodgeVec;
 
+    private static Player instance = null;
+
+    public static Player Instance
+    {
+        get
+        {
+            if(instance == null)
+            {
+                instance = FindObjectOfType<Player>();
+
+                if(instance != null)
+                {
+                    Debug.LogError("Player ������Ʈ�� ���� �����ϴ�.");
+                }
+            }
+
+            return instance;
+        }
+    }
+
     Animator anim;
     private void Awake()
     {
+        if(instance != null && instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        instance = this;
+
+
+
         rigid = GetComponent<Rigidbody>();
         anim = GetComponentInChildren<Animator>();
         attack = GetComponent<Attack>();
         meshs = GetComponentsInChildren<MeshRenderer>();
+        invincibleScript = GetComponent<Invincible>();
     }
 
     private void Start()
@@ -152,24 +182,12 @@ public class Player : MonoBehaviour
 
     public void TakeDamage(int damageAmount)
     {
-        // 무적 상태가 아닐 때만 데미지를 받음
-        if (!isInvincible)
+        if (invincibleScript != null && !invincibleScript.isInvincible)
         {
             CulHealth -= damageAmount;
-            Debug.Log($"플레이어 피격! 받은 데미지: {damageAmount}, 남은 체력: {health}");
-            // 피격 애니메이션 재생 (선택 사항)
-            //if (anim != null)
-            //{
-            //    anim.SetTrigger("doHit");
-            //}
+            Debug.Log($"플레이어 피격! 받은 데미지: {damageAmount}, 남은 체력: {CulHealth}");
 
-            // 피격 시 무적 상태 시작 (선택 사항)
-            StartInvincible();
-
-            // 체력이 0 이하로 떨어졌을 때 사망 처리
-            if (health <= 0)
-
-            StartInvincible();
+            invincibleScript.StartInvincible();
 
 
             if (CulHealth <= 0)
@@ -181,20 +199,6 @@ public class Player : MonoBehaviour
         {
             Debug.Log("플레이어 무적 상태로 데미지를 받지 않음!");
         }
-    }
-
-
-    private void StartInvincible()
-    {
-        isInvincible = true;
-        // 무적 시간 후 무적 상태 해제
-        Invoke("EndInvincible", invincibleDuration);
-        // 필요하다면 무적 상태 시 시각적 효과를 줄 수도 있습니다.
-    }
-
-    private void EndInvincible()
-    {
-        isInvincible = false;
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -210,7 +214,12 @@ public class Player : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        
+        if(other.tag == "EnemyBullet")
+        {
+            MonsterBullet enemyBullet = other.GetComponent<MonsterBullet>();
+            CulHealth -= enemyBullet.damage;
+            StartCoroutine(OnDamage());
+        }
     }
 
     IEnumerator OnDamage()
@@ -258,6 +267,11 @@ public class Player : MonoBehaviour
         }
     }
 
+
+    private void Die()
+    {
+
+    }
 
     public void UseItem(int index, itemType type)
     {
