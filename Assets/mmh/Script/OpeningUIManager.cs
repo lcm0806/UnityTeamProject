@@ -107,8 +107,8 @@ public class OpeningUIManager : MonoBehaviour
     public void OnSettingButton()
     {
         Debug.Log("Go to Setting Panel");
-        if (panelParent != null)
-            panelParent.gameObject.SetActive(false);
+        //if (panelParent != null)
+        //    panelParent.gameObject.SetActive(false);
 
         if (settingPanel != null)
         {
@@ -123,8 +123,8 @@ public class OpeningUIManager : MonoBehaviour
         if (settingPanel != null)
             settingPanel.SetActive(false);
 
-        if (panelParent != null)
-            panelParent.gameObject.SetActive(true);
+        // if (panelParent != null)
+        //     panelParent.gameObject.SetActive(true);
 
         currentIndex = 2;
         UpdatePanels();
