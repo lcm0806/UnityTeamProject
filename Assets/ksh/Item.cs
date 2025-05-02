@@ -42,7 +42,7 @@ public class TheInnerEye : Item //패시브아이템
 {
     public TheInnerEye()
     {
-        itemName = "내면의 눈";
+        itemName = "민호의 슬픈 파란 눈";
         itemDescription = "어디선가 슬퍼보이는 눈..";
         itemSkillDescription = "Triple Shot";
         itemType = itemType.Passive;
