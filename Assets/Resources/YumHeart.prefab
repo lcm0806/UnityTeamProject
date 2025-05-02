@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 1968900073997626013}
   - component: {fileID: 5054189105884635172}
   - component: {fileID: 2826130811173302791}
+  - component: {fileID: 7467281973419649094}
+  - component: {fileID: 2911894899762174809}
   m_Layer: 0
   m_Name: YumHeart
   m_TagString: Item
@@ -82,6 +84,30 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.893699, y: 1.6378711, z: 0.6458223}
   m_Center: {x: 0.019460842, y: -0.07385783, z: -0.009394959}
+--- !u!114 &7467281973419649094
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1845196448072212678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c7358c8fb67e0b49ace67b9b5cdbf7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2911894899762174809
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1845196448072212678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11674fa767072294d94f1e798b2ee974, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3906410397137283949
 GameObject:
   m_ObjectHideFlags: 0

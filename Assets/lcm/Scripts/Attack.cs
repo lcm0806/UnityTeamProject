@@ -20,7 +20,7 @@ public class Attack : MonoBehaviour
     private float timer;
     private float delaytime = 0.2f;
 
-    [Range(10, 30)]
+    [Range(5, 30)]
     [SerializeField] private float bulletSpeed;
     public float BulletSpeed
     {
@@ -29,7 +29,7 @@ public class Attack : MonoBehaviour
     }
 
     
-    public void Fire(int damage)
+    public void Fire(float damage)
     {
         GameObject instance = Instantiate(bulletPrefab, muzzlePoint.position, Quaternion.LookRotation(Vector3.forward));
         Rigidbody bulletRigidbody = instance.GetComponent<Rigidbody>();

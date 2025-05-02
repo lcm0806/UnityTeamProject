@@ -25,7 +25,7 @@ public class SadOnion : Item //패시브아이템
 {
     public SadOnion()
     {
-        itemName = "눈물나는 양파";
+        itemName = "만준의 눈물나는 양파";
         itemDescription = "양파를 썰면 눈이 매워지면서 눈물을 흘리는 점을 반영해 캐릭터의 눈이 초롱초롱해지며 눈물을 폭포같이 흘린다.";
         itemSkillDescription = "Tears Up";
         itemType = itemType.Passive;
@@ -69,7 +69,7 @@ public class Pentagram : Item //패시브아이템
 
     public override void UseItem()
     {
-        attack.Damage += 1f; //공격력 + 1
+        player.Damage += 1f; //공격력 + 1
     }
 }
 
@@ -86,7 +86,7 @@ public class GrowthHormones : Item //패시브아이템
 
     public override void UseItem()
     {
-        attack.Damage += 1f; //공격력 + 1
+        player.Damage += 1f; //공격력 + 1
         player.Speed += 0.4f; //이동속도 + 0.4
     }
 }
@@ -104,12 +104,11 @@ public class MagicMushroom : Item //패시브아이템
 
     public override void UseItem()
     {
-        //player.Health += 1; //최대체력 +1 //맥스체력 설정
-        //체력 모두 회복
-        attack.Damage += 0.3f;//공격력 + 0.3
+        player.MaxHealth += 1; //최대체력 +1 //맥스체력 설정
+        player.Health = player.MaxHealth; //모두회복
+        player.Damage += 0.3f;//공격력 + 0.3
         player.Speed += 0.3f; //이동속도 + 0.3
-        attack.Damage *= 1.5f; //공격력 배율 * 1.5
-        //사거리 +2.5
+        player.Damage *= 1.5f; //공격력 배율 * 1.5
     }
 }
 
@@ -143,8 +142,8 @@ public class BlueCap : Item //패시브아이템
     }
 
     public override void UseItem()
-    {
-        //player.Health += 1; //최대 체력 +1 //맥스체력설정
+    { 
+        player.MaxHealth += 1; //최대 체력 +1 //맥스체력설정
         attack.BulletSpeed += 0.7f; //공격 속도 +0.7
         player.Speed -= 0.3f; //속도 - 0.3
     }
@@ -163,8 +162,8 @@ public class CricketsState : Item //패시브아이템
 
     public override void UseItem()
     {
-        attack.Damage += 0.5f; //공격력 + 0.5
-        attack.Damage *= 1.5f; //공격력배율 * 1.5
+        player.Damage += 0.5f; //공격력 + 0.5
+        player.Damage *= 1.5f; //공격력배율 * 1.5
         //눈물의 크기 커짐
     }
 }
@@ -190,7 +189,7 @@ public class Polyphemus : Item //패시브아이템
 {
     public Polyphemus()
     {
-        itemName = "폴리페무스";
+        itemName = "민호의 충혈된 빨간 눈";
         itemDescription = "죽은 거인의 썩지 않는 눈알.";
         itemSkillDescription = "Mega Tears";
         itemType = itemType.Passive;
@@ -199,8 +198,8 @@ public class Polyphemus : Item //패시브아이템
 
     public override void UseItem()
     {
-        attack.Damage += 4f; //공격력 + 4
-        attack.Damage *= 2f; //공격력배율 * 2
+        player.Damage += 4f; //공격력 + 4
+        player.Damage *= 2f; //공격력배율 * 2
         attack.BulletSpeed *= 0.42f; //공격속도 배율 * 0.42
     }
 }
@@ -260,7 +259,7 @@ public class ShoopDaWhoop : Item //액티브아이템
 {
     public ShoopDaWhoop()
     {
-        itemName = "모두 다 사라져빔!!";
+        itemName = "석숭이의 인형";
         itemDescription = "다 사라져라!!! (단, 책임은 지지 않습니다)";
         itemSkillDescription = "BLLLARRRRGGG!";
         itemType = itemType.Active;

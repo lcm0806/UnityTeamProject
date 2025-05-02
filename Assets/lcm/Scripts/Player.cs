@@ -22,6 +22,13 @@ public class Player : MonoBehaviour
         get => health;
         set => health = value;
     }
+    [SerializeField] private int maxHealth;
+
+    public int MaxHealth
+    {
+        get => maxHealth;
+        set => maxHealth = value;
+    }
     
     [SerializeField] private float soulhealth;
     public float SoulHealth
@@ -30,8 +37,8 @@ public class Player : MonoBehaviour
         set => soulhealth = value;
     }
     
-    [SerializeField] private int damage = 10;
-    public int Damage { get { return damage; } set { damage = value; } }
+    [SerializeField] private float damage = 10f;
+    public float Damage { get { return damage; } set { damage = value; } }
     [SerializeField] Attack attack;
 
     private bool wDown;
@@ -57,13 +64,12 @@ public class Player : MonoBehaviour
     {
         rigid = GetComponent<Rigidbody>();
         anim = GetComponentInChildren<Animator>();
+        attack = GetComponent<Attack>();
     }
-    // Start is called before the first frame update
-    void Start()
+
+    private void Start()
     {
-        AcquireItem(new SadOnion());
-        AcquireItem(new Pentagram());
-        ApplyPassiveEffects();
+        Health = maxHealth;
     }
 
     // Update is called once per frame
@@ -180,25 +186,14 @@ public class Player : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         anim.SetBool("isJump", false);
-
-         // ?????? ???? ??? (?役 ????)
-         if (collision.gameObject.GetComponent<ItemPickup>() != null)
-         {
-            ItemPickup pickup = collision.gameObject.GetComponent<ItemPickup>();
-            AcquireItem(pickup.item);
-            Destroy(collision.gameObject); // ?????? ?????? ??????? ?캇?
-            ApplyPassiveEffects(); // ???? ?? ?戟?? ??? ??? ????
-            Debug.Log("?????? ???: " + pickup.item.itemName);
-         }
-
-
-
     }
 
     public void AcquireItem(Item newItem)
     {
         if(newItem.itemType == itemType.Passive)
         {
+            newItem.attack = this.attack;
+            newItem.player = this;
             passiveItems.Add(newItem);
             ApplyPassiveEffects();
         }
