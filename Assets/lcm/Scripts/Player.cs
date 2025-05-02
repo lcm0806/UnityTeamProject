@@ -21,7 +21,6 @@ public class Player : MonoBehaviour
     public int CulHealth { get { return culhealth; } set { culhealth = value; } }
     [SerializeField] private float damage = 10f;
     public float Damage { get { return damage; } set { damage = value; } }
-
     public int MaxHealth
     {
         get => maxHealth;
@@ -34,10 +33,8 @@ public class Player : MonoBehaviour
         get => soulhealth;
         set => soulhealth = value;
     }
-    [SerializeField] private float damage = 10f;
-    public float Damage { get { return damage; } set { damage = value; } }
     [SerializeField] Attack attack;
-    [SerializeField] private float attackRate = 0.5f; //���ݼӵ�
+    [SerializeField] private float attackRate = 0.5f;
     private float nextAttackTime = 0f;
 
     private bool wDown;
@@ -186,7 +183,6 @@ public class Player : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-
          if (collision.gameObject.GetComponent<ItemPickup>() != null)
          {
             ItemPickup pickup = collision.gameObject.GetComponent<ItemPickup>();
