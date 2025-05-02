@@ -43,6 +43,7 @@ GameObject:
   - component: {fileID: 5653897782540722854}
   - component: {fileID: 4458126563582589149}
   - component: {fileID: 3598237266481800563}
+  - component: {fileID: 6383771543587049761}
   m_Layer: 20
   m_Name: Monster_D
   m_TagString: Monster
@@ -146,6 +147,22 @@ MonoBehaviour:
   missile: {fileID: 6588574633023880281, guid: a44276642f302034da3a257f885d7bf1, type: 3}
   missilePortA: {fileID: 5347236865268061169}
   missilePortB: {fileID: 5597189073881728273}
+  bulletPool: {fileID: 0}
+--- !u!114 &6383771543587049761
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2877379589520346134}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20c4cb8c59b45e149a129a7f7614e6ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pool: []
+  prefab: {fileID: 5526812104307456553, guid: a44276642f302034da3a257f885d7bf1, type: 3}
+  size: 10
 --- !u!1 &6025714687981535220
 GameObject:
   m_ObjectHideFlags: 0
@@ -406,7 +423,7 @@ Animator:
   m_GameObject: {fileID: 4331418649929058705}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 94a7d44c18a5082459aacff1000e97f0, type: 2}
+  m_Controller: {fileID: 9100000, guid: 459b56812ad1c2a42a15d512a2523b52, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
