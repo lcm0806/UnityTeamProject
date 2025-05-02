@@ -17,7 +17,6 @@ public class Monster : MonoBehaviour
 
     public bool isChase;
     public bool isAttack;
-    public bool isDead;
 
     public Rigidbody rigid;
     public BoxCollider boxCollider;
@@ -146,7 +145,6 @@ public class Monster : MonoBehaviour
         {
             mat.color = Color.gray;
             gameObject.layer = 21;
-            isDead = true;
             isChase = false;
             anime.SetTrigger("doDie");
 
