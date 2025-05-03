@@ -6,6 +6,7 @@ using UnityEngine.UIElements;
 public class Bullet : MonoBehaviour
 {
     [SerializeField] private float damageAmount;
+
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "Floor" || collision.gameObject.tag == "Wall")

@@ -12244,8 +12244,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 216920116}
   m_CullTransparentMesh: 1
-<<<<<<< Updated upstream
-=======
 --- !u!1 &217507239
 GameObject:
   m_ObjectHideFlags: 8
@@ -14957,7 +14955,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
->>>>>>> Stashed changes
 --- !u!1 &273138266
 GameObject:
   m_ObjectHideFlags: 0
@@ -15033,8 +15030,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 273138266}
   m_CullTransparentMesh: 1
-<<<<<<< Updated upstream
-=======
 --- !u!1 &273478925
 GameObject:
   m_ObjectHideFlags: 8
@@ -17996,7 +17991,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2070938415}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
->>>>>>> Stashed changes
 --- !u!1 &335534155
 GameObject:
   m_ObjectHideFlags: 0
@@ -18816,7 +18810,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
->>>>>>> Stashed changes
 --- !u!1 &347753367
 GameObject:
   m_ObjectHideFlags: 0
@@ -18951,8 +18944,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 347753367}
   m_CullTransparentMesh: 1
-<<<<<<< Updated upstream
-=======
 --- !u!1 &347806580
 GameObject:
   m_ObjectHideFlags: 8
@@ -19572,7 +19563,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1954856778}
   m_LocalEulerAnglesHint: {x: -180, y: -90, z: 0}
->>>>>>> Stashed changes
 --- !u!1 &358644887
 GameObject:
   m_ObjectHideFlags: 0
@@ -42145,6 +42135,8 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 789768256}
   m_CullTransparentMesh: 1
+<<<<<<< HEAD
+=======
 <<<<<<< Updated upstream
 =======
 --- !u!1 &789933972
@@ -47190,6 +47182,7 @@ Transform:
   m_Father: {fileID: 1049465402}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 >>>>>>> Stashed changes
+>>>>>>> 3f9a23efdd4217bd39bb76885d2a4b0df522221e
 --- !u!224 &890628602 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 594885843826837191, guid: 966dc2e8af4576243b08003c4a647099, type: 3}
