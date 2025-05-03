@@ -9,6 +9,7 @@ TagManager:
   - MonsterBullet
   - Wall
   - Item
+  - Bullet
   layers:
   - Default
   - TransparentFX
@@ -33,7 +34,7 @@ TagManager:
   - Monster
   - MonsterDied
   - MonsterBullet
-  - 
+  - Bullet
   - 
   - 
   - 

@@ -82,7 +82,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 84
+  m_Constraints: 116
   m_CollisionDetection: 0
 --- !u!114 &1738420213812045733
 MonoBehaviour:
@@ -100,10 +100,10 @@ MonoBehaviour:
   maxHealth: 50
   curHealth: 50
   target: {fileID: 0}
-  moveSpeed: 5
+  moveSpeed: 10
   meleeArea: {fileID: 2314690502311439826}
   bullet: {fileID: 0}
-  isChase: 0
+  isChase: 1
   isAttack: 0
   isDead: 0
   rigid: {fileID: 0}
