@@ -25,8 +25,6 @@ public class Player : MonoBehaviour
     public int CulHealth { get { return culhealth; } set { culhealth = value; } }
     [SerializeField] private float damage = 10f;
     public float Damage { get { return damage; } set { damage = value; } }
-
-
     
     [SerializeField] private float soulhealth;
     public float SoulHealth
@@ -53,7 +51,6 @@ public class Player : MonoBehaviour
 
     Rigidbody rigid;
     MeshRenderer[] meshs; 
-
 
     Vector3 moveVec;
     Vector3 sideVec;
@@ -186,10 +183,7 @@ public class Player : MonoBehaviour
         {
             CulHealth -= damageAmount;
             Debug.Log($"플레이어 피격! 받은 데미지: {damageAmount}, 남은 체력: {CulHealth}");
-
             invincibleScript.StartInvincible();
-
-
             if (CulHealth <= 0)
             {
                 Die();
@@ -262,16 +256,13 @@ public class Player : MonoBehaviour
         {
             if (item.itemType == itemType.Passive)
             {
+
                 Debug.Log("패시브 아이템 효과 적용: " + item.itemName);
+
             }
         }
     }
 
-
-    private void Die()
-    {
-
-    }
 
     public void UseItem(int index, itemType type)
     {
