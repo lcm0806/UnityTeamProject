@@ -5,6 +5,7 @@ using UnityEngine;
 public class ItemPickup : MonoBehaviour
 {
     public Item item; // ?????? ??????
+    public Player player;
 
     private void Awake()
     {
