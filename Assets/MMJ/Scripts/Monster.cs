@@ -18,7 +18,7 @@ public class Monster : MonoBehaviour
 
     public Rigidbody rigid;
     public BoxCollider boxCollider;
-    public Material mat;
+    public MeshRenderer[] meshs;
     
     public Animator anime;
 
@@ -27,7 +27,7 @@ public class Monster : MonoBehaviour
     {
         rigid = GetComponent<Rigidbody>();
         boxCollider = GetComponent<BoxCollider>();
-        mat = GetComponentInChildren<MeshRenderer>().material;
+        meshs = GetComponentsInChildren<MeshRenderer>();
         anime = GetComponentInChildren<Animator>();
     }
 
@@ -151,16 +151,25 @@ public class Monster : MonoBehaviour
 
     IEnumerator OnDamage(Vector3 reactVec)
     {
-        mat.color = Color.red;
+        foreach (MeshRenderer mesh in meshs)
+        { 
+            mesh.material.color = Color.red;
+        }
         yield return new WaitForSeconds(0.1f);
 
         if (curHealth > 0)
         {
-            mat.color = Color.white;
+            foreach (MeshRenderer mesh in meshs)
+            {
+                mesh.material.color = Color.white;
+            }
         }
         else
         {
-            mat.color = Color.gray;
+            foreach (MeshRenderer mesh in meshs)
+            {
+                mesh.material.color = Color.gray;
+            }
             gameObject.layer = 21;
             isChase = false;
             anime.SetTrigger("doDie");
