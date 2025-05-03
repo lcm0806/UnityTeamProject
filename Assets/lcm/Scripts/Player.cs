@@ -91,7 +91,7 @@ public class Player : MonoBehaviour
 
         rigid = GetComponent<Rigidbody>();
         anim = GetComponentInChildren<Animator>();
-        attack = GetComponent<Attack>();
+        Attack attack = GetComponent<Attack>();
         meshs = GetComponentsInChildren<MeshRenderer>();
         invincibleScript = GetComponent<Invincible>();
     }
