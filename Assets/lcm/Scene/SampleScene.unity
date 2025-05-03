@@ -347,7 +347,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &520783988
 Transform:
   m_ObjectHideFlags: 0
@@ -466,11 +466,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 15
-  maxhealth: 0
+  bulletSpeed: 10
   damage: 10
+  soulhealth: 0
   attack: {fileID: 1776008821}
   attackRate: 0.5
-  invincibleDuration: 0.5
 --- !u!54 &721955885
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1072,6 +1072,11 @@ MonoBehaviour:
   bullet: {fileID: 0}
   isChase: 0
   isAttack: 1
+  isDead: 0
+  rigid: {fileID: 0}
+  boxCollider: {fileID: 0}
+  mat: {fileID: 0}
+  anime: {fileID: 0}
 --- !u!1 &1540400219 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3403024553794750845, guid: 8f5e135a19626f544908fc8f156144b9, type: 3}
@@ -1225,9 +1230,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be75f8804f915294dbe4dce80484914e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 0
   bulletPrefab: {fileID: 3843234681057504617, guid: 73bc695d61aaef54cb0221d4159edab5, type: 3}
   muzzlePoint: {fileID: 520783988}
-  bulletSpeed: 30
 --- !u!1 &1787140841
 GameObject:
   m_ObjectHideFlags: 0
