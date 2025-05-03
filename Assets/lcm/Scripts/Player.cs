@@ -163,11 +163,11 @@ public class Player : MonoBehaviour
 
     private void Attack()
     {
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            attack.Fire(damage);
-        }
-        else if (Input.GetKey(KeyCode.Q))
+      // if (Input.GetKeyDown(KeyCode.Q))
+      // {
+      //     attack.Fire(damage);
+      // }
+        if (Input.GetKey(KeyCode.Q))
         {
             if (Time.time >= nextAttackTime)
             {
