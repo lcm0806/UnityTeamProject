@@ -197,14 +197,7 @@ public class Player : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-         if (collision.gameObject.GetComponent<ItemPickup>() != null)
-         {
-            ItemPickup pickup = collision.gameObject.GetComponent<ItemPickup>();
-            AcquireItem(pickup.item);
-            Destroy(collision.gameObject);
-            ApplyPassiveEffects();
-            Debug.Log("아이템 획득: " + pickup.item.itemName);
-        }
+         
     }
     private void OnTriggerEnter(Collider other)
     {
