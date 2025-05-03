@@ -47,8 +47,17 @@ public class Monster : MonoBehaviour
         }
     }
 
+
     private void Update()
     {
+        if (isDead)
+        { 
+            StopAllCoroutines();
+            return;
+        }
+
+
+
         if (isChase)
         {
             anime.SetBool("isWalk", true);
@@ -171,6 +180,7 @@ public class Monster : MonoBehaviour
                 mesh.material.color = Color.gray;
             }
             gameObject.layer = 21;
+            isDead = true;
             isChase = false;
             anime.SetTrigger("doDie");
 
