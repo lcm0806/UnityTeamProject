@@ -98,7 +98,7 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-        ApplyPassiveEffects();
+        
     }
 
     // Update is called once per frame
@@ -207,6 +207,14 @@ public class Player : MonoBehaviour
             CulHealth -= enemyBullet.damage;
             StartCoroutine(OnDamage());
         }
+        else if (other.tag == "Item")
+        {
+            Item item = other.GetComponent<Item>();
+            switch (item.GetType())
+            {
+
+            }
+        }
     }
 
     IEnumerator OnDamage()
@@ -232,7 +240,6 @@ public class Player : MonoBehaviour
             newItem.attack = this.attack;
             newItem.player = this;
             passiveItems.Add(newItem);
-            ApplyPassiveEffects();
         }
         else if(newItem.itemType == itemType.Active)
         {
@@ -243,17 +250,6 @@ public class Player : MonoBehaviour
     }
 
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.tag == "Item")
-        {
-            Item item = other.GetComponent<Item>();
-            switch (item.GetType())
-            {
-
-            }
-        }
-    }
     private void OnTriggerStay(Collider other)
     {
         // 현재는 간단하게 로그만 출력, 실제 효과 적용 로직 구현 필요
