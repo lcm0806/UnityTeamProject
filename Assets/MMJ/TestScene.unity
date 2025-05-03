@@ -498,6 +498,7 @@ MonoBehaviour:
   bullet: {fileID: 0}
   isChase: 0
   isAttack: 0
+  isDead: 0
   rigid: {fileID: 0}
   boxCollider: {fileID: 0}
   mat: {fileID: 0}
@@ -725,14 +726,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
-  jumpPower: 10
-  health: 100
-  Damage: 10
-  coin: 0
-  hasGrenades: 0
-  maxHasGrenades: 0
-  maxHealth: 0
-  maxCoin: 0
+  bulletSpeed: 0
+  damage: 10
+  soulhealth: 0
+  attack: {fileID: 0}
+  attackRate: 0.5
 --- !u!54 &483858156
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1310,6 +1308,7 @@ MonoBehaviour:
   bullet: {fileID: 4005118072708448221, guid: a9d02a5334dc4964a91c468476fefca1, type: 3}
   isChase: 0
   isAttack: 0
+  isDead: 0
   rigid: {fileID: 0}
   boxCollider: {fileID: 0}
   mat: {fileID: 0}
@@ -1533,6 +1532,7 @@ MonoBehaviour:
   bullet: {fileID: 9094526157573967305, guid: f44b0031a2a45e146a71b9bfd96e651c, type: 3}
   isChase: 0
   isAttack: 0
+  isDead: 0
   rigid: {fileID: 0}
   boxCollider: {fileID: 0}
   mat: {fileID: 0}
@@ -1540,7 +1540,22 @@ MonoBehaviour:
   missile: {fileID: 6588574633023880281, guid: a44276642f302034da3a257f885d7bf1, type: 3}
   missilePortA: {fileID: 1628636949}
   missilePortB: {fileID: 1752478087}
-  isLook: 0
+  bulletPool: {fileID: 1012746174}
+--- !u!114 &1012746174
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1012746169}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20c4cb8c59b45e149a129a7f7614e6ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pool: []
+  prefab: {fileID: 5526812104307456553, guid: a44276642f302034da3a257f885d7bf1, type: 3}
+  size: 10
 --- !u!1 &1138872167 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3763568185796318628, guid: 4198e2587d1fcca4cb87c16c3cfed34d, type: 3}
@@ -2170,6 +2185,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7988094277207216310, guid: 83dab506297948d4d8d34c4fe12431ee, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1012746173}
+    - targetCorrespondingSourceObject: {fileID: 7988094277207216310, guid: 83dab506297948d4d8d34c4fe12431ee, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1012746174}
     - targetCorrespondingSourceObject: {fileID: 3773346728750375572, guid: 83dab506297948d4d8d34c4fe12431ee, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1824578487}
@@ -2294,6 +2312,7 @@ MonoBehaviour:
   bullet: {fileID: 0}
   isChase: 0
   isAttack: 0
+  isDead: 0
   rigid: {fileID: 0}
   boxCollider: {fileID: 0}
   mat: {fileID: 0}

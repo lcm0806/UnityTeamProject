@@ -147,7 +147,7 @@ MonoBehaviour:
   missile: {fileID: 6588574633023880281, guid: a44276642f302034da3a257f885d7bf1, type: 3}
   missilePortA: {fileID: 5347236865268061169}
   missilePortB: {fileID: 5597189073881728273}
-  bulletPool: {fileID: 0}
+  bulletPool: {fileID: 6383771543587049761}
 --- !u!114 &6383771543587049761
 MonoBehaviour:
   m_ObjectHideFlags: 0
