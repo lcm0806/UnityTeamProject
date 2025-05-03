@@ -36,4 +36,5 @@ public class BossRock : MonsterBullet
             yield return null;
         }
     }
+
 }

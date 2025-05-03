@@ -53,10 +53,9 @@ public class Monster : MonoBehaviour
         if (isDead)
         { 
             StopAllCoroutines();
+            Debug.Log("나주것어");
             return;
         }
-
-
 
         if (isChase)
         {
@@ -71,8 +70,16 @@ public class Monster : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Targeting();
+        if (!isDead)
+        {
+            Targeting();
+        }
+        else 
+        {
+            StopAllCoroutines();
+        }
     }
+
 
     void Targeting()
     {
