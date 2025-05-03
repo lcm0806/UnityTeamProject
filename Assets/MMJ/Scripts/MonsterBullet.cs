@@ -18,11 +18,16 @@ public class MonsterBullet : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (!isMelee && other.gameObject.tag == "Wall")
+        {
+            Destroy(gameObject);
+        }
+        if (!isMelee && other.gameObject.tag == "Player")
         {
             Destroy(gameObject);
         }

@@ -615,6 +615,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 15
   bulletSpeed: 10
+  culhealth: 5
   damage: 10
   soulhealth: 0
   attack: {fileID: 314646827}

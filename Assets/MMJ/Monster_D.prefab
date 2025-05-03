@@ -131,8 +131,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   monsterType: 3
-  maxHealth: 200
-  curHealth: 200
+  maxHealth: 308
+  curHealth: 308
   target: {fileID: 0}
   moveSpeed: 3
   meleeArea: {fileID: 3266846505547378775}
@@ -173,6 +173,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7086820420719715191}
   - component: {fileID: 3266846505547378775}
+  - component: {fileID: 6610936827025512458}
   m_Layer: 20
   m_Name: Melee Area
   m_TagString: MonsterBullet
@@ -216,6 +217,21 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 3.5, y: 0.5, z: 3.5}
   m_Center: {x: 0, y: 0.32, z: 0}
+--- !u!114 &6610936827025512458
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6025714687981535220}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9e5d776cee79a1489376e3a14013824, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 1
+  isMelee: 1
+  isrock: 0
 --- !u!1 &8818645683656946272
 GameObject:
   m_ObjectHideFlags: 0

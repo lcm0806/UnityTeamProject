@@ -19,6 +19,7 @@ public class Monster : MonoBehaviour
     public Rigidbody rigid;
     public BoxCollider boxCollider;
     public Material mat;
+    
     public Animator anime;
 
 
@@ -108,7 +109,7 @@ public class Monster : MonoBehaviour
             {
                 case Type.A:
 
-                    yield return new WaitForSeconds(0.2f);
+                    yield return new WaitForSeconds(0.5f);
                     meleeArea.enabled = true;
 
                     yield return new WaitForSeconds(1f);
@@ -120,7 +121,7 @@ public class Monster : MonoBehaviour
                 case Type.B:
 
                     yield return new WaitForSeconds(0.1f);
-                    rigid.AddForce(transform.forward * 20, ForceMode.Impulse);
+                    rigid.AddForce(transform.forward * 30, ForceMode.Impulse);
                     meleeArea.enabled = true;
 
                     yield return new WaitForSeconds(0.5f);

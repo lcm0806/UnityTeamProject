@@ -20,8 +20,8 @@ public class Player : MonoBehaviour
     [SerializeField] private float bulletSpeed;
     public float BulletSpeed { get => bulletSpeed; set => bulletSpeed = value;}
     private int maxhealth;
-    public int MaxHealth { get { return maxhealth; } set { maxhealth = value; } }
-    private int culhealth;
+    [SerializeField]public int MaxHealth { get { return maxhealth; } set { maxhealth = value; } } //민만준이 여기에 시리얼 라이즈 필드를 달아서 테스트함
+    [SerializeField]private int culhealth;                                                        //민만준이 여기에 시리얼 라이즈 필드를 달아서 테스트함
     public int CulHealth { get { return culhealth; } set { culhealth = value; } }
     [SerializeField] private float damage = 10f;
     public float Damage { get { return damage; } set { damage = value; } }
@@ -201,7 +201,7 @@ public class Player : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "EnemyBullet")
+        if(other.tag == "MonsterBullet") //민만준이 총알의 태그를 수정. enemyBullet -> MonsterBullet
         {
             MonsterBullet enemyBullet = other.GetComponent<MonsterBullet>();
             CulHealth -= enemyBullet.damage;

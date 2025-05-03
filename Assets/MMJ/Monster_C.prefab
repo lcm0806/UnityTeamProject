@@ -96,8 +96,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   monsterType: 2
-  maxHealth: 100
-  curHealth: 100
+  maxHealth: 60
+  curHealth: 60
   target: {fileID: 0}
   moveSpeed: 5
   meleeArea: {fileID: 0}
