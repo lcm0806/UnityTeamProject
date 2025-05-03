@@ -9,6 +9,8 @@ TagManager:
   - MonsterBullet
   - Wall
   - Item
+  - Ground
+  - Room
   layers:
   - Default
   - TransparentFX
