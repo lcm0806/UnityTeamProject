@@ -13,11 +13,8 @@ public class Attack : MonoBehaviour
 
     [SerializeField] GameObject bulletPrefab;
     [SerializeField] Transform muzzlePoint;
-
-
-    [Range(10, 30)]
-    [SerializeField] private float bulletSpeed;
-    public float BulletSpeed
+    
+    public void Fire(float damage)
     {
         get => bulletSpeed;
         set => bulletSpeed = value;
@@ -29,7 +26,7 @@ public class Attack : MonoBehaviour
 
         GameObject instance = Instantiate(bulletPrefab, muzzlePoint.position, Quaternion.LookRotation(Vector3.forward));
         Rigidbody bulletRigidbody = instance.GetComponent<Rigidbody>();
-        bulletRigidbody.velocity = muzzlePoint.forward * bulletSpeed;
+        bulletRigidbody.velocity = muzzlePoint.forward * Player.Instance.BulletSpeed;
 
         Bullet bulletComponent = instance.GetComponent<Bullet>();
         if (bulletComponent != null)
@@ -40,5 +37,9 @@ public class Attack : MonoBehaviour
         {
             Debug.LogError("생성된 총알 오브젝트에 Bullet 스크립트가 없습니다.");
         }
+
     }
+
+    
+
 }
