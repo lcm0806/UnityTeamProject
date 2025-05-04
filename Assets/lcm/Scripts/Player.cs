@@ -16,8 +16,7 @@ public class Player : MonoBehaviour
     }
     [SerializeField] private List<Item> passiveItems = new List<Item>();
     [SerializeField] private List<Item> activeItems = new List<Item>();
-    [Range(10, 30)]
-    [SerializeField] private float bulletSpeed;
+    [SerializeField] private float bulletSpeed = 30;
     public float BulletSpeed { get => bulletSpeed; set => bulletSpeed = value;}
     private int maxhealth;
     public int MaxHealth { get { return maxhealth; } set { maxhealth = value; } }
@@ -37,6 +36,20 @@ public class Player : MonoBehaviour
     [SerializeField] Attack attack;
     [SerializeField] private float attackRate = 0.5f;
     private float nextAttackTime = 0f;
+
+    [SerializeField] private float defaultBulletScale = 1f;
+    public float DefaultBulletScale
+    {
+        get => defaultBulletScale;
+        set => defaultBulletScale = value;
+    }
+
+    private float currentBulletScale;
+    public float CurrentBulletScale
+    {
+        get => currentBulletScale;
+        private set => currentBulletScale = value;
+    }
 
     private bool wDown;
     private bool jDown;
@@ -90,11 +103,10 @@ public class Player : MonoBehaviour
 
         instance = this;
 
-
-
+        currentBulletScale = defaultBulletScale;
         rigid = GetComponent<Rigidbody>();
         anim = GetComponentInChildren<Animator>();
-        attack = GetComponent<Attack>();
+        Attack attack = GetComponent<Attack>();
         meshs = GetComponentsInChildren<MeshRenderer>();
         invincibleScript = GetComponent<Invincible>();
     }
@@ -166,11 +178,8 @@ public class Player : MonoBehaviour
 
     private void Attack()
     {
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            attack.Fire(damage);
-        }
-        else if (Input.GetKey(KeyCode.Q))
+        
+        if (Input.GetKey(KeyCode.Q))
         {
             if (Time.time >= nextAttackTime)
             {
@@ -178,6 +187,18 @@ public class Player : MonoBehaviour
                 nextAttackTime = Time.time + 1f / attackRate;
             }
         }
+    }
+
+    public void SetBulletScale(float scaleFactor)
+    {
+        currentBulletScale *= scaleFactor;
+        Debug.Log($"불렛 크기가 {currentBulletScale} 배로 변경되었습니다.");
+        // 필요하다면 현재 발사되고 있는 불렛들의 크기를 즉시 업데이트하는 로직 추가
+    }
+
+    public float GetCurrentBulletScale()
+    {
+        return currentBulletScale;
     }
 
     public void TakeDamage(int damageAmount)
@@ -203,14 +224,7 @@ public class Player : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-         if (collision.gameObject.GetComponent<ItemPickup>() != null)
-         {
-            ItemPickup pickup = collision.gameObject.GetComponent<ItemPickup>();
-            AcquireItem(pickup.item);
-            Destroy(collision.gameObject);
-            ApplyPassiveEffects();
-            Debug.Log("아이템 획득: " + pickup.item.itemName);
-        }
+        
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -263,6 +277,7 @@ public class Player : MonoBehaviour
             if (item.itemType == itemType.Passive)
             {
                 Debug.Log("패시브 아이템 효과 적용: " + item.itemName);
+                item.UseItem();
             }
         }
     }

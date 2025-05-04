@@ -52,6 +52,7 @@ public class TheInnerEye : Item //패시브아이템
     public override void UseItem()
     {
         Player.Instance.BulletSpeed *= 0.51f;
+        //눈물이 3갈래로 나감
     }
 }
 
@@ -164,6 +165,7 @@ public class CricketsState : Item //패시브아이템
         Player.Instance.Damage += 0.5f;
         Player.Instance.Damage *= 1.5f;
         //눈물의 크기가 커짐짐
+        Player.Instance.SetBulletScale(1.2f);
     }
 }
 
