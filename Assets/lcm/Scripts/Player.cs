@@ -43,8 +43,6 @@ public class Player : MonoBehaviour
     private bool isDodge;
     private bool isDamage = false;
 
-    
-
     private GameObject nearObject;
     private Invincible invincibleScript;
 
@@ -139,8 +137,6 @@ public class Player : MonoBehaviour
     {
         transform.LookAt(transform.position + moveVec);
     }
-
-    
 
     private void Dodge()
     {
