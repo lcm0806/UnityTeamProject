@@ -5,8 +5,8 @@ public class Monster : MonoBehaviour
 {
     public enum Type { A, B, C, D };
     public Type monsterType;
-    public int maxHealth;
-    public int curHealth;
+    public float maxHealth;
+    public float curHealth;
     public Transform target;
     public float moveSpeed;
     public BoxCollider meleeArea;
@@ -18,7 +18,8 @@ public class Monster : MonoBehaviour
 
     public Rigidbody rigid;
     public BoxCollider boxCollider;
-    public Material mat;
+    public MeshRenderer[] meshs;
+    
     public Animator anime;
 
 
@@ -26,26 +27,36 @@ public class Monster : MonoBehaviour
     {
         rigid = GetComponent<Rigidbody>();
         boxCollider = GetComponent<BoxCollider>();
-        mat = GetComponentInChildren<MeshRenderer>().material;
+        meshs = GetComponentsInChildren<MeshRenderer>();
         anime = GetComponentInChildren<Animator>();
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "공격수단") //todo
+        if (other.tag == "Bullet")
         {
-            //공격수단(태그지정) 공격수단이름 = other.GetComponent<공격수단>();
-            //curHealth -= 공격수단공격력;
+            Bullet bullet = other.GetComponent<Bullet>();
+            curHealth -= bullet.damageAmount;
+            Destroy(other.gameObject);
             Vector3 reactVec = transform.position - other.transform.position;
 
-            //Destroy(other.gameObject); //(총알 같은 투사체일경우 맞았을때 삭제)
+            Debug.Log(curHealth);
+            
 
             StartCoroutine(OnDamage(reactVec));
         }
     }
 
+
     private void Update()
     {
+        if (isDead)
+        { 
+            StopAllCoroutines();
+            Debug.Log("나주것어");
+            return;
+        }
+
         if (isChase)
         {
             anime.SetBool("isWalk", true);
@@ -59,8 +70,16 @@ public class Monster : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Targeting();
+        if (!isDead)
+        {
+            Targeting();
+        }
+        else 
+        {
+            StopAllCoroutines();
+        }
     }
+
 
     void Targeting()
     {
@@ -72,8 +91,8 @@ public class Monster : MonoBehaviour
             switch (monsterType)
             {
                 case Type.A:
-                    targetRadius = 1.5f;
-                    targetRange = 3f;
+                    targetRadius = 1f;
+                    targetRange = 1f;
                     break;
                 case Type.B:
                     targetRadius = 1f;
@@ -100,69 +119,80 @@ public class Monster : MonoBehaviour
         isAttack = true;
         anime.SetBool("isAttack", true);
 
-        switch (monsterType)
+        if (!isDead)
         {
-            case Type.A:
+            switch (monsterType)
+            {
+                case Type.A:
 
-                yield return new WaitForSeconds(0.2f);
-                meleeArea.enabled = true;
+                    yield return new WaitForSeconds(0.5f);
+                    meleeArea.enabled = true;
 
-                yield return new WaitForSeconds(1f);
-                meleeArea.enabled = false;
+                    yield return new WaitForSeconds(1f);
+                    meleeArea.enabled = false;
 
-                yield return new WaitForSeconds(1f);
+                    yield return new WaitForSeconds(1f);
 
-                break;
-            case Type.B:
+                    break;
+                case Type.B:
 
-                yield return new WaitForSeconds(0.1f);
-                rigid.AddForce(transform.forward * 20, ForceMode.Impulse);
-                meleeArea.enabled = true;
+                    yield return new WaitForSeconds(0.1f);
+                    rigid.AddForce(transform.forward * 30, ForceMode.Impulse);
+                    meleeArea.enabled = true;
 
-                yield return new WaitForSeconds(0.5f);
-                rigid.velocity = Vector3.zero;
-                meleeArea.enabled = false;
+                    yield return new WaitForSeconds(0.5f);
+                    rigid.velocity = Vector3.zero;
+                    meleeArea.enabled = false;
 
-                yield return new WaitForSeconds(2f);
+                    yield return new WaitForSeconds(2f);
 
-                break;
-            case Type.C:
-                yield return new WaitForSeconds(0.5f);
-                GameObject instantBullet = Instantiate(bullet, transform.position, transform.rotation);
-                Rigidbody rigidBullet = instantBullet.GetComponent<Rigidbody>();
-                rigidBullet.velocity = transform.forward * 20;
+                    break;
+                case Type.C:
+                    yield return new WaitForSeconds(0.5f);
+                    GameObject instantBullet = Instantiate(bullet, transform.position, transform.rotation);
+                    Rigidbody rigidBullet = instantBullet.GetComponent<Rigidbody>();
+                    rigidBullet.velocity = transform.forward * 20;
 
-                yield return new WaitForSeconds(2f);
+                    yield return new WaitForSeconds(2f);
 
-                break;
+                    break;
+            }
+
+
+            isChase = true;
+            isAttack = false;
+            anime.SetBool("isAttack", false);
         }
-
-
-        isChase = true;
-        isAttack = false;
-        anime.SetBool("isAttack", false);
     }
 
     IEnumerator OnDamage(Vector3 reactVec)
     {
-        mat.color = Color.red;
+        foreach (MeshRenderer mesh in meshs)
+        { 
+            mesh.material.color = Color.red;
+        }
         yield return new WaitForSeconds(0.1f);
 
         if (curHealth > 0)
         {
-            mat.color = Color.white;
+            foreach (MeshRenderer mesh in meshs)
+            {
+                mesh.material.color = Color.white;
+            }
         }
         else
         {
-            mat.color = Color.gray;
+            foreach (MeshRenderer mesh in meshs)
+            {
+                mesh.material.color = Color.gray;
+            }
             gameObject.layer = 21;
+            isDead = true;
             isChase = false;
             anime.SetTrigger("doDie");
 
-            reactVec = reactVec.normalized;
-            reactVec += Vector3.up;
-            rigid.AddForce(reactVec * 5, ForceMode.Impulse);
-            Destroy(gameObject, 4);
+
+            Destroy(gameObject, 3);
         }
     }
 
