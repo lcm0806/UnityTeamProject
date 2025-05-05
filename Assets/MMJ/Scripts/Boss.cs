@@ -17,7 +17,7 @@ public class Boss : Monster
     {
         rigid = GetComponent<Rigidbody>();
         boxCollider = GetComponent<BoxCollider>();
-        mat = GetComponentInChildren<MeshRenderer>().material;
+        meshs = GetComponentsInChildren<MeshRenderer>();
         anime = GetComponentInChildren<Animator>();
 
         StartCoroutine(Think());
