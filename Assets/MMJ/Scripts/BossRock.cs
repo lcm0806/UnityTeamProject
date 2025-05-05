@@ -14,12 +14,10 @@ public class BossRock : MonsterBullet
         rigid = GetComponent<Rigidbody>();
         StartCoroutine(GainPowerTimer());
         StartCoroutine(GainPower());
+
+        Destroy(gameObject, 10f); // 오브젝트를 10초 뒤에 파괴
     }
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+
 
     IEnumerator GainPowerTimer()
     { 
@@ -32,10 +30,11 @@ public class BossRock : MonsterBullet
         while (!isShoot)
         {
             angularPower += 0.02f;
-            scaleValue += 0.0005f;
-            transform.localScale = Vector3.one * scaleValue;
+            scaleValue += 0.65f;
+            transform.localScale = Vector3.one * scaleValue * Time.deltaTime;
             rigid.AddTorque(transform.right * angularPower, ForceMode.Acceleration);
             yield return null;
         }
     }
+
 }

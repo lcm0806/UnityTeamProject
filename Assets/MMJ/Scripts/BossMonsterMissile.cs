@@ -8,16 +8,6 @@ public class BossMonsterMissile : MonsterBullet
     public float moveSpeed;
 
   
-    void Awake()
-    {
-        
-    }
-
-   
-    void Update()
-    {
-        Trace();
-    }
     private void Trace()
     {
         
