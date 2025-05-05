@@ -346,7 +346,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3500344805672581627, guid: 777038928f8e22c4cab72db75eb1539d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 43.4
+      value: 13.2
       objectReference: {fileID: 0}
     - target: {fileID: 3500344805672581627, guid: 777038928f8e22c4cab72db75eb1539d, type: 3}
       propertyPath: m_LocalRotation.w
@@ -388,6 +388,18 @@ PrefabInstance:
       propertyPath: maxHealth
       value: 60
       objectReference: {fileID: 0}
+    - target: {fileID: 3732717507832626904, guid: 777038928f8e22c4cab72db75eb1539d, type: 3}
+      propertyPath: itemprefabs.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3732717507832626904, guid: 777038928f8e22c4cab72db75eb1539d, type: 3}
+      propertyPath: itemprefabs.Array.data[0]
+      value: 
+      objectReference: {fileID: 568411293983401323, guid: e95bc7fb395341c4bbe2af10bf356a49, type: 3}
+    - target: {fileID: 3732717507832626904, guid: 777038928f8e22c4cab72db75eb1539d, type: 3}
+      propertyPath: itemprefabs.Array.data[1]
+      value: 
+      objectReference: {fileID: 5684429815976063172, guid: 0b3c9c7dfb8821d4691e64d2d18cdb08, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -493,6 +505,7 @@ MonoBehaviour:
   boxCollider: {fileID: 0}
   meshs: []
   anime: {fileID: 0}
+  itemprefabs: []
 --- !u!54 &590837574
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -679,6 +692,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Monster_D
       objectReference: {fileID: 0}
+    - target: {fileID: 2877379589520346134, guid: b51ef11fc31a727438819bbe63deb987, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3500344805672581627, guid: b51ef11fc31a727438819bbe63deb987, type: 3}
       propertyPath: m_LocalPosition.x
       value: 14.724901
@@ -794,7 +811,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4462523135328065168, guid: 464cc7c4f7ea10b47a36d7848aa9ca9a, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 41.9
+      value: 27.5
       objectReference: {fileID: 0}
     - target: {fileID: 4462523135328065168, guid: 464cc7c4f7ea10b47a36d7848aa9ca9a, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1178,8 +1195,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1313511370}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalRotation: {x: 0.31975994, y: 0.17487505, z: -0.060145628, w: 0.9292766}
+  m_LocalPosition: {x: -17.219585, y: 29.390257, z: -42.419075}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
