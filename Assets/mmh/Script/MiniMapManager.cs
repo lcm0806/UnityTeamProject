@@ -1,52 +1,56 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class MiniMapManager : MonoBehaviour
 {
-    public Image[,] roomImages = new Image[4, 4]; // 3x3 방
-    public Color normalColor = Color.gray;
-    public Color currentColor = Color.yellow;
+    [System.Serializable]
+    public class RoomData
+    {
+        public Image roomIcon;
+        public bool isVisited;
+        public bool isBossRoom;
+    }
 
-    private Vector2Int currentPos = new Vector2Int(1, 1); // 초기 위치 (중앙)
+    public RoomData[] rooms; // 0 = Room1, 1 = Room2, ...
+    public int currentRoomIndex = 0;
+
+    public Sprite defaultIcon;
+    public Sprite visitedIcon;
+    public Sprite currentIcon;
+    public Sprite bossIcon;
 
     void Start()
     {
-        // roomImages 배열 자동으로 채우기
-        for (int y = 0; y < 4; y++)
-        {
-            for (int x = 0; x < 4; x++)
-            {
-                string name = $"Room_{y}_{x}";
-                Transform t = transform.Find(name);
-                if (t != null)
-                {
-                    roomImages[y, x] = t.GetComponent<Image>();
-                    roomImages[y, x].color = normalColor;
-                }
-            }
-        }
-
         UpdateMiniMap();
     }
 
-    public void MoveTo(int x, int y)
+    public void EnterRoom(int roomIndex)
     {
-        if (x < 0 || x >= 4 || y < 0 || y >= 4) return;
-
-        currentPos = new Vector2Int(y, x); // (행, 열 순서)
+        rooms[currentRoomIndex].isVisited = true;
+        currentRoomIndex = roomIndex;
         UpdateMiniMap();
     }
 
     void UpdateMiniMap()
     {
-        for (int y = 0; y < 4; y++)
+        for (int i = 0; i < rooms.Length; i++)
         {
-            for (int x = 0; x < 4; x++)
+            if (i == currentRoomIndex)
             {
-                if (roomImages[y, x] != null)
-                    roomImages[y, x].color = (currentPos.x == y && currentPos.y == x) ? currentColor : normalColor;
+                rooms[i].roomIcon.sprite = currentIcon;
+            }
+            else if (rooms[i].isBossRoom)
+            {
+                rooms[i].roomIcon.sprite = bossIcon;
+            }
+            else if (rooms[i].isVisited)
+            {
+                rooms[i].roomIcon.sprite = visitedIcon;
+            }
+            else
+            {
+                rooms[i].roomIcon.sprite = defaultIcon;
             }
         }
     }
