@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -46,7 +47,6 @@ public class Player : MonoBehaviour
     private GameObject nearObject;
     private Invincible invincibleScript;
 
-
     Rigidbody rigid;
     MeshRenderer[] meshs; 
 
@@ -55,6 +55,7 @@ public class Player : MonoBehaviour
     Vector3 dodgeVec;
 
     private static Player instance = null;
+    private Rayser rayser;
 
     public static Player Instance
     {
@@ -97,6 +98,7 @@ public class Player : MonoBehaviour
     private void Start()
     {
         ApplyPassiveEffects();
+        rayser = GetComponent<Rayser>();
     }
 
     // Update is called once per frame
@@ -107,6 +109,11 @@ public class Player : MonoBehaviour
         Turn();
         Dodge();
         Attack();
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            rayser.Laser(damage);
+        }
     }
 
     private void GetInput()

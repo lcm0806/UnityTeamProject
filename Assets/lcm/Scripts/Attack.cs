@@ -13,6 +13,7 @@ public class Attack : MonoBehaviour
 
     [SerializeField] GameObject bulletPrefab;
     [SerializeField] Transform muzzlePoint;
+    
 
     
     
