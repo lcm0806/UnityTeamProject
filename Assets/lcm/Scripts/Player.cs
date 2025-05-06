@@ -124,7 +124,6 @@ public class Player : MonoBehaviour
         Turn();
         Dodge();
         Attack();
-        UseItem();
     }
 
     private void GetInput()
