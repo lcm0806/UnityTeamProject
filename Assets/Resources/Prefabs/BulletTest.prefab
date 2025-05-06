@@ -147,6 +147,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageAmount: 0
-  isHoming: 1
-  homingSpeed: 500
-  rotateSpeed: 200
+  startHoming: 0
+  homingSpeed: 10
+  rotationSpeed: 5

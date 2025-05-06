@@ -21,8 +21,7 @@ public class Monster : MonoBehaviour
     public MeshRenderer[] meshs;
     
     public Animator anime;
-    
-    
+
     [SerializeField] private List<GameObject> itemprefabs;
     private bool DropItem = false;
 
@@ -33,6 +32,7 @@ public class Monster : MonoBehaviour
         meshs = GetComponentsInChildren<MeshRenderer>();
         anime = GetComponentInChildren<Animator>();
     }
+
 
     private void OnTriggerEnter(Collider other)
     {
@@ -136,6 +136,16 @@ public class Monster : MonoBehaviour
                     yield return new WaitForSeconds(0.5f);
                     meleeArea.enabled = true;
 
+                    // 근접 공격 시 플레이어에게 데미지 주기
+                    Collider[] hitColliders = Physics.OverlapBox(meleeArea.bounds.center, meleeArea.bounds.extents, Quaternion.identity, LayerMask.GetMask("Player"));
+                    foreach (var hitCollider in hitColliders)
+                    {
+                        Player player = hitCollider.GetComponent<Player>();
+                        if (player != null)
+                        {
+                            player.TakeDamage(1); // 예시: 근접 공격 데미지 1
+                        }
+                    }
                     yield return new WaitForSeconds(1f);
                     meleeArea.enabled = false;
 
@@ -148,9 +158,22 @@ public class Monster : MonoBehaviour
                     rigid.AddForce(transform.forward * 30, ForceMode.Impulse);
                     meleeArea.enabled = true;
 
+                    Collider[] hitCollidersB = Physics.OverlapBox(meleeArea.bounds.center, meleeArea.bounds.extents, Quaternion.identity, LayerMask.GetMask("Player"));
+                    foreach (var hitCollider in hitCollidersB)
+                    {
+                        Player player = hitCollider.GetComponent<Player>();
+                        if (player != null)
+                        {
+                            player.TakeDamage(2); // 예시: 돌진 공격 데미지 2
+                        }
+                    }
+                    
+
                     yield return new WaitForSeconds(0.5f);
                     rigid.velocity = Vector3.zero;
                     meleeArea.enabled = false;
+
+                    
 
                     yield return new WaitForSeconds(2f);
 
@@ -160,6 +183,11 @@ public class Monster : MonoBehaviour
                     GameObject instantBullet = Instantiate(bullet, transform.position, transform.rotation);
                     Rigidbody rigidBullet = instantBullet.GetComponent<Rigidbody>();
                     rigidBullet.velocity = transform.forward * 20;
+
+                    // 생성된 총알에 MonsterBullet 스크립트 추가 및 태그 설정
+                    MonsterBullet monsterBulletComponent = instantBullet.AddComponent<MonsterBullet>();
+                    monsterBulletComponent.damage = 1; // 몬스터 총알 데미지 설정 (원하는 값으로 변경)
+                    instantBullet.tag = "MonsterBullet";
 
                     yield return new WaitForSeconds(2f);
 

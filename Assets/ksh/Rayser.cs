@@ -40,5 +40,5 @@ public class Rayser : MonoBehaviour
         laser.transform.localScale = new Vector3(1, 1, length);
         
         Destroy(laser, 0.5f);
-}
+    }
 }

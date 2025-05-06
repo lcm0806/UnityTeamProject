@@ -19,6 +19,10 @@ public class MonsterBullet : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        else if (!isMelee && collision.gameObject.tag == "Player")
+        {
+            Destroy(gameObject);
+        }
 
     }
 
@@ -30,6 +34,7 @@ public class MonsterBullet : MonoBehaviour
         }
         if (!isMelee && other.gameObject.tag == "Player")
         {
+            Player.Instance.TakeDamage(damage);
             Destroy(gameObject);
         }
     }
