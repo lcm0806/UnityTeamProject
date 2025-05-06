@@ -124,6 +124,7 @@ public class Player : MonoBehaviour
         Turn();
         Dodge();
         Attack();
+        UseItem();
     }
 
     private void GetInput()
@@ -291,14 +292,15 @@ public class Player : MonoBehaviour
         {
             if (targetList[index].itemType == type)
             {
-                Debug.Log("액티브 아이템 사용: " + targetList[index].itemName);
-                targetList[index].UseItem(); // 액티브 아이템의 UseItem() 호출 (실제 효과 구현)
-                // 사용 후 아이템 제거 또는 쿨타임 처리 등 추가 로직 필요
-                if (type == itemType.Active)
+                
+                if (type == itemType.Active && Input.GetKeyDown(KeyCode.Alpha1))
                 {
-                    // 예시: 사용 후 첫 번째 액티브 아이템 제거
-                    // activeItems.RemoveAt(index);
-                    // UpdateActiveItemUI();
+                    Debug.Log("액티브 아이템 사용: " + targetList[index].itemName);
+                    targetList[index].UseItem(); // 액티브 아이템의 UseItem() 호출 (실제 효과 구현)
+                                                 // 사용 후 아이템 제거 또는 쿨타임 처리 등 추가 로직 필요
+                                                 // 예시: 사용 후 첫 번째 액티브 아이템 제거
+                                                 // activeItems.RemoveAt(index);
+                                                 // UpdateActiveItemUI();
                 }
             }
             else
