@@ -51,8 +51,11 @@ public class TheInnerEye : Item //패시브아이템
 
     public override void UseItem()
     {
-        Player.Instance.BulletSpeed *= 0.51f;
+        
         //눈물이 3갈래로 나감
+        Attack playerAttack = Player.Instance.GetComponent<Attack>();
+        playerAttack.SetTripleShot(true); // Attack 스크립트에 트리플 샷 활성화
+        Player.Instance.BulletSpeed *= 0.51f;
     }
 }
 
@@ -344,6 +347,25 @@ public class TammysBlessing : Item //액티브아이템
     public override void UseItem()
     {
         //8방향 눈물 발사
+        Attack playerAttack = Player.Instance.GetComponent<Attack>();
+
+        if (playerAttack != null)
+        {
+            float currentDamage = playerAttack.Damage;
+
+            // 8방향 발사 활성화
+            playerAttack.Set8WayShot(true);
+
+            // 발사 (Fire 함수가 8방향 발사를 수행하도록 변경되었으므로 단순히 Fire() 호출)
+            playerAttack.Fire(currentDamage);
+
+            // 8방향 발사 비활성화 (필요에 따라 쿨타임 후에 비활성화할 수도 있습니다.)
+            playerAttack.Set8WayShot(false);
+        }
+        else
+        {
+            Debug.LogError("Player 오브젝트에 Attack 컴포넌트가 없습니다!");
+        }
     }
 }
 
