@@ -182,7 +182,7 @@ public class OpeningUIManager : MonoBehaviour
         {
             player.SetActive(true);
             Player playerScript = player.GetComponent<Player>();
-            playerScript.isActive = true;
+            //playerScript.isActive = true;
 
             if (resetPlayer) // 초기화 여부에 따라 분기
             {
