@@ -9,7 +9,7 @@ public class Bullet : MonoBehaviour
     [SerializeField] public float damageAmount;
     [SerializeField] private float homingSpeed = 10f; // 유도 속도
     private Transform target; // 추적할 대상
-    private bool isHomingEnabled = true;
+    private bool isHomingEnabled = false;
     private Rigidbody rb;
     [SerializeField] private float rotationSpeed = 5f;
     private float initialY; // 총알의 초기 Y 좌표

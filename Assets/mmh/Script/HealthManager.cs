@@ -8,8 +8,9 @@ public class HealthManager : MonoBehaviour
     public Image[] hearts; // 하트 이미지 배열
     public Sprite fullHeart; // 빨간 하트
     public Sprite emptyHeart; // 빈 하트
-    public int health = 3; // 현재 체력
-    private int maxHealth = 3; // 최대 체력
+    public int health = Player.Instance.CulHealth; // 현재 체력
+    private int maxHealth = Player.Instance.MaxHealth; // 최대 체력
+    
 
     void Update()
     {
