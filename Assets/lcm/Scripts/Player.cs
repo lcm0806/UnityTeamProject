@@ -19,7 +19,7 @@ public class Player : MonoBehaviour
     [SerializeField] private List<Item> activeItems = new List<Item>();
     [SerializeField] private float bulletSpeed = 30;
     public float BulletSpeed { get => bulletSpeed; set => bulletSpeed = value;}
-    private int maxhealth;
+    private int maxhealth = 1;
     [SerializeField]public int MaxHealth { get { return maxhealth; } set { maxhealth = value; } } //민만준이 여기에 시리얼 라이즈 필드를 달아서 테스트함
     [SerializeField]private int culhealth;                                                        //민만준이 여기에 시리얼 라이즈 필드를 달아서 테스트함
     public int CulHealth { get { return culhealth; } set { culhealth = value; } }
@@ -98,7 +98,7 @@ public class Player : MonoBehaviour
         }
 
         instance = this;
-
+        CulHealth = MaxHealth;
         currentBulletScale = defaultBulletScale;
         rigid = GetComponent<Rigidbody>();
         anim = GetComponentInChildren<Animator>();
@@ -211,6 +211,7 @@ public class Player : MonoBehaviour
             CulHealth -= damageAmount;
             Debug.Log($"플레이어 피격! 받은 데미지: {damageAmount}, 남은 체력: {CulHealth}");
             invincibleScript.StartInvincible();
+            StartCoroutine(OnDamage());
             if (CulHealth <= 0)
             {
                 Die();
@@ -219,20 +220,6 @@ public class Player : MonoBehaviour
         else
         {
             Debug.Log("플레이어 무적 상태로 데미지를 받지 않음!");
-        }
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-
-    }
-    private void OnTriggerEnter(Collider other)
-    {
-        if(other.tag == "MonsterBullet") //민만준이 총알의 태그를 수정. enemyBullet -> MonsterBullet
-        {
-            MonsterBullet enemyBullet = other.GetComponent<MonsterBullet>();
-            CulHealth -= enemyBullet.damage;
-            StartCoroutine(OnDamage());
         }
     }
 
@@ -298,7 +285,7 @@ public class Player : MonoBehaviour
                     Debug.Log("액티브 아이템 사용: " + targetList[index].itemName);
                     targetList[index].UseItem(); 
                  // 예시: 사용 후 첫 번째 액티브 아이템 제거
-                 // activeItems.RemoveAt(index);
+                    activeItems.RemoveAt(index);
                  // UpdateActiveItemUI();
                 }
             }
