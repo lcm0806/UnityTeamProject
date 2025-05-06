@@ -1,5 +1,9 @@
 fileFormatVersion: 2
-guid: 77b83a04fbdb6fd4d8d208dfa46948c2
+<<<<<<< Updated upstream
+guid: a79c0373169ae2d4a9a2832e75c350fe
+=======
+guid: 7115c89627b0b04478383ccb765ce8ba
+>>>>>>> Stashed changes
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -40,7 +44,7 @@ TextureImporter:
     wrapU: 0
     wrapV: 0
     wrapW: 0
-  nPOTScale: 1
+  nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
   spriteMode: 0
@@ -54,7 +58,7 @@ TextureImporter:
   alphaUsage: 1
   alphaIsTransparency: 0
   spriteTessellationDetail: -1
-  textureType: 0
+  textureType: 8
   textureShape: 1
   singleChannelComponent: 0
   flipbookRows: 1
