@@ -16,7 +16,7 @@ public class Attack : MonoBehaviour
 
     private bool isTripleShotEnabled = false;
     private bool is8WayShotEnabled = false;
-
+    private bool isHomingBulletEnabled = false;
 
 
     public void SetTripleShot(bool enabled)
@@ -27,6 +27,10 @@ public class Attack : MonoBehaviour
     public void Set8WayShot(bool enabled)
     {
         is8WayShotEnabled = enabled;
+    }
+    public void SetHomingBullet(bool enabled)
+    {
+        isHomingBulletEnabled = enabled;
     }
 
 
@@ -171,4 +175,5 @@ public class Attack : MonoBehaviour
 
 
     }
+
 }

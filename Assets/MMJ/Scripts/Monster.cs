@@ -61,7 +61,7 @@ public class Monster : MonoBehaviour
                 RandomItem();
                 DropItem = true;
             }
-            Debug.Log("���ְ;�");
+            Debug.Log("아이템이 없습니다.");
             return;
         }
 

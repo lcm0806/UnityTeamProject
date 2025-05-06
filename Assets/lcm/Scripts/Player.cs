@@ -291,7 +291,7 @@ public class Player : MonoBehaviour
                     Debug.Log("액티브 아이템 사용: " + targetList[index].itemName);
                     targetList[index].UseItem(); 
                  // 예시: 사용 후 첫 번째 액티브 아이템 제거
-                 // activeItems.RemoveAt(index);
+                    activeItems.RemoveAt(index);
                  // UpdateActiveItemUI();
                 }
             }
