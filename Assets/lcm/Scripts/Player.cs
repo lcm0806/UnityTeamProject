@@ -19,13 +19,11 @@ public class Player : MonoBehaviour
     [SerializeField] private float bulletSpeed = 30;
     public float BulletSpeed { get => bulletSpeed; set => bulletSpeed = value;}
     private int maxhealth;
-    public int MaxHealth { get { return maxhealth; } set { maxhealth = value; } }
-    private int culhealth;
+    [SerializeField]public int MaxHealth { get { return maxhealth; } set { maxhealth = value; } } //민만준이 여기에 시리얼 라이즈 필드를 달아서 테스트함
+    [SerializeField]private int culhealth;                                                        //민만준이 여기에 시리얼 라이즈 필드를 달아서 테스트함
     public int CulHealth { get { return culhealth; } set { culhealth = value; } }
     [SerializeField] private float damage = 10f;
     public float Damage { get { return damage; } set { damage = value; } }
-
-
     
     [SerializeField] private float soulhealth;
     public float SoulHealth
@@ -58,15 +56,12 @@ public class Player : MonoBehaviour
     private bool isDodge;
     private bool isDamage = false;
 
-    
-
     private GameObject nearObject;
     private Invincible invincibleScript;
 
 
     Rigidbody rigid;
     MeshRenderer[] meshs; 
-
 
     Vector3 moveVec;
     Vector3 sideVec;
@@ -155,8 +150,6 @@ public class Player : MonoBehaviour
         transform.LookAt(transform.position + moveVec);
     }
 
-    
-
     private void Dodge()
     {
         if (jDown && moveVec != Vector3.zero && !isDodge)
@@ -178,7 +171,10 @@ public class Player : MonoBehaviour
 
     private void Attack()
     {
-        
+      // if (Input.GetKeyDown(KeyCode.Q))
+      // {
+      //     attack.Fire(damage);
+      // }
         if (Input.GetKey(KeyCode.Q))
         {
             if (Time.time >= nextAttackTime)
@@ -207,10 +203,7 @@ public class Player : MonoBehaviour
         {
             CulHealth -= damageAmount;
             Debug.Log($"플레이어 피격! 받은 데미지: {damageAmount}, 남은 체력: {CulHealth}");
-
             invincibleScript.StartInvincible();
-
-
             if (CulHealth <= 0)
             {
                 Die();
@@ -224,11 +217,11 @@ public class Player : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        
+
     }
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "EnemyBullet")
+        if(other.tag == "MonsterBullet") //민만준이 총알의 태그를 수정. enemyBullet -> MonsterBullet
         {
             MonsterBullet enemyBullet = other.GetComponent<MonsterBullet>();
             CulHealth -= enemyBullet.damage;
@@ -276,6 +269,7 @@ public class Player : MonoBehaviour
         {
             if (item.itemType == itemType.Passive)
             {
+
                 Debug.Log("패시브 아이템 효과 적용: " + item.itemName);
                 item.UseItem();
             }

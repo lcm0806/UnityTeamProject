@@ -18,7 +18,7 @@ public abstract class Item
 
 public enum itemType
 {
-    Passive, Active, Normal
+    Passive, Active, Normal, Gold
 }
 
 public class SadOnion : Item //패시브아이템
@@ -42,7 +42,7 @@ public class TheInnerEye : Item //패시브아이템
 {
     public TheInnerEye()
     {
-        itemName = "내면의 눈";
+        itemName = "민호의 슬픈 파란 눈";
         itemDescription = "어디선가 슬퍼보이는 눈..";
         itemSkillDescription = "Triple Shot";
         itemType = itemType.Passive;
@@ -329,7 +329,7 @@ public class MrBoom : Item //액티브아이템
 
     public override void UseItem()
     {
-        //폭탄 던지기(공격력 +60)
+        
     }
 }
 
@@ -399,7 +399,22 @@ public class AnarchistCookBook : Item //액티브아이템
 
     public override void UseItem()
     {
-        //방안에 랜덤으로 폭탄 6개 소환
+        if (Player.Instance != null)
+        {
+            SixBomb sixbomb = Player.Instance.GetComponent<SixBomb>();
+            if (sixbomb != null)
+            {
+                sixbomb.RandomSpawnBomb();
+            }
+            else
+            {
+                Debug.LogError("플레이어 오브젝트에 SixBomb 스크립트가 없습니다.");
+            }
+        }
+        else
+        {
+            Debug.LogError("플레이어 싱글톤 인스턴스를 찾을 수 없습니다.");
+        }
     }
 }
 
@@ -448,7 +463,7 @@ public class GoldenKey : Item //액티브아이템
         itemName = "열쇠";
         itemDescription = "황금 빛이 나는 열쇠";
         itemSkillDescription = "Get!";
-        itemType = itemType.Normal;
+        itemType = itemType.Gold;
         itemPrefab = Resources.Load<GameObject>("GoldenKey");
     }
 

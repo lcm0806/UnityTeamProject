@@ -5,9 +5,17 @@ using UnityEngine.UIElements;
 
 public class Bullet : MonoBehaviour
 {
-    [SerializeField] private float damageAmount;
+    [SerializeField] public float damageAmount;
+    private bool hasHit = false;
+
     private void OnCollisionEnter(Collision collision)
     {
+        if (hasHit)
+        {
+            return;
+        }
+        hasHit = true;
+        
         if (collision.gameObject.tag == "Floor" || collision.gameObject.tag == "Wall")
         {
             Destroy(gameObject); // 바닥이나 벽에 부딪히면 총알을 파괴합니다.
