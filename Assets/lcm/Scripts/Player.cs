@@ -16,8 +16,7 @@ public class Player : MonoBehaviour
     }
     [SerializeField] private List<Item> passiveItems = new List<Item>();
     [SerializeField] private List<Item> activeItems = new List<Item>();
-    [Range(10, 30)]
-    [SerializeField] private float bulletSpeed;
+    [SerializeField] private float bulletSpeed = 30;
     public float BulletSpeed { get => bulletSpeed; set => bulletSpeed = value;}
     private int maxhealth;
     [SerializeField]public int MaxHealth { get { return maxhealth; } set { maxhealth = value; } } //민만준이 여기에 시리얼 라이즈 필드를 달아서 테스트함
@@ -35,6 +34,20 @@ public class Player : MonoBehaviour
     [SerializeField] Attack attack;
     [SerializeField] private float attackRate = 0.5f;
     private float nextAttackTime = 0f;
+
+    [SerializeField] private float defaultBulletScale = 1f;
+    public float DefaultBulletScale
+    {
+        get => defaultBulletScale;
+        set => defaultBulletScale = value;
+    }
+
+    private float currentBulletScale;
+    public float CurrentBulletScale
+    {
+        get => currentBulletScale;
+        private set => currentBulletScale = value;
+    }
 
     private bool wDown;
     private bool jDown;
@@ -85,8 +98,7 @@ public class Player : MonoBehaviour
 
         instance = this;
 
-
-
+        currentBulletScale = defaultBulletScale;
         rigid = GetComponent<Rigidbody>();
         anim = GetComponentInChildren<Animator>();
         Attack attack = GetComponent<Attack>();
@@ -173,6 +185,18 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void SetBulletScale(float scaleFactor)
+    {
+        currentBulletScale *= scaleFactor;
+        Debug.Log($"불렛 크기가 {currentBulletScale} 배로 변경되었습니다.");
+        // 필요하다면 현재 발사되고 있는 불렛들의 크기를 즉시 업데이트하는 로직 추가
+    }
+
+    public float GetCurrentBulletScale()
+    {
+        return currentBulletScale;
+    }
+
     public void TakeDamage(int damageAmount)
     {
         if (invincibleScript != null && !invincibleScript.isInvincible)
@@ -193,7 +217,7 @@ public class Player : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-         
+
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -247,7 +271,7 @@ public class Player : MonoBehaviour
             {
 
                 Debug.Log("패시브 아이템 효과 적용: " + item.itemName);
-
+                item.UseItem();
             }
         }
     }
@@ -261,14 +285,14 @@ public class Player : MonoBehaviour
         {
             if (targetList[index].itemType == type)
             {
-                Debug.Log("액티브 아이템 사용: " + targetList[index].itemName);
-                targetList[index].UseItem(); // 액티브 아이템의 UseItem() 호출 (실제 효과 구현)
-                // 사용 후 아이템 제거 또는 쿨타임 처리 등 추가 로직 필요
-                if (type == itemType.Active)
+                
+                if (type == itemType.Active && Input.GetKeyDown(KeyCode.Alpha1))
                 {
-                    // 예시: 사용 후 첫 번째 액티브 아이템 제거
-                    // activeItems.RemoveAt(index);
-                    // UpdateActiveItemUI();
+                    Debug.Log("액티브 아이템 사용: " + targetList[index].itemName);
+                    targetList[index].UseItem(); 
+                 // 예시: 사용 후 첫 번째 액티브 아이템 제거
+                 // activeItems.RemoveAt(index);
+                 // UpdateActiveItemUI();
                 }
             }
             else
@@ -278,7 +302,7 @@ public class Player : MonoBehaviour
         }
         else
         {
-            Debug.Log("??? ?琯????? ???????? ???????.");
+            Debug.Log("패시브 아이템은 사용할수 없습니다.");
         }
     }
 
