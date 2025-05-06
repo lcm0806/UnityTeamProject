@@ -18,7 +18,7 @@ public abstract class Item
 
 public enum itemType
 {
-    Passive, Active, Normal
+    Passive, Active, Normal, Gold
 }
 
 public class SadOnion : Item //패시브아이템
@@ -439,7 +439,7 @@ public class GoldenKey : Item //액티브아이템
         itemName = "열쇠";
         itemDescription = "황금 빛이 나는 열쇠";
         itemSkillDescription = "Get!";
-        itemType = itemType.Normal;
+        itemType = itemType.Gold;
         itemPrefab = Resources.Load<GameObject>("GoldenKey");
     }
 

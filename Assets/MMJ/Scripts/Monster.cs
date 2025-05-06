@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Monster : MonoBehaviour
@@ -15,13 +16,15 @@ public class Monster : MonoBehaviour
     public bool isAttack;
     public bool isDead;
 
-
     public Rigidbody rigid;
     public BoxCollider boxCollider;
     public MeshRenderer[] meshs;
     
     public Animator anime;
-
+    
+    
+    [SerializeField] private List<GameObject> itemprefabs;
+    private bool DropItem = false;
 
     private void Awake()
     {
@@ -53,7 +56,12 @@ public class Monster : MonoBehaviour
         if (isDead)
         { 
             StopAllCoroutines();
-            Debug.Log("Ё╙аж╟м╬Н");
+            if (!DropItem)
+            {
+                RandomItem();
+                DropItem = true;
+            }
+            Debug.Log("О©╫О©╫О©╫ж╟м╬О©╫");
             return;
         }
 
@@ -200,6 +208,17 @@ public class Monster : MonoBehaviour
     {
         transform.position = Vector3.MoveTowards(transform.position, target.transform.position, moveSpeed * Time.deltaTime);
         transform.LookAt(target.transform.position);
+    }
+
+    private void RandomItem()
+    {
+        int randomIndex = UnityEngine.Random.Range(0, itemprefabs.Count);
+        GameObject selectedPrefab = itemprefabs[randomIndex];
+        
+        GameObject item = Instantiate(selectedPrefab, transform.position, Quaternion.identity);
+        Rigidbody rigid = item.GetComponent<Rigidbody>();
+        rigid.AddForce(Vector3.up * 6f, ForceMode.Impulse);
+        rigid.AddForce(Vector3.forward * 6f, ForceMode.Impulse);
     }
 
 }
