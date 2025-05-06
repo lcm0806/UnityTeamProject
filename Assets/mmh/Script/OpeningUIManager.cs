@@ -23,6 +23,8 @@ public class OpeningUIManager : MonoBehaviour
     private bool isPaused = false;
     private Vector2 targetPosition;
 
+    public GameObject player;
+
     void Start()
     {
         if (panelParent == null)
@@ -94,7 +96,7 @@ public class OpeningUIManager : MonoBehaviour
     public void OnNewGameButton()
     {
         Debug.Log("New Game Start!");
-        StartGame();
+        StartGame(true); // 초기화 ON
     }
 
     public void OnContinueButton()
@@ -102,7 +104,7 @@ public class OpeningUIManager : MonoBehaviour
         if (!isGameActive)
         {
             Debug.Log("Continue Game Start!");
-            StartGame();
+            StartGame(false); // 초기화 OFF
         }
         else if (isPaused)
         {
@@ -146,7 +148,7 @@ public class OpeningUIManager : MonoBehaviour
 #endif
     }
 
-    private void StartGame()
+    private void StartGame(bool resetPlayer)
     {
         isGameActive = true;
         isPaused = false;
@@ -174,7 +176,24 @@ public class OpeningUIManager : MonoBehaviour
                     Debug.LogWarning("RenderCamera가 연결되지 않았습니다.");
             }
         }
+
+
+        if (player != null)
+        {
+            player.SetActive(true);
+            Player playerScript = player.GetComponent<Player>();
+            //playerScript.isActive = true;
+
+            if (resetPlayer) // 초기화 여부에 따라 분기
+            {
+                playerScript.CulHealth = playerScript.MaxHealth;
+                player.transform.position = new Vector3(0f, 0f, 0f);
+                player.transform.rotation = Quaternion.identity;
+            }
+        }
     }
+
+
 
 
     private void PauseGame()
@@ -247,4 +266,6 @@ public class OpeningUIManager : MonoBehaviour
         currentIndex = 2;
         UpdatePanels();
     }
+
+   
 }
