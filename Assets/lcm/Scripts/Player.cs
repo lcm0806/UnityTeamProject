@@ -138,6 +138,7 @@ public class Player : MonoBehaviour
         Attack attack = GetComponent<Attack>();
         meshs = GetComponentsInChildren<MeshRenderer>();
         invincibleScript = GetComponent<Invincible>();
+
     }
 
     private void Start()
