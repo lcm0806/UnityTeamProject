@@ -13,7 +13,6 @@ public class Attack : MonoBehaviour
 
     [SerializeField] GameObject bulletPrefab;
     [SerializeField] Transform muzzlePoint;
-    
 
     private bool isTripleShotEnabled = false;
     private bool is8WayShotEnabled = false;
@@ -97,28 +96,7 @@ public class Attack : MonoBehaviour
             Debug.LogError("총알 프리팹, 발사 위치, 또는 Player 인스턴스가 할당되지 않았습니다.");
         }
     }
-    private void FireHomingShot(float currentDamage)
-    {
-        GameObject instance = Instantiate(bulletPrefab, muzzlePoint.position, muzzlePoint.rotation);
-        Bullet bulletComponent = instance.GetComponent<Bullet>();
-        if (bulletComponent != null)
-        {
-            bulletComponent.SetDamage(currentDamage);
-            bulletComponent.EnableHoming(); // 총알 생성 시 호밍 활성화
-            Rigidbody bulletRigidbody = instance.GetComponent<Rigidbody>();
-            if (bulletRigidbody != null)
-            {
-                bulletRigidbody.velocity = muzzlePoint.forward * Player.Instance.BulletSpeed; // 초기 속도 부여 (호밍 시작 전)
-            }
-            //float bulletScale = Player.Instance.GetCurrentBulletScale();
-            //instance.transform.localScale = Vector3.one * bulletScale;
-        }
-        else
-        {
-            Debug.LogError("생성된 총알 오브젝트에 Bullet 스크립트가 없습니다.");
-            Destroy(instance);
-        }
-    }
+
     private void InitializeBullet(GameObject instance, Vector3 initialDirection, float currentDamage)
     {
         Rigidbody bulletRigidbody = instance.GetComponent<Rigidbody>();

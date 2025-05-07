@@ -101,7 +101,7 @@ public class Player : MonoBehaviour
 
                 if(instance != null)
                 {
-                    Debug.LogError("Player ������Ʈ�� ���� �����ϴ�.");
+                    Debug.LogError("플레이어 인스턴스가 씬에 존재하지 않습니다.");
                 }
             }
 
@@ -142,7 +142,6 @@ public class Player : MonoBehaviour
             FindObjectOfType<ActiveEquipmentUI>()?.ResetUI();
             GameBootFlags.isNewGame = false; // 한 번만 초기화되도록
         }
-
     }
 
     // Update is called once per frame
@@ -207,11 +206,7 @@ public class Player : MonoBehaviour
 
     private void Attack()
     {
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            attack.Fire(damage);
-        }
-        else if (Input.GetKey(KeyCode.Q))
+        if (Input.GetKey(KeyCode.Q))
         {
             if (Time.time >= nextAttackTime)
             {
