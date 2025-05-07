@@ -4,40 +4,73 @@ using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
-    // 각각의 레벨 내 적들의 존재를 관리하는 컴포넌트
-    // 적 스포너 갯수를 보유해야 함
-    // 적이 0명이 되면 문 오브젝트를 비활성화
-    // 적 갯수 = 스포너 갯수로 설정
+    [Header("해당 맵의 적 스포너 프리팹 갯수")]
+    [SerializeField] List<GameObject> spawnerList;
+    [Header("해당 맵의 문 갯수")]
+    [SerializeField] List<GameObject> doorList;
+    [Header("해당 맵의 로딩포인트 갯수")]
+    [SerializeField] List<GameObject> loadpointList; 
+    private int listLength;
 
-    [SerializeField] List<GameObject> enemySpanwers;
-    [SerializeField] List<GameObject> Doors;
-    private int enemyCount;
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        enemyCount = enemySpanwers.Count;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    public void OnEnemyKill()
-    {
-        enemyCount--;
-        if(enemyCount == 0)
+        if(gameObject.activeSelf == true)
         {
-            OpenDoors();
+            if (spawnerList != null)
+            {
+                listLength = spawnerList.Count;
+                ActivateAllSpawners();
+            }
+            if (doorList != null)
+            {
+                foreach (var door in doorList)
+                {
+                    if (door != null) { door.SetActive(true); }
+                }
+            }
+            if (loadpointList != null)
+            {
+                foreach (var loadpoint in loadpointList)
+                {
+                    if (loadpoint != null) { loadpoint.SetActive(false); }
+                }
+            }
+        }
+        else
+        {
+            Debug.Log($"{gameObject.name} 비활성화");
         }
     }
 
-    public void OpenDoors()
+    public void ActivateAllSpawners()
     {
-        foreach(var door in Doors)
+        foreach (var spawner in spawnerList)
         {
-            door.SetActive(false);
+            if (spawner != null) { spawner.SetActive(true); }
         }
     }
+    public void OnEnemyKilled()
+    {
+        Debug.Log("적 처치");
+        listLength--;
+        if(listLength == 0 )
+        {
+            Debug.Log("모든 적 처치!");
+            if (doorList != null)
+            {
+                foreach (var door in doorList)
+                {
+                    if (door != null) { door.SetActive(false); }
+                }
+            }
+            if (loadpointList != null)
+            {
+                foreach (var loadpoint in loadpointList)
+                {
+                    if (loadpoint != null) { loadpoint.SetActive(true); }
+                }
+            }
+        }
+    }
+
 }
