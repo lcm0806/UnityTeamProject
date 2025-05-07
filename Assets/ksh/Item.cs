@@ -12,8 +12,7 @@ public abstract class Item
 
     [Header("아이템 프리팹")]
     public GameObject itemPrefab;
-<<<<<<< Updated upstream
-=======
+
 
     [Header("아이템 아이콘 (인스펙터에서 직접 설정)")]
     [Header("아이템 아이콘 (직접 드래그)")]
@@ -22,7 +21,7 @@ public abstract class Item
     public Attack attack;
     public Player player;
 
->>>>>>> Stashed changes
+
     public abstract void UseItem();
     public void ShowIconOnUI()
     {
@@ -82,13 +81,12 @@ public class TheInnerEye : Item //패시브아이템
 
     public override void UseItem()
     {
-<<<<<<< Updated upstream
-=======
+
 
         //눈물이 3갈래로 나감
         Attack playerAttack = Player.Instance.GetComponent<Attack>();
         playerAttack.SetTripleShot(true); // Attack 스크립트에 트리플 샷 활성화
->>>>>>> Stashed changes
+
         Player.Instance.BulletSpeed *= 0.51f;
     }
 }
@@ -148,7 +146,7 @@ public class MagicMushroom : Item //패시브아이템
         Player.Instance.Speed += 0.3f;
         Player.Instance.Damage *= 1.5f;
         player.MaxHealth += 1; //최대체력 +1 //맥스체력 설정
-        player.Health = player.MaxHealth; //모두회복
+//        player.Health = player.MaxHealth; //모두회복
     }
 }
 
@@ -376,11 +374,11 @@ public class MrBoom : Item //액티브아이템
 
     public override void UseItem()
     {
-<<<<<<< Updated upstream
-        //폭탄 던지기(공격력 +60)
-=======
 
->>>>>>> Stashed changes
+        //폭탄 던지기(공격력 +60)
+
+
+
     }
 }
 

@@ -95,9 +95,10 @@ public class OpeningUIManager : MonoBehaviour
 
     public void OnNewGameButton()
     {
+
         Debug.Log("New Game Start!");
-        GameBootFlags.isNewGame = true;
-        SceneManager.LoadScene("GameScene");
+       //GameBootFlags.isNewGame = true;
+       //SceneManager.LoadScene("GameScene");
     }
 
     public void NewGame()

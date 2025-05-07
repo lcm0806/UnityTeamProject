@@ -110,8 +110,8 @@ public class Attack : MonoBehaviour
             {
                 bulletRigidbody.velocity = muzzlePoint.forward * Player.Instance.BulletSpeed; // 초기 속도 부여 (호밍 시작 전)
             }
-            float bulletScale = Player.Instance.GetCurrentBulletScale();
-            instance.transform.localScale = Vector3.one * bulletScale;
+            //float bulletScale = Player.Instance.GetCurrentBulletScale();
+            //instance.transform.localScale = Vector3.one * bulletScale;
         }
         else
         {
@@ -134,8 +134,8 @@ public class Attack : MonoBehaviour
         }
 
 
-        float bulletScale = Player.Instance.GetCurrentBulletScale();
-        instance.transform.localScale = Vector3.one * bulletScale;
+       // float bulletScale = Player.Instance.GetCurrentBulletScale();
+        //instance.transform.localScale = Vector3.one * bulletScale;
 
         Bullet bulletComponent = instance.GetComponent<Bullet>();
         if (bulletComponent != null)

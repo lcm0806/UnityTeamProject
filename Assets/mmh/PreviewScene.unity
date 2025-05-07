@@ -3110,10 +3110,10 @@ PrefabInstance:
     - target: {fileID: 289334691890424643, guid: cbc245c7c86bf1f48ae9ed1968a4889e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 11500000, guid: 9098ed558c7b0ea43b9fc619f9cf244a, type: 3}
+      objectReference: {fileID: 1849414413}
     - target: {fileID: 289334691890424643, guid: cbc245c7c86bf1f48ae9ed1968a4889e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: 
+      value: OnNewGameButton
       objectReference: {fileID: 0}
     - target: {fileID: 343205058802652999, guid: cbc245c7c86bf1f48ae9ed1968a4889e, type: 3}
       propertyPath: m_AnchorMax.y
@@ -3259,6 +3259,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1849414413}
+    - target: {fileID: 7343537207117533500, guid: cbc245c7c86bf1f48ae9ed1968a4889e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnContinueButton
+      objectReference: {fileID: 0}
     - target: {fileID: 7784958309121215935, guid: cbc245c7c86bf1f48ae9ed1968a4889e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 

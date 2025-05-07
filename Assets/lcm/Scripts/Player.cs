@@ -39,8 +39,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float attackRate = 0.5f;
     private float nextAttackTime = 0f;
 
-<<<<<<< Updated upstream
-=======
+
     [SerializeField] private float defaultBulletScale = 1f;
     [SerializeField] private GameObject pickupTextUIPrefab; // 인스펙터에서 연결할 프리팹
 
@@ -68,7 +67,7 @@ public class Player : MonoBehaviour
         private set => currentBulletScale = value;
     }
 
->>>>>>> Stashed changes
+
     private bool wDown;
     private bool jDown;
 
@@ -133,9 +132,8 @@ public class Player : MonoBehaviour
     private void Start()
     {
         ApplyPassiveEffects();
-<<<<<<< Updated upstream
-=======
-        rayser = GetComponent<Rayser>();
+
+        //rayser = GetComponent<Rayser>();
 
         if (GameBootFlags.isNewGame)
         {
@@ -144,7 +142,7 @@ public class Player : MonoBehaviour
             FindObjectOfType<ActiveEquipmentUI>()?.ResetUI();
             GameBootFlags.isNewGame = false; // 한 번만 초기화되도록
         }
->>>>>>> Stashed changes
+
     }
 
     // Update is called once per frame
@@ -235,7 +233,7 @@ public class Player : MonoBehaviour
 
             if (CulHealth <= 0)
             {
-                Die();
+                //Die();
             }
         }
         else
@@ -287,16 +285,16 @@ public class Player : MonoBehaviour
 
         if (newItem.itemType == itemType.Passive)
         {
-            newItem.attack = this.attack;
-            newItem.player = this;
+            //newItem.attack = this.attack;
+            //newItem.player = this;
             passiveItems.Add(newItem);
             ApplyPassiveEffects();
-            FindObjectOfType<PassiveEquipmentUI>()?.AddPassiveItem(newItem.itemIcon);
+            //FindObjectOfType<PassiveEquipmentUI>()?.AddPassiveItem(newItem.itemIcon);
         }
         else if (newItem.itemType == itemType.Active)
         {
             activeItems.Add(newItem);
-            FindObjectOfType<ActiveEquipmentUI>()?.AddActiveItem(newItem.itemIcon);
+            //FindObjectOfType<ActiveEquipmentUI>()?.AddActiveItem(newItem.itemIcon);
         }
         ShowPickupText(newItem.itemName);
 
@@ -316,15 +314,15 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        ItemHolder holder = other.GetComponent<ItemHolder>();
-        if (holder != null && holder.itemInstance != null)
-        {
-            AcquireItem(holder.itemInstance);
-            Destroy(other.gameObject);
-        }
-    }
+   //private void OnTriggerEnter(Collider other)
+   //{
+   //    ItemHolder holder = other.GetComponent<ItemHolder>();
+   //    if (holder != null && holder.itemInstance != null)
+   //    {
+   //        AcquireItem(holder.itemInstance);
+   //        Destroy(other.gameObject);
+   //    }
+   //}
 
 
     private void Die()
@@ -340,7 +338,7 @@ public class Player : MonoBehaviour
         {
             if (targetList[index].itemType == type)
             {
-<<<<<<< Updated upstream
+
                 Debug.Log("액티브 아이템 사용: " + targetList[index].itemName);
                 targetList[index].UseItem(); // 액티브 아이템의 UseItem() 호출 (실제 효과 구현)
                 // 사용 후 아이템 제거 또는 쿨타임 처리 등 추가 로직 필요
@@ -348,26 +346,27 @@ public class Player : MonoBehaviour
                 {
                     // 예시: 사용 후 첫 번째 액티브 아이템 제거
                     // activeItems.RemoveAt(index);
-=======
 
-                if (type == itemType.Active && Input.GetKeyDown(KeyCode.Alpha1))
+
+                    if (type == itemType.Active && Input.GetKeyDown(KeyCode.Alpha1))
+                    {
+                        Debug.Log("액티브 아이템 사용: " + targetList[index].itemName);
+                        targetList[index].UseItem();
+                        // 예시: 사용 후 첫 번째 액티브 아이템 제거
+                        activeItems.RemoveAt(index);
+
+                        // UpdateActiveItemUI();
+                    }
+                }
+                else
                 {
-                    Debug.Log("액티브 아이템 사용: " + targetList[index].itemName);
-                    targetList[index].UseItem();
-                    // 예시: 사용 후 첫 번째 액티브 아이템 제거
-                    activeItems.RemoveAt(index);
->>>>>>> Stashed changes
-                    // UpdateActiveItemUI();
+                    Debug.Log("해당 슬롯은 " + type + " 아이템이 아닙니다.");
                 }
             }
             else
             {
-                Debug.Log("해당 슬롯은 " + type + " 아이템이 아닙니다.");
+                Debug.Log("??? ?琯????? ???????? ???????.");
             }
-        }
-        else
-        {
-            Debug.Log("??? ?琯????? ???????? ???????.");
         }
     }
 
@@ -387,10 +386,10 @@ public class Player : MonoBehaviour
         transform.rotation = Quaternion.identity;
     }
 
-    private void Die()
-    {
-        Debug.Log("플레이어 사망!");
-    }
+    //private void Die()
+    //{
+    //    Debug.Log("플레이어 사망!");
+    //}
 
     // UI 업데이트 (임시)
     private void UpdatePassiveItemsUI()
