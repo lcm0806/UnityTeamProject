@@ -33,4 +33,11 @@ public class HealthManager : MonoBehaviour
                 hearts[i].sprite = emptyHeart;
         }
     }
+
+    public void ResetHealth(int max)
+    {
+        this.health = max;
+        this.maxHealth = max;
+        UpdateHearts();
+    }
 }

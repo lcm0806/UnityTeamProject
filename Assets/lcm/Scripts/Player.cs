@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using static OpeningUIManager;
 
 public class Player : MonoBehaviour
 {
@@ -38,6 +39,36 @@ public class Player : MonoBehaviour
     [SerializeField] private float attackRate = 0.5f;
     private float nextAttackTime = 0f;
 
+<<<<<<< Updated upstream
+=======
+    [SerializeField] private float defaultBulletScale = 1f;
+    [SerializeField] private GameObject pickupTextUIPrefab; // 인스펙터에서 연결할 프리팹
+
+    public void ShowPickupText(string message)
+    {
+        Vector3 spawnPos = transform.position + Vector3.up * 2f;
+        GameObject obj = Instantiate(pickupTextUIPrefab, spawnPos, Quaternion.identity);
+
+        PickupTextWorldUI textUI = obj.GetComponent<PickupTextWorldUI>();
+        if (textUI != null)
+        {
+            textUI.SetText(message);
+        }
+    }
+    public float DefaultBulletScale
+    {
+        get => defaultBulletScale;
+        set => defaultBulletScale = value;
+    }
+
+    private float currentBulletScale;
+    public float CurrentBulletScale
+    {
+        get => currentBulletScale;
+        private set => currentBulletScale = value;
+    }
+
+>>>>>>> Stashed changes
     private bool wDown;
     private bool jDown;
 
@@ -102,6 +133,18 @@ public class Player : MonoBehaviour
     private void Start()
     {
         ApplyPassiveEffects();
+<<<<<<< Updated upstream
+=======
+        rayser = GetComponent<Rayser>();
+
+        if (GameBootFlags.isNewGame)
+        {
+            ResetPlayer();
+            FindObjectOfType<PassiveEquipmentUI>()?.ResetUI();
+            FindObjectOfType<ActiveEquipmentUI>()?.ResetUI();
+            GameBootFlags.isNewGame = false; // 한 번만 초기화되도록
+        }
+>>>>>>> Stashed changes
     }
 
     // Update is called once per frame
@@ -240,20 +283,26 @@ public class Player : MonoBehaviour
 
     public void AcquireItem(Item newItem)
     {
-        if(newItem.itemType == itemType.Passive)
+        //newItem.EnsureIconLoaded();
+
+        if (newItem.itemType == itemType.Passive)
         {
             newItem.attack = this.attack;
             newItem.player = this;
             passiveItems.Add(newItem);
             ApplyPassiveEffects();
+            FindObjectOfType<PassiveEquipmentUI>()?.AddPassiveItem(newItem.itemIcon);
         }
-        else if(newItem.itemType == itemType.Active)
+        else if (newItem.itemType == itemType.Active)
         {
             activeItems.Add(newItem);
-
+            FindObjectOfType<ActiveEquipmentUI>()?.AddActiveItem(newItem.itemIcon);
         }
+        ShowPickupText(newItem.itemName);
+
+
         Debug.Log("아이템 획득 :" + newItem.itemName + " (" + newItem.itemType + ")");
-    }
+}
 
     private void ApplyPassiveEffects()
     {
@@ -264,6 +313,16 @@ public class Player : MonoBehaviour
             {
                 Debug.Log("패시브 아이템 효과 적용: " + item.itemName);
             }
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        ItemHolder holder = other.GetComponent<ItemHolder>();
+        if (holder != null && holder.itemInstance != null)
+        {
+            AcquireItem(holder.itemInstance);
+            Destroy(other.gameObject);
         }
     }
 
@@ -281,6 +340,7 @@ public class Player : MonoBehaviour
         {
             if (targetList[index].itemType == type)
             {
+<<<<<<< Updated upstream
                 Debug.Log("액티브 아이템 사용: " + targetList[index].itemName);
                 targetList[index].UseItem(); // 액티브 아이템의 UseItem() 호출 (실제 효과 구현)
                 // 사용 후 아이템 제거 또는 쿨타임 처리 등 추가 로직 필요
@@ -288,6 +348,15 @@ public class Player : MonoBehaviour
                 {
                     // 예시: 사용 후 첫 번째 액티브 아이템 제거
                     // activeItems.RemoveAt(index);
+=======
+
+                if (type == itemType.Active && Input.GetKeyDown(KeyCode.Alpha1))
+                {
+                    Debug.Log("액티브 아이템 사용: " + targetList[index].itemName);
+                    targetList[index].UseItem();
+                    // 예시: 사용 후 첫 번째 액티브 아이템 제거
+                    activeItems.RemoveAt(index);
+>>>>>>> Stashed changes
                     // UpdateActiveItemUI();
                 }
             }
@@ -300,6 +369,22 @@ public class Player : MonoBehaviour
         {
             Debug.Log("??? ?琯????? ???????? ???????.");
         }
+    }
+
+    public void ResetPlayer()
+    {
+        this.CulHealth = this.MaxHealth;
+
+        // 아이템 초기화
+        passiveItems.Clear();
+        activeItems.Clear();
+
+        // 체력 초기화 (UI 쪽과 연동된다면 HealthManager에서도 추가 작업 필요)
+        FindObjectOfType<HealthManager>()?.ResetHealth(MaxHealth);
+
+        // 위치 초기화
+        transform.position = new Vector3(0f, 5f, 0f);
+        transform.rotation = Quaternion.identity;
     }
 
     private void Die()

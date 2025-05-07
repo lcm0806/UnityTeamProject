@@ -82,6 +82,7 @@ public class NewBehaviourScript : MonoBehaviour
     private void OpenChest()
     {
         Debug.Log("상자 열렸다!");
+<<<<<<< Updated upstream
       //int TypeChoose = UnityEngine.Random.Range(0, 100);
       //if (TypeChoose < 30)
       //{
@@ -97,7 +98,28 @@ public class NewBehaviourScript : MonoBehaviour
         //Item selectedItem = CurrentItems[randomIndex];
         int randomIndex = UnityEngine.Random.Range(0,items.Count);
         Item selectedItem = items[randomIndex];
+=======
+       int TypeChoose = UnityEngine.Random.Range(0, 100);
+       if (TypeChoose < 30)
+       {
+           chooseitemType = itemType.Active;
+       }
+       else
+       {
+           chooseitemType = itemType.Passive;
+       }
+       List<Item> CurrentItems = items.FindAll(item => item.itemType == chooseitemType);
+        
+        int randomIndex = UnityEngine.Random.Range(0, CurrentItems.Count);
+        Item selectedItem = CurrentItems[randomIndex];
+
+>>>>>>> Stashed changes
         currentItem = Instantiate(selectedItem.itemPrefab, ItemSpawn.position, selectedItem.itemPrefab.transform.rotation);
+
+
+        // 아이템 정보 주입
+        ItemHolder holder = currentItem.AddComponent<ItemHolder>();
+        holder.Init(selectedItem);
         Rigidbody rigid = currentItem.GetComponent<Rigidbody>();
         rigid.AddForce(Vector3.up * 6f, ForceMode.Impulse);
         rigid.AddForce(Vector3.back * 6f, ForceMode.Impulse);

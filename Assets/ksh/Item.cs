@@ -9,8 +9,40 @@ public abstract class Item
     public string itemDescription;
     public string itemSkillDescription;
     public itemType itemType;
+
+    [Header("아이템 프리팹")]
     public GameObject itemPrefab;
+<<<<<<< Updated upstream
+=======
+
+    [Header("아이템 아이콘 (인스펙터에서 직접 설정)")]
+    [Header("아이템 아이콘 (직접 드래그)")]
+    [SerializeField] public Sprite itemIcon;
+
+    public Attack attack;
+    public Player player;
+
+>>>>>>> Stashed changes
     public abstract void UseItem();
+    public void ShowIconOnUI()
+    {
+        if (itemIcon == null)
+        {
+            Debug.LogWarning($"[Item] {itemName} 아이콘이 비어 있음!");
+            return;
+        }
+
+        if (itemType == itemType.Passive)
+        {
+            var passiveUI = GameObject.FindObjectOfType<PassiveEquipmentUI>();
+            passiveUI?.AddPassiveItem(itemIcon);
+        }
+        else if (itemType == itemType.Active)
+        {
+            var activeUI = GameObject.FindObjectOfType<ActiveEquipmentUI>();
+            activeUI?.AddActiveItem(itemIcon);
+        }
+    }
 }
 
 public enum itemType
@@ -27,6 +59,7 @@ public class SadOnion : Item //패시브아이템
         itemSkillDescription = "Tears Up";
         itemType = itemType.Passive;
         itemPrefab = Resources.Load<GameObject>("SadOnion");
+        itemIcon = Resources.Load<Sprite>("ImageSource/sadonion");
     }
 
     public override void UseItem()
@@ -44,10 +77,18 @@ public class TheInnerEye : Item //패시브아이템
         itemSkillDescription = "Triple Shot";
         itemType = itemType.Passive;
         itemPrefab = Resources.Load<GameObject>("TheInnerEye");
+        itemIcon = Resources.Load<Sprite>("ImageSource/theinnereye");
     }
 
     public override void UseItem()
     {
+<<<<<<< Updated upstream
+=======
+
+        //눈물이 3갈래로 나감
+        Attack playerAttack = Player.Instance.GetComponent<Attack>();
+        playerAttack.SetTripleShot(true); // Attack 스크립트에 트리플 샷 활성화
+>>>>>>> Stashed changes
         Player.Instance.BulletSpeed *= 0.51f;
     }
 }
@@ -61,6 +102,7 @@ public class Pentagram : Item //패시브아이템
         itemSkillDescription = "DMG Up";
         itemType = itemType.Passive;
         itemPrefab = Resources.Load<GameObject>("Pentagram");
+        itemIcon = Resources.Load<Sprite>("ImageSource/pentagram");
     }
 
     public override void UseItem()
@@ -78,6 +120,7 @@ public class GrowthHormones : Item //패시브아이템
         itemSkillDescription = "Speed + DMG up";
         itemType = itemType.Passive;
         itemPrefab = Resources.Load<GameObject>("GrowthHormones");
+        itemIcon = Resources.Load<Sprite>("ImageSource/growthhormones");
     }
 
     public override void UseItem()
@@ -96,6 +139,7 @@ public class MagicMushroom : Item //패시브아이템
         itemSkillDescription = "All Stats UP";
         itemType = itemType.Passive;
         itemPrefab = Resources.Load<GameObject>("MagicMushroom");
+        itemIcon = Resources.Load<Sprite>("ImageSource/magicmushroom");
     }
 
     public override void UseItem()
@@ -117,6 +161,7 @@ public class SpoonBender : Item //패시브아이템
         itemSkillDescription = "Homing Shots";
         itemType = itemType.Passive;
         itemPrefab = Resources.Load<GameObject>("SpoonBender");
+        itemIcon = Resources.Load<Sprite>("ImageSource/spoonbender");
     }
 
     public override void UseItem()
@@ -135,6 +180,7 @@ public class BlueCap : Item //패시브아이템
         itemSkillDescription = "HP + Tears Up, Speed Down";
         itemType = itemType.Passive;
         itemPrefab = Resources.Load<GameObject>("BlueCap");
+        itemIcon = Resources.Load<Sprite>("ImageSource/bluecap");
     }
 
     public override void UseItem()
@@ -154,6 +200,7 @@ public class CricketsState : Item //패시브아이템
         itemSkillDescription = "DMG Up";
         itemType = itemType.Passive;
         itemPrefab = Resources.Load<GameObject>("CricketsState");
+        itemIcon = Resources.Load<Sprite>("ImageSource/cricketsstate");
     }
 
     public override void UseItem()
@@ -173,6 +220,7 @@ public class TornPhoto : Item //패시브아이템
         itemSkillDescription = "Shot Speed Up";
         itemType = itemType.Passive;
         itemPrefab = Resources.Load<GameObject>("TornPhoto");
+        itemIcon = Resources.Load<Sprite>("ImageSource/tornphoto");
     }
 
     public override void UseItem()
@@ -190,6 +238,7 @@ public class Polyphemus : Item //패시브아이템
         itemSkillDescription = "Mega Tears";
         itemType = itemType.Passive;
         itemPrefab = Resources.Load<GameObject>("Polyphemus");
+        itemIcon = Resources.Load<Sprite>("ImageSource/polyphemus");
     }
 
     public override void UseItem()
@@ -209,6 +258,7 @@ public class BookOfBelial : Item //액티브아이템
         itemSkillDescription = "Temporary DMG Up";
         itemType = itemType.Active;
         itemPrefab = Resources.Load<GameObject>("BookOfBelial");
+        itemIcon = Resources.Load<Sprite>("ImageSource/bookofbelial");
     }
 
     public override void UseItem()
@@ -226,12 +276,13 @@ public class YumHeart : Item //액티브아이템
         itemSkillDescription = "+1 Hearts";
         itemType = itemType.Active;
         itemPrefab = Resources.Load<GameObject>("YumHeart");
+        itemIcon = Resources.Load<Sprite>("ImageSource/heart");
     }
 
     public override void UseItem()
     {
         Player.Instance.CulHealth += 1;
-        if(Player.Instance.CulHealth > Player.Instance.MaxHealth)
+        if (Player.Instance.CulHealth > Player.Instance.MaxHealth)
         {
             Player.Instance.CulHealth = Player.Instance.MaxHealth;
         }
@@ -247,6 +298,7 @@ public class BookOfShadow : Item //액티브아이템
         itemSkillDescription = "Temporary Invencibility";
         itemType = itemType.Active;
         itemPrefab = Resources.Load<GameObject>("BookOfShadow");
+        itemIcon = Resources.Load<Sprite>("ImageSource/bookofshadow");
     }
 
     public override void UseItem()
@@ -281,6 +333,7 @@ public class ShoopDaWhoop : Item //액티브아이템
         itemSkillDescription = "BLLLARRRRGGG!";
         itemType = itemType.Active;
         itemPrefab = Resources.Load<GameObject>("ShoopDaWhoop");
+        itemIcon = Resources.Load<Sprite>("ImageSource/shoopdawhoop");
     }
 
     public override void UseItem()
@@ -298,6 +351,7 @@ public class TheNail : Item //액티브아이템
         itemSkillDescription = "Temporary demon form";
         itemType = itemType.Active;
         itemPrefab = Resources.Load<GameObject>("TheNail");
+        itemIcon = Resources.Load<Sprite>("ImageSource/nails");
     }
 
     public override void UseItem()
@@ -317,11 +371,16 @@ public class MrBoom : Item //액티브아이템
         itemSkillDescription = "bombs!";
         itemType = itemType.Active;
         itemPrefab = Resources.Load<GameObject>("MrBoom");
+        itemIcon = Resources.Load<Sprite>("ImageSource/mrBoom");
     }
 
     public override void UseItem()
     {
+<<<<<<< Updated upstream
         //폭탄 던지기(공격력 +60)
+=======
+
+>>>>>>> Stashed changes
     }
 }
 
@@ -334,6 +393,7 @@ public class TammysBlessing : Item //액티브아이템
         itemSkillDescription = "8-Way Shot!";
         itemType = itemType.Active;
         itemPrefab = Resources.Load<GameObject>("TammysBlessing");
+        itemIcon = Resources.Load<Sprite>("ImageSource/tammysblessing");
     }
 
     public override void UseItem()
@@ -351,6 +411,7 @@ public class Cross : Item //액티브아이템
         itemSkillDescription = "Reusable Soul Protection";
         itemType = itemType.Active;
         itemPrefab = Resources.Load<GameObject>("Cross");
+        itemIcon = Resources.Load<Sprite>("ImageSource/cross");
     }
 
     public override void UseItem()
@@ -368,6 +429,7 @@ public class AnarchistCookBook : Item //액티브아이템
         itemSkillDescription = "Random 6-Boom!";
         itemType = itemType.Active;
         itemPrefab = Resources.Load<GameObject>("AnarchistCookBook");
+        itemIcon = Resources.Load<Sprite>("ImageSource/anarchistcookook");
     }
 
     public override void UseItem()
@@ -385,6 +447,7 @@ public class TheHourglass : Item //액티브아이템
         itemSkillDescription = "Temporary enemy slowdown";
         itemType = itemType.Active;
         itemPrefab = Resources.Load<GameObject>("TheHourglass");
+        itemIcon = Resources.Load<Sprite>("ImageSource/thehourglass");
     }
 
     public override void UseItem()
@@ -402,6 +465,7 @@ public class Potion : Item //노말아이템
         itemSkillDescription = "+ 1 HP";
         itemType = itemType.Normal;
         itemPrefab = Resources.Load<GameObject>("Potion");
+        itemIcon = Resources.Load<Sprite>("ImageSource/potion");
     }
 
     public override void UseItem()
@@ -423,6 +487,7 @@ public class GoldenKey : Item //액티브아이템
         itemSkillDescription = "Get!";
         itemType = itemType.Normal;
         itemPrefab = Resources.Load<GameObject>("GoldenKey");
+        itemIcon = Resources.Load<Sprite>("ImageSource/goldenkey");
     }
 
     public override void UseItem()
@@ -440,6 +505,7 @@ public class Bomb : Item //액티브아이템
         itemSkillDescription = "Boom!";
         itemType = itemType.Normal;
         itemPrefab = Resources.Load<GameObject>("Bomb");
+        itemIcon = Resources.Load<Sprite>("ImageSource/bomb");
     }
 
     public override void UseItem()
@@ -447,7 +513,3 @@ public class Bomb : Item //액티브아이템
         //폭팔
     }
 }
-
-
-
-
