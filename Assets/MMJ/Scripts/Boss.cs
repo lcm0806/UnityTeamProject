@@ -30,7 +30,7 @@ public class Boss : Monster
         {
             float h = Input.GetAxisRaw("Horizontal");
             float v = Input.GetAxisRaw("Vertical");
-            lookVec = new Vector3(h, 0, v) * 5f;
+            lookVec = new Vector3(h, 0, v) * 8f;
             transform.LookAt(target.position + lookVec);
         }
     }
