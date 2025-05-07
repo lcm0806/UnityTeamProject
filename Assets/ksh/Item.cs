@@ -129,7 +129,8 @@ public class SpoonBender : Item //패시브아이템
     public override void UseItem()
     {
         //눈물 유도 스킬
-
+        Bullet bullet = new Bullet();
+        bullet.IsHomingEnabled = true;
         //눈물 보라색으로 변하기
         //    Renderer bulletRenderer = bullet.GetComponent<Renderer>();
         //    if(bulletRenderer != null && bulletRenderer.material != null)
