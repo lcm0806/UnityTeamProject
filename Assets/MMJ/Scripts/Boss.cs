@@ -39,7 +39,7 @@ public class Boss : Monster
     {
         yield return new WaitForSeconds(0.1f);
 
-        int ranAction = Random.Range(0, 5);
+        int ranAction = Random.Range(0, 6);
         switch (ranAction)
         {
             case 0:
@@ -53,6 +53,7 @@ public class Boss : Monster
                 StartCoroutine(RockShot());
                 break;
             case 4:
+            case 5:
                 //¾²²öÇÏ°Ô ÇÔ ¶Ù¾îº¼±î?
                 StartCoroutine(Taunt());
                 break;

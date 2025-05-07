@@ -85,8 +85,8 @@ public class HealthManager : MonoBehaviour
 
     public void ResetHealth(int max)
     {
-        this.health = max;
-        this.maxHealth = max;
+      // this.health = max;
+      // this.maxHealth = max;
         UpdateHearts();
     }
 }
