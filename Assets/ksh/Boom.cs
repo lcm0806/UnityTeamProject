@@ -11,7 +11,6 @@ public class Boom : MonoBehaviour
     private bool Expolde = false;
     [SerializeField] private float damage;
     
-    
     void Start()
     {
         StartCoroutine(Explosion());
@@ -27,7 +26,7 @@ public class Boom : MonoBehaviour
         
 
         RaycastHit[] rayHits =
-            Physics.SphereCastAll(transform.position, 15, Vector3.up, 0f, LayerMask.GetMask("Monster"));
+            Physics.SphereCastAll(transform.position, 5, Vector3.up, 0f, LayerMask.GetMask("Monster"));
         foreach (RaycastHit hitObj in rayHits)
         {
             Monster monster = hitObj.transform.GetComponent<Monster>();
@@ -37,10 +36,10 @@ public class Boom : MonoBehaviour
             }
         }
         
-        yield return new WaitForSeconds(1f);
         if (effectObj != null)
         {
             effectObj.SetActive(true);
+            
         }
         Destroy(gameObject);
     }

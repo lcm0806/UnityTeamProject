@@ -441,7 +441,7 @@ public class Player : MonoBehaviour
 
     public void PickupItem(Item item)
     {
-        if (item.itemType == itemType.Normal && item.itemName == "Bomm")
+        if (item.itemType == itemType.Normal && item.itemName == "Bomb")
         {
             normalItems.Add(item);
             hasGrenades++;
