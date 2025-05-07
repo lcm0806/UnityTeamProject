@@ -12,7 +12,7 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] UnityEvent OnEnemyKilled;
     private void Start()
     {
-        SpawnEnemy();
+        //SpawnEnemy();
         gameObject.GetComponent<MeshRenderer>().enabled = false;
     }
 
@@ -22,12 +22,12 @@ public class EnemySpawner : MonoBehaviour
         enemyObj.name = $"Level{levelNumber}Monster";
         spawnedEnemy = enemyObj.GetComponent<EnemyDeath>();
 
-        if (spawnedEnemy != null) { spawnedEnemy.OnDeath += HandleEnemyDeath; }
+        //if (spawnedEnemy != null) { spawnedEnemy.OnDeath += HandleEnemyDeath; }
     }
 
     public void OnDestroy()
     {
-        if (spawnedEnemy != null) { spawnedEnemy.OnDeath -= HandleEnemyDeath; }
+        //if (spawnedEnemy != null) { spawnedEnemy.OnDeath -= HandleEnemyDeath; }
     }
 
     private void HandleEnemyDeath()
