@@ -9,7 +9,7 @@ public class Bullet : MonoBehaviour
     [SerializeField] public float damageAmount;
     [SerializeField] private float homingSpeed = 10f; // 유도 속도
     private Transform target; // 추적할 대상
-    private bool isHomingEnabled = false;
+    private bool isHomingEnabled = true;
     public bool IsHomingEnabled { get { return isHomingEnabled; }  set { isHomingEnabled = value; } }
     private Rigidbody rb;
     [SerializeField] private float rotationSpeed = 5f;
@@ -62,19 +62,19 @@ public class Bullet : MonoBehaviour
                 Destroy(gameObject); 
             }
         }
-        else if (collision.gameObject.tag == "Floor" || collision.gameObject.tag == "Wall")
-        {
-            Destroy(gameObject); // 바닥이나 벽에 부딪히면 총알을 파괴합니다.
-        }
+        //else if (collision.gameObject.tag == "Floor" || collision.gameObject.tag == "Wall")
+        //{
+        //    Destroy(gameObject); // 바닥이나 벽에 부딪히면 총알을 파괴합니다.
+        //}
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.tag == "Wall")
-        {
-            Destroy(gameObject);
-        }
-    }
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    if (other.gameObject.tag == "Wall")
+    //    {
+    //        Destroy(gameObject);
+    //    }
+    //}
 
     private void FindClosestMonsterAndSetInitialDirection()
     {

@@ -277,10 +277,6 @@ public class Player : MonoBehaviour
             //FindObjectOfType<ActiveEquipmentUI>()?.AddActiveItem(newItem.itemIcon);
         }
 
-        else if(newItem is Bomb)
-        {
-            hasGranade++;
-        }
         ShowPickupText(newItem.itemName);
 
 
