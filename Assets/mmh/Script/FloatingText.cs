@@ -1,27 +1,37 @@
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 
 public class FloatingText : MonoBehaviour
 {
+    public float duration = 2f;
     public float floatSpeed = 1f;
-    public float duration = 1f;
+    private TextMeshProUGUI text;
 
-    private Vector3 direction = Vector3.up;
-    private float timer = 0f;
-
-    void Update()
+    void Awake()
     {
-        transform.position += direction * floatSpeed * Time.deltaTime;
-        timer += Time.deltaTime;
-        if (timer > duration)
+        // 자식 오브젝트 포함해서 TextMeshProUGUI 컴포넌트 찾기
+        text = GetComponentInChildren<TextMeshProUGUI>();
+    }
+
+    public void SetText(string message)
+    {
+        if (text != null)
         {
-            Destroy(gameObject);
+            text.SetText(message);
+        }
+        else
+        {
+            Debug.LogWarning("FloatingText: TextMeshProUGUI가 연결되지 않았습니다.");
         }
     }
 
-    public void SetText(string message, Color color)
+    void Start()
     {
-        GetComponentInChildren<TextMeshProUGUI>().text = message;
-        GetComponentInChildren<TextMeshProUGUI>().color = color;
+        Destroy(gameObject, duration);
+    }
+
+    void Update()
+    {
+        transform.position += Vector3.up * floatSpeed * Time.deltaTime;
     }
 }

@@ -4,5 +4,6 @@ using UnityEngine;
 
 public static class GameBootFlags
 {
+    public static bool IsContinue = false;
     public static bool isNewGame = false;
 }

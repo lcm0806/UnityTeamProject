@@ -23,25 +23,25 @@ public class NewBehaviourScript : MonoBehaviour
         IsClosed = true;
         
   items.Add(new SadOnion()); //이펙트
-  //items.Add(new TheInnerEye());
-  //items.Add(new Pentagram()); //이펙트
-  //items.Add(new GrowthHormones()); //이펙트
-  //items.Add(new MagicMushroom()); //이펙트
-  //items.Add(new SpoonBender());
-  //items.Add(new BlueCap());//이펙트
-  //items.Add(new CricketsState()); //이펙트
-  //items.Add(new TornPhoto());
-  //items.Add(new Polyphemus()); //이펙트
-  //items.Add(new BookOfBelial()); //이펙트
-  //items.Add(new YumHeart());
-  //items.Add(new BookOfShadow());//이펙트
-  //items.Add(new ShoopDaWhoop());
-  //items.Add(new TheNail()); 
-  //items.Add(new MrBoom()); //이펙트
-  //items.Add(new TammysBlessing());
-  //items.Add(new Cross());
-  //items.Add(new AnarchistCookBook()); //이펙트
-  //items.Add(new TheHourglass());
+  items.Add(new TheInnerEye());
+  items.Add(new Pentagram()); //이펙트
+  items.Add(new GrowthHormones()); //이펙트
+  items.Add(new MagicMushroom()); //이펙트
+  items.Add(new SpoonBender());
+  items.Add(new BlueCap());//이펙트
+  items.Add(new CricketsState()); //이펙트
+  items.Add(new TornPhoto());
+  items.Add(new Polyphemus()); //이펙트
+  items.Add(new BookOfBelial()); //이펙트
+  items.Add(new YumHeart());
+  items.Add(new BookOfShadow());//이펙트
+  items.Add(new ShoopDaWhoop());
+  items.Add(new TheNail()); 
+  items.Add(new MrBoom()); //이펙트
+  items.Add(new TammysBlessing());
+  items.Add(new Cross());
+  items.Add(new AnarchistCookBook()); //이펙트
+  items.Add(new TheHourglass());
     }
 
     private void Update()

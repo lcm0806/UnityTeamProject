@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
 using TMPro;
+using System.Linq;
 
 public class OpeningUIManager : MonoBehaviour
 {
@@ -95,16 +96,43 @@ public class OpeningUIManager : MonoBehaviour
 
     public void OnNewGameButton()
     {
+        GameBootFlags.IsContinue = false;
 
-        Debug.Log("New Game Start!");
-       //GameBootFlags.isNewGame = true;
-       //SceneManager.LoadScene("GameScene");
+        // ⬇ 새 게임 시작 전에 기존 초기화 코드 수행
+        ResetGameState(); // 아래 직접 추가할 함수
+
+        SceneManager.LoadScene("PreviewScene");
+    }
+
+    void ResetGameState()
+    {
+        // 플레이어 관련 정리
+        var player = FindObjectOfType<Player>();
+        if (player != null)
+        {
+            Destroy(player.gameObject);
+        }
+
+        // 카메라 관련 정리
+        var cam = FindObjectOfType<Camera>();
+        if (cam != null)
+        {
+            cam.transform.position = new Vector3(0, 10, -10); // 초기 카메라 위치로 설정
+        }
+
+        // 필요한 DontDestroyOnLoad 오브젝트도 제거
+        var persistentObjects = GameObject.FindObjectsOfType<MonoBehaviour>()
+            .Where(obj => obj.name.Contains("Manager")); // 예시로 이름에 Manager 포함된 경우
+        foreach (var obj in persistentObjects)
+        {
+            Destroy(obj.gameObject);
+        }
     }
 
     public void NewGame()
     {
         GameBootFlags.isNewGame = true;
-        SceneManager.LoadScene("GameScene");
+        SceneManager.LoadScene("PreviewScene");
     }
 
     public void OnContinueButton()
@@ -203,7 +231,7 @@ public class OpeningUIManager : MonoBehaviour
         if (resetPlayer && player != null)
         {
             var playerScript = player.GetComponent<Player>();
-            playerScript.ResetPlayer();
+       //     playerScript.ResetPlayer();
 
             FindObjectOfType<PassiveEquipmentUI>()?.ResetUI();
             FindObjectOfType<ActiveEquipmentUI>()?.ResetUI();

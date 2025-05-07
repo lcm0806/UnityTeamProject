@@ -20,7 +20,12 @@ public abstract class Item
 
     public Attack attack;
     public Player player;
+<<<<<<< Updated upstream
 
+=======
+    [SerializeField]
+    public Sprite itemIcon;
+>>>>>>> Stashed changes
 
     public abstract void UseItem();
     public void ShowIconOnUI()
@@ -282,7 +287,11 @@ public class YumHeart : Item //액티브아이템
         itemSkillDescription = "+1 Hearts";
         itemType = itemType.Active;
         itemPrefab = Resources.Load<GameObject>("YumHeart");
+<<<<<<< Updated upstream
         itemIcon = Resources.Load<Sprite>("ImageSource/heart");
+=======
+        itemIcon = Resources.Load<Sprite>("ImageSource/blackherart");
+>>>>>>> Stashed changes
     }
 
     public override void UseItem()
@@ -357,7 +366,11 @@ public class TheNail : Item //액티브아이템
         itemSkillDescription = "Temporary demon form";
         itemType = itemType.Active;
         itemPrefab = Resources.Load<GameObject>("TheNail");
+<<<<<<< Updated upstream
         itemIcon = Resources.Load<Sprite>("ImageSource/nails");
+=======
+        itemIcon = Resources.Load<Sprite>("ImageSource/thenail");
+>>>>>>> Stashed changes
     }
 
     public override void UseItem()
@@ -377,7 +390,11 @@ public class MrBoom : Item //액티브아이템
         itemSkillDescription = "bombs!";
         itemType = itemType.Active;
         itemPrefab = Resources.Load<GameObject>("MrBoom");
+<<<<<<< Updated upstream
         itemIcon = Resources.Load<Sprite>("ImageSource/mrBoom");
+=======
+        itemIcon = Resources.Load<Sprite>("ImageSource/mrboom");
+>>>>>>> Stashed changes
     }
 
     public override void UseItem()
@@ -435,7 +452,11 @@ public class AnarchistCookBook : Item //액티브아이템
         itemSkillDescription = "Random 6-Boom!";
         itemType = itemType.Active;
         itemPrefab = Resources.Load<GameObject>("AnarchistCookBook");
+<<<<<<< Updated upstream
         itemIcon = Resources.Load<Sprite>("ImageSource/anarchistcookook");
+=======
+        itemIcon = Resources.Load<Sprite>("ImageSource/anarchistcookbook");
+>>>>>>> Stashed changes
     }
 
     public override void UseItem()

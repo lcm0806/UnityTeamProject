@@ -10,16 +10,16 @@ public class ItemHolder : MonoBehaviour
     {
         itemInstance = item;
 
-        if (itemInstance.itemIcon == null)
+        //   if (itemInstance.itemIcon == null)
         {
             string iconName = itemInstance.itemName.Replace(" ", "").ToLower();  // ex: "Sad Onion" → "sadonion"
-            itemInstance.itemIcon = Resources.Load<Sprite>($"ImageSource/{iconName}");
+                                                                                 //       itemInstance.itemIcon = Resources.Load<Sprite>($"ImageSource/{iconName}");
 
-            if (itemInstance.itemIcon == null)
+            //       if (itemInstance.itemIcon == null)
             {
                 Debug.LogWarning($"[ItemHolder] 아이콘 로드 실패: {iconName}");
             }
-            else
+         //   else
             {
                 Debug.Log($"[ItemHolder] 아이콘 로드 성공: {iconName}");
             }

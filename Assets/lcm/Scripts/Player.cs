@@ -276,6 +276,7 @@ public class Player : MonoBehaviour
 
     public void AcquireItem(Item newItem)
     {
+<<<<<<< Updated upstream
         //newItem.EnsureIconLoaded();
 
         if (newItem.itemType == itemType.Passive)
@@ -285,10 +286,23 @@ public class Player : MonoBehaviour
             passiveItems.Add(newItem);
             ApplyPassiveEffects();
             //FindObjectOfType<PassiveEquipmentUI>()?.AddPassiveItem(newItem.itemIcon);
+=======
+        if (newItem.itemType == itemType.Passive)
+        {
+            passiveItems.Add(newItem);
+
+
+            PassiveEquipmentUI ui = FindObjectOfType<PassiveEquipmentUI>();
+            if (ui != null && newItem.itemIcon != null)
+            {
+                ui.AddPassiveItem(newItem.itemIcon);
+            }
+>>>>>>> Stashed changes
         }
         else if (newItem.itemType == itemType.Active)
         {
             activeItems.Add(newItem);
+<<<<<<< Updated upstream
             //FindObjectOfType<ActiveEquipmentUI>()?.AddActiveItem(newItem.itemIcon);
         }
         ShowPickupText(newItem.itemName);
@@ -296,7 +310,41 @@ public class Player : MonoBehaviour
 
         Debug.Log("아이템 획득 :" + newItem.itemName + " (" + newItem.itemType + ")");
 }
+=======
 
+
+            ActiveEquipmentUI ui = FindObjectOfType<ActiveEquipmentUI>();
+            if (ui != null && newItem.itemIcon != null)
+            {
+                ui.AddActiveItem(newItem.itemIcon);
+            }
+        }
+
+        if (newItem.itemName == "폭탄")
+        {
+            FindObjectOfType<LootUIManager>()?.AddBomb();
+        }
+        else if (newItem.itemName == "열쇠")
+        {
+            FindObjectOfType<LootUIManager>()?.AddKey();
+        }
+
+        ShowFloatingText(newItem.itemSkillDescription);
+
+        Debug.Log($"아이템 획득: {newItem.itemName} / 타입: {newItem.itemType}");
+    }
+>>>>>>> Stashed changes
+
+    private void ShowFloatingText(string message)
+    {
+        GameObject floatingTextPrefab = Resources.Load<GameObject>("FloatingText");
+        if (floatingTextPrefab != null)
+        {
+            Vector3 spawnPosition = transform.position + new Vector3(0, 6f, 0);
+            GameObject go = Instantiate(floatingTextPrefab, spawnPosition, Quaternion.identity);
+            go.GetComponent<FloatingText>().SetText(message);
+        }
+    }
     private void ApplyPassiveEffects()
     {
         // 현재는 간단하게 로그만 출력, 실제 효과 적용 로직 구현 필요
