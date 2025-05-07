@@ -344,7 +344,23 @@ public class ShoopDaWhoop : Item //액티브아이템
 
     public override void UseItem()
     {
-        //레이저 발사(데미지 +13)
+        if (Player.Instance != null)
+        {
+            Rayser rayser = Player.Instance.GetComponent<Rayser>();
+            if (rayser != null)
+            {
+               rayser.Laser(player.Damage += 13);
+                Debug.Log($"{itemName} 사용! 레이저발사됩니다!");
+            }
+            else
+            {
+                Debug.LogError("플레이어 오브젝트에 Rayser 스크립트가 없습니다.");
+            }
+        }
+        else
+        {
+            Debug.LogError("플레이어 싱글톤 인스턴스를 찾을 수 없습니다.");
+        }
     }
 }
 
@@ -445,6 +461,23 @@ public class AnarchistCookBook : Item //액티브아이템
     public override void UseItem()
     {
         //방안에 랜덤으로 폭탄 6개 소환
+        if (Player.Instance != null)
+        {
+            SixBomb sixBomb = Player.Instance.GetComponent<SixBomb>();
+            if (sixBomb != null)
+            {
+               sixBomb.RandomSpawnBomb();
+                Debug.Log($"{itemName} 사용! 랜덤으로 폭탄이 생성됩니다!");
+            }
+            else
+            {
+                Debug.LogError("플레이어 오브젝트에 SixBomb 스크립트가 없습니다.");
+            }
+        }
+        else
+        {
+            Debug.LogError("플레이어 싱글톤 인스턴스를 찾을 수 없습니다.");
+        }
     }
 }
 
