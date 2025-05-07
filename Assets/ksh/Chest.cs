@@ -23,7 +23,7 @@ public class NewBehaviourScript : MonoBehaviour
         IsClosed = true;
         
   //items.Add(new SadOnion()); //이펙트
-  items.Add(new TheInnerEye());
+  //items.Add(new TheInnerEye());
   //items.Add(new Pentagram()); //이펙트
   //items.Add(new GrowthHormones()); //이펙트
   //items.Add(new MagicMushroom()); //이펙트
@@ -38,7 +38,7 @@ public class NewBehaviourScript : MonoBehaviour
   //items.Add(new ShoopDaWhoop());
   //items.Add(new TheNail()); 
   //items.Add(new MrBoom()); //이펙트
-  //items.Add(new TammysBlessing());
+  items.Add(new TammysBlessing());
   //items.Add(new Cross());
   //items.Add(new AnarchistCookBook()); //이펙트
   //items.Add(new TheHourglass());
