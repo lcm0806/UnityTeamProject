@@ -481,7 +481,7 @@ public class GoldenKey : Item //액티브아이템
     }
 }
 
-public class Bomb : Item //액티브아이템
+public class Bomb : Item // Normal 타입 아이템
 {
     public Bomb()
     {
@@ -489,14 +489,28 @@ public class Bomb : Item //액티브아이템
         itemDescription = "터진다!!";
         itemSkillDescription = "Boom!";
         itemType = itemType.Normal;
-        itemPrefab = Resources.Load<GameObject>("Bomb");
+        itemPrefab = Resources.Load<GameObject>("BombPrefab"); // Inspector에서 할당할 폭탄 외형 프리팹 이름
     }
 
     public override void UseItem()
     {
-        //폭팔
+        if (player != null)
+        {
+            Debug.Log($"{itemName} 사용 준비!");
+            // 폭탄 생성 요청만 하고, 실제 생성은 Player 스크립트에서 처리
+            Player playerScript = player.GetComponent<Player>();
+            if (playerScript != null)
+            {
+                playerScript.SpawnBomb(itemPrefab);
+            }
+        }
+        else
+        {
+            Debug.LogError("플레이어 참조가 없습니다.");
+        }
     }
 }
+
 
 
 

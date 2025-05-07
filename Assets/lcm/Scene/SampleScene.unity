@@ -500,6 +500,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 15
+  bombPrefab: {fileID: 3199739609026866401, guid: 74469eb493f429143b789ebb39da91d4, type: 3}
+  bombOffset: 1
   bulletSpeed: 30
   culhealth: 0
   damage: 10
@@ -507,6 +509,7 @@ MonoBehaviour:
   attack: {fileID: 1776008821}
   attackRate: 0.5
   defaultBulletScale: 1
+  hasGranade: 2
 --- !u!54 &721955885
 Rigidbody:
   m_ObjectHideFlags: 0
