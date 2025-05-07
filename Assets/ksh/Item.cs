@@ -20,12 +20,9 @@ public abstract class Item
 
     public Attack attack;
     public Player player;
-<<<<<<< Updated upstream
-
-=======
     [SerializeField]
     public Sprite itemIcon;
->>>>>>> Stashed changes
+
 
     public abstract void UseItem();
     public void ShowIconOnUI()
@@ -68,7 +65,8 @@ public class SadOnion : Item //패시브아이템
 
     public override void UseItem()
     {
-        Player.Instance.BulletSpeed += 0.7f;
+        Player.Instance.BulletSpeed += 1.7f;
+        Debug.Log("총알속도증가!!");
     }
 }
 
@@ -86,12 +84,9 @@ public class TheInnerEye : Item //패시브아이템
 
     public override void UseItem()
     {
-
-
         //눈물이 3갈래로 나감
         Attack playerAttack = Player.Instance.GetComponentInChildren<Attack>();
         playerAttack.SetTripleShot(true); // Attack 스크립트에 트리플 샷 활성화
-
         Player.Instance.BulletSpeed *= 0.51f;
     }
 }
@@ -287,11 +282,7 @@ public class YumHeart : Item //액티브아이템
         itemSkillDescription = "+1 Hearts";
         itemType = itemType.Active;
         itemPrefab = Resources.Load<GameObject>("YumHeart");
-<<<<<<< Updated upstream
         itemIcon = Resources.Load<Sprite>("ImageSource/heart");
-=======
-        itemIcon = Resources.Load<Sprite>("ImageSource/blackherart");
->>>>>>> Stashed changes
     }
 
     public override void UseItem()
@@ -382,11 +373,7 @@ public class TheNail : Item //액티브아이템
         itemSkillDescription = "Temporary demon form";
         itemType = itemType.Active;
         itemPrefab = Resources.Load<GameObject>("TheNail");
-<<<<<<< Updated upstream
         itemIcon = Resources.Load<Sprite>("ImageSource/nails");
-=======
-        itemIcon = Resources.Load<Sprite>("ImageSource/thenail");
->>>>>>> Stashed changes
     }
 
     public override void UseItem()
@@ -406,11 +393,7 @@ public class MrBoom : Item //액티브아이템
         itemSkillDescription = "bombs!";
         itemType = itemType.Active;
         itemPrefab = Resources.Load<GameObject>("MrBoom");
-<<<<<<< Updated upstream
         itemIcon = Resources.Load<Sprite>("ImageSource/mrBoom");
-=======
-        itemIcon = Resources.Load<Sprite>("ImageSource/mrboom");
->>>>>>> Stashed changes
     }
 
     public override void UseItem()
@@ -472,11 +455,7 @@ public class AnarchistCookBook : Item //액티브아이템
         itemSkillDescription = "Random 6-Boom!";
         itemType = itemType.Active;
         itemPrefab = Resources.Load<GameObject>("AnarchistCookBook");
-<<<<<<< Updated upstream
         itemIcon = Resources.Load<Sprite>("ImageSource/anarchistcookook");
-=======
-        itemIcon = Resources.Load<Sprite>("ImageSource/anarchistcookbook");
->>>>>>> Stashed changes
     }
 
     public override void UseItem()
@@ -560,7 +539,7 @@ public class GoldenKey : Item //액티브아이템
     }
 }
 
-public class Bomb : Item // Normal 타입 아이템
+public class Bomb : Item //액티브아이템
 {
     public Bomb()
     {
@@ -574,20 +553,7 @@ public class Bomb : Item // Normal 타입 아이템
 
     public override void UseItem()
     {
-        if (player != null)
-        {
-            Debug.Log($"{itemName} 사용 준비!");
-            // 폭탄 생성 요청만 하고, 실제 생성은 Player 스크립트에서 처리
-            Player playerScript = player.GetComponent<Player>();
-            if (playerScript != null)
-            {
-                playerScript.SpawnBomb(itemPrefab);
-            }
-        }
-        else
-        {
-            Debug.LogError("플레이어 참조가 없습니다.");
-        }
+        
     }
 }
 

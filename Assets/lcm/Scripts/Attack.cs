@@ -14,8 +14,8 @@ public class Attack : MonoBehaviour
     [SerializeField] GameObject bulletPrefab;
     [SerializeField] Transform muzzlePoint;
 
-    private bool isTripleShotEnabled = false;
-    private bool is8WayShotEnabled = false;
+    public bool isTripleShotEnabled = false;
+    public bool is8WayShotEnabled = false;
 
     public void SetTripleShot(bool enabled)
     {
@@ -57,14 +57,15 @@ public class Attack : MonoBehaviour
     private void FireSingleShot(float Damage)
     {
         GameObject instance = Instantiate(bulletPrefab, muzzlePoint.position, muzzlePoint.rotation);
+        //instance.GetComponent<Rigidbody>().AddForce(instance.transform.forward * 3);
         InitializeBullet(instance, muzzlePoint.forward, Damage);
     }
     private void FireTripleShot(float currentDamage)
     {
         // 발사 각도 조절 (원하는 각도 값으로 변경)
-        Quaternion rotation1 = muzzlePoint.rotation * Quaternion.Euler(30f, 0f, 0f);
+        Quaternion rotation1 = muzzlePoint.rotation * Quaternion.Euler(0f, 30f, 0f);
         Quaternion rotation2 = muzzlePoint.rotation;
-        Quaternion rotation3 = muzzlePoint.rotation * Quaternion.Euler(-30f, 0f, 0f);
+        Quaternion rotation3 = muzzlePoint.rotation * Quaternion.Euler(0f, -30f, 0f);
 
         // 첫 번째 총알 발사
         GameObject instance1 = Instantiate(bulletPrefab, muzzlePoint.position, rotation1);
@@ -86,7 +87,7 @@ public class Attack : MonoBehaviour
             for (int i = 0; i < 8; i++)
             {
                 float angle = i * 360f / 8f;
-                Quaternion rotation = muzzlePoint.rotation * Quaternion.Euler(angle, 0f, 0f);
+                Quaternion rotation = muzzlePoint.rotation * Quaternion.Euler(0f, angle, 0f);
                 GameObject instance = Instantiate(bulletPrefab, muzzlePoint.position, rotation);
                 InitializeBullet(instance, rotation * Vector3.forward, currentDamage);
             }
@@ -112,7 +113,7 @@ public class Attack : MonoBehaviour
         }
 
 
-       // float bulletScale = Player.Instance.GetCurrentBulletScale();
+        //float bulletScale = Player.Instance.CurrentBulletScale;
         //instance.transform.localScale = Vector3.one * bulletScale;
 
         Bullet bulletComponent = instance.GetComponent<Bullet>();

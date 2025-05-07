@@ -21,7 +21,6 @@ public class NewBehaviourScript : MonoBehaviour
         animator = GetComponent<Animator>();
         IsPlayerEnter = false; //초가엔 False
         IsClosed = true;
-        
   items.Add(new SadOnion()); //이펙트
   items.Add(new TheInnerEye());
   items.Add(new Pentagram()); //이펙트
