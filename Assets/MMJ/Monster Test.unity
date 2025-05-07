@@ -456,7 +456,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9e5d776cee79a1489376e3a14013824, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 10
+  damage: 1
   isMelee: 1
   isrock: 0
 --- !u!4 &491034501
@@ -625,6 +625,7 @@ MonoBehaviour:
   soulhealth: 0
   attack: {fileID: 290014227}
   attackRate: 0.5
+  defaultBulletScale: 1
 --- !u!54 &600253288
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -751,6 +752,10 @@ PrefabInstance:
     - target: {fileID: 5653897782540722854, guid: b51ef11fc31a727438819bbe63deb987, type: 3}
       propertyPath: m_Constraints
       value: 126
+      objectReference: {fileID: 0}
+    - target: {fileID: 6610936827025512458, guid: b51ef11fc31a727438819bbe63deb987, type: 3}
+      propertyPath: damage
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

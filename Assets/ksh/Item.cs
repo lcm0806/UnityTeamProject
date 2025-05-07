@@ -517,7 +517,7 @@ public class Bomb : Item //액티브아이템
 
     public override void UseItem()
     {
-
+        
     }
 }
 
