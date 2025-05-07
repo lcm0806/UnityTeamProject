@@ -304,8 +304,6 @@ public class Player : MonoBehaviour
         {
             normalItems.Add(newItem);
         }
-        ShowPickupText(newItem.itemName);
-
         else if(newItem.itemType == itemType.Normal && newItem.itemName == "폭탄")
         {
             hasGranade += 1;
