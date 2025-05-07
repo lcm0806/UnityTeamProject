@@ -38,12 +38,6 @@ public class HealthManager : MonoBehaviour
         UpdateHearts();
     }
 
-    public void TakeDamage(int damage)
-    {
-        health -= damage;
-        if (health < 0)
-            health = 0;
-    }
 
     void UpdateHearts()
     {
@@ -71,11 +65,13 @@ public class HealthManager : MonoBehaviour
 
         for (int i = 0; i < hearts.Length; i++)
         {
-            if (i < health)
+            if (i < previousHealth)
+            {
                 hearts[i].sprite = fullHeart;
 
                 hearts[i].gameObject.SetActive(true); // Ȱ��ȭ
             }
+            
 
             else{
                 hearts[i].sprite = emptyHeart;

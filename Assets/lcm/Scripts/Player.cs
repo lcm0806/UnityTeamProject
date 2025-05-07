@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
     }
     [SerializeField] private List<Item> passiveItems = new List<Item>();
     [SerializeField] private List<Item> activeItems = new List<Item>();
+    [SerializeField] private List<Item> normalItems = new List<Item>();
     [SerializeField] private float bulletSpeed;
     public float BulletSpeed { get => bulletSpeed; set => bulletSpeed = value;}
     private int maxhealth;
@@ -288,10 +289,6 @@ public class Player : MonoBehaviour
         else if (newItem.itemType == itemType.Normal)
         {
             normalItems.Add(newItem);
-        }
-        else if(newItem.itemType == itemType.Normal && newItem.itemName == "폭탄")
-        {
-            hasGranade += 1;
         }
         ShowPickupText(newItem.itemName);
 
