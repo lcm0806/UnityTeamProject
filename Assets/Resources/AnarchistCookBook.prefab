@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 1482797932844859080}
   - component: {fileID: 1070338407184936615}
   - component: {fileID: 6848199566575327660}
-  - component: {fileID: 6851786040857160728}
   m_Layer: 0
   m_Name: AnarchistCookBook
   m_TagString: Item
@@ -112,27 +111,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
---- !u!65 &6851786040857160728
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3266975579291002273}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 2.1297848, y: 2.3005145, z: 0.94693065}
-  m_Center: {x: -0.12587535, y: 1.3653418, z: 0.026534677}
 --- !u!1001 &2014156998654720818
 PrefabInstance:
   m_ObjectHideFlags: 0

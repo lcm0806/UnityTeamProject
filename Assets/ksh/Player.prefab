@@ -43,9 +43,11 @@ GameObject:
   - component: {fileID: 1822053227237894226}
   - component: {fileID: 4550148497267703389}
   - component: {fileID: 444889284087411741}
+  - component: {fileID: 8665999338161027613}
+  - component: {fileID: 4402029381546984167}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -129,10 +131,41 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 15
-  health: 0
+  bulletSpeed: 11.1
+  damage: 10
   soulhealth: 0
-  Damage: 0
   attack: {fileID: 5690113483845638029}
+  attackRate: 0.5
+  defaultBulletScale: 1
+  pickupTextUIPrefab: {fileID: 0}
+--- !u!114 &8665999338161027613
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4880180701201141071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be75f8804f915294dbe4dce80484914e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 0
+  bulletPrefab: {fileID: 3843234681057504617, guid: 73bc695d61aaef54cb0221d4159edab5, type: 3}
+  muzzlePoint: {fileID: 152887647218064555}
+--- !u!114 &4402029381546984167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4880180701201141071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e91c0cba9883ec646b011f85cba27e96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BombPrefab: {fileID: 5530515833611478191, guid: 94957dfa75115cf498498de6b7aaa9fc, type: 3}
 --- !u!1001 &3021417473383949857
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -278,4 +311,3 @@ MonoBehaviour:
   damage: 10
   bulletPrefab: {fileID: 3843234681057504617, guid: 73bc695d61aaef54cb0221d4159edab5, type: 3}
   muzzlePoint: {fileID: 152887647218064555}
-  bulletSpeed: 30
