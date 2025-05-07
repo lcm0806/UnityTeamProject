@@ -48,6 +48,10 @@ public class Monster : MonoBehaviour
 
             StartCoroutine(OnDamage(reactVec));
         }
+        else if(other.tag == "Rayser")
+        {
+
+        }
     }
 
 
@@ -247,6 +251,12 @@ public class Monster : MonoBehaviour
         Rigidbody rigid = item.GetComponent<Rigidbody>();
         rigid.AddForce(Vector3.up * 6f, ForceMode.Impulse);
         rigid.AddForce(Vector3.forward * 6f, ForceMode.Impulse);
+    }
+    
+    public void TakeDamage(float amount)
+    {
+        curHealth -= amount;
+        Debug.Log($"몬스터가 {amount} 데미지를 입었습니다. 남은 체력: {curHealth}");
     }
 
 }

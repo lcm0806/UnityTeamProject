@@ -9,6 +9,7 @@ public class ItemPickup : MonoBehaviour
 
     private void Awake()
     {
+        Debug.Log("아이템인스턴스가 생성되었습니다.");
         DetectionItem();
     }
 
