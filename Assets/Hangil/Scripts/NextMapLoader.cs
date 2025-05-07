@@ -10,7 +10,7 @@ public class NextMapLoader : MonoBehaviour
     [SerializeField] GameObject nextMap;           // 다음 맵 오브젝트
     [SerializeField] int nextMapPos;               // MapManager에서의 다음 맵 번호
     [SerializeField] Transform loadPoint;          // 플레이어가 도착할 위치
-
+    [SerializeField] UnityEvent OnLoadEnemySpawn;
     public static event System.Action OnMapMove2;  // 맵 이동 알림용 이벤트
 
     private void OnTriggerEnter(Collider other)
@@ -37,7 +37,7 @@ public class NextMapLoader : MonoBehaviour
             {
                 Debug.LogError("MapManager 인스턴스를 찾을 수 없습니다! 카메라가 이동하지 않습니다.");
             }
-
+            OnLoadEnemySpawn?.Invoke();
             // 맵 이동 이벤트 발행
             OnMapMove2?.Invoke();
         }

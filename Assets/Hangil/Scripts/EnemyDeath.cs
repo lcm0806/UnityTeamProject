@@ -2,11 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class EnemyDeath : MonoBehaviour
 {
-    public event Action OnDeath; // 죽음 이벤트
-
+    // 죽음 이벤트
+    public UnityEvent OnDeath;
     public void OnDisable()
     {
         if(OnDeath != null) { Die(); }

@@ -11,7 +11,7 @@ public class LevelManager : MonoBehaviour
     [Header("해당 맵의 로딩포인트 갯수")]
     [SerializeField] List<GameObject> loadpointList; 
     private int listLength;
-
+    private bool isSpawn = false;
     private void Start()
     {
         if(gameObject.activeSelf == true)
@@ -19,7 +19,7 @@ public class LevelManager : MonoBehaviour
             if (spawnerList != null)
             {
                 listLength = spawnerList.Count;
-                ActivateAllSpawners();
+                //ActivateAllSpawners();
             }
             if (doorList != null)
             {
@@ -44,9 +44,13 @@ public class LevelManager : MonoBehaviour
 
     public void ActivateAllSpawners()
     {
-        foreach (var spawner in spawnerList)
+        if(isSpawn == false)
         {
-            if (spawner != null) { spawner.SetActive(true); }
+            foreach (var spawner in spawnerList)
+            {
+                if (spawner != null) { spawner.SetActive(true); }
+            }
+            isSpawn = true;
         }
     }
     public void OnEnemyKilled()

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6546439471697726781}
   - component: {fileID: 2528805436957551551}
   - component: {fileID: 1738420213812045733}
-  - component: {fileID: -8969816314348280799}
+  - component: {fileID: 8540344909999123775}
   m_Layer: 20
   m_Name: Monster_A
   m_TagString: Monster
@@ -111,7 +111,8 @@ MonoBehaviour:
   boxCollider: {fileID: 0}
   meshs: []
   anime: {fileID: 0}
---- !u!114 &-8969816314348280799
+  itemprefabs: []
+--- !u!114 &8540344909999123775
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
