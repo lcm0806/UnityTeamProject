@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using static OpeningUIManager;
 
 public class Player : MonoBehaviour
 {
@@ -18,14 +19,17 @@ public class Player : MonoBehaviour
     }
     [SerializeField] private List<Item> passiveItems = new List<Item>();
     [SerializeField] private List<Item> activeItems = new List<Item>();
-    [SerializeField] private float bulletSpeed = 30;
+    [Range(10, 30)]
+    [SerializeField] private float bulletSpeed;
     public float BulletSpeed { get => bulletSpeed; set => bulletSpeed = value;}
-    private int maxhealth = 1;
-    [SerializeField]public int MaxHealth { get { return maxhealth; } set { maxhealth = value; } } //민만준이 여기에 시리얼 라이즈 필드를 달아서 테스트함
-    [SerializeField]private int culhealth;                                                        //민만준이 여기에 시리얼 라이즈 필드를 달아서 테스트함
+    private int maxhealth;
+    public int MaxHealth { get { return maxhealth; } set { maxhealth = value; } }
+    private int culhealth;
     public int CulHealth { get { return culhealth; } set { culhealth = value; } }
     [SerializeField] private float damage = 10f;
     public float Damage { get { return damage; } set { damage = value; } }
+
+
     
     [SerializeField] private float soulhealth;
     public float SoulHealth
@@ -37,7 +41,21 @@ public class Player : MonoBehaviour
     [SerializeField] private float attackRate = 0.5f;
     private float nextAttackTime = 0f;
 
+
     [SerializeField] private float defaultBulletScale = 1f;
+    [SerializeField] private GameObject pickupTextUIPrefab; // 인스펙터에서 연결할 프리팹
+
+    public void ShowPickupText(string message)
+    {
+        Vector3 spawnPos = transform.position + Vector3.up * 2f;
+        GameObject obj = Instantiate(pickupTextUIPrefab, spawnPos, Quaternion.identity);
+
+        PickupTextWorldUI textUI = obj.GetComponent<PickupTextWorldUI>();
+        if (textUI != null)
+        {
+            textUI.SetText(message);
+        }
+    }
     public float DefaultBulletScale
     {
         get => defaultBulletScale;
@@ -51,6 +69,7 @@ public class Player : MonoBehaviour
         private set => currentBulletScale = value;
     }
 
+
     private bool wDown;
     private bool jDown;
 
@@ -58,11 +77,15 @@ public class Player : MonoBehaviour
     private bool isDodge;
     private bool isDamage = false;
 
+    
+
     private GameObject nearObject;
     private Invincible invincibleScript;
 
+
     Rigidbody rigid;
     MeshRenderer[] meshs; 
+
 
     Vector3 moveVec;
     Vector3 sideVec;
@@ -71,7 +94,6 @@ public class Player : MonoBehaviour
     public int hasGranade = 0;
 
     private static Player instance = null;
-    private Rayser rayser;
 
     public static Player Instance
     {
@@ -101,11 +123,12 @@ public class Player : MonoBehaviour
         }
 
         instance = this;
-        CulHealth = MaxHealth;
-        currentBulletScale = defaultBulletScale;
+
+
+
         rigid = GetComponent<Rigidbody>();
         anim = GetComponentInChildren<Animator>();
-        Attack attack = GetComponent<Attack>();
+        attack = GetComponent<Attack>();
         meshs = GetComponentsInChildren<MeshRenderer>();
         invincibleScript = GetComponent<Invincible>();
     }
@@ -113,7 +136,16 @@ public class Player : MonoBehaviour
     private void Start()
     {
         ApplyPassiveEffects();
-        rayser = GetComponent<Rayser>();
+
+        //rayser = GetComponent<Rayser>();
+
+        if (GameBootFlags.isNewGame)
+        {
+            ResetPlayer();
+            FindObjectOfType<PassiveEquipmentUI>()?.ResetUI();
+            FindObjectOfType<ActiveEquipmentUI>()?.ResetUI();
+            GameBootFlags.isNewGame = false; // 한 번만 초기화되도록
+        }
     }
 
     // Update is called once per frame
@@ -161,6 +193,8 @@ public class Player : MonoBehaviour
         transform.LookAt(transform.position + moveVec);
     }
 
+    
+
     private void Dodge()
     {
         if (jDown && moveVec != Vector3.zero && !isDodge)
@@ -192,34 +226,45 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void SetBulletScale(float scaleFactor)
-    {
-        currentBulletScale *= scaleFactor;
-        Debug.Log($"불렛 크기가 {currentBulletScale} 배로 변경되었습니다.");
-        // 필요하다면 현재 발사되고 있는 불렛들의 크기를 즉시 업데이트하는 로직 추가
-    }
-
-    public float GetCurrentBulletScale()
-    {
-        return currentBulletScale;
-    }
-
     public void TakeDamage(int damageAmount)
     {
         if (invincibleScript != null && !invincibleScript.isInvincible)
         {
             CulHealth -= damageAmount;
             Debug.Log($"플레이어 피격! 받은 데미지: {damageAmount}, 남은 체력: {CulHealth}");
+
             invincibleScript.StartInvincible();
-            StartCoroutine(OnDamage());
+
+
             if (CulHealth <= 0)
             {
-                Die();
+                //Die();
             }
         }
         else
         {
             Debug.Log("플레이어 무적 상태로 데미지를 받지 않음!");
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+         if (collision.gameObject.GetComponent<ItemPickup>() != null)
+         {
+            ItemPickup pickup = collision.gameObject.GetComponent<ItemPickup>();
+            AcquireItem(pickup.item);
+            Destroy(collision.gameObject);
+            ApplyPassiveEffects();
+            Debug.Log("아이템 획득: " + pickup.item.itemName);
+        }
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "EnemyBullet")
+        {
+            MonsterBullet enemyBullet = other.GetComponent<MonsterBullet>();
+            CulHealth -= enemyBullet.damage;
+            StartCoroutine(OnDamage());
         }
     }
 
@@ -241,23 +286,28 @@ public class Player : MonoBehaviour
 
     public void AcquireItem(Item newItem)
     {
-        if(newItem.itemType == itemType.Passive)
+        //newItem.EnsureIconLoaded();
+
+        if (newItem.itemType == itemType.Passive)
         {
-            newItem.attack = this.attack;
-            newItem.player = this;
+            //newItem.attack = this.attack;
+            //newItem.player = this;
             passiveItems.Add(newItem);
             ApplyPassiveEffects();
+            //FindObjectOfType<PassiveEquipmentUI>()?.AddPassiveItem(newItem.itemIcon);
         }
-        else if(newItem.itemType == itemType.Active)
+        else if (newItem.itemType == itemType.Active)
         {
             activeItems.Add(newItem);
-
+            //FindObjectOfType<ActiveEquipmentUI>()?.AddActiveItem(newItem.itemIcon);
         }
+
         else if(newItem.itemType == itemType.Normal && newItem.itemName == "폭탄")
         {
             hasGranade += 1;
         }
-            Debug.Log("아이템 획득 :" + newItem.itemName + " (" + newItem.itemType + ")");
+        ShowPickupText(newItem.itemName);
+        Debug.Log("아이템 획득 :" + newItem.itemName + " (" + newItem.itemType + ")");
     }
 
     private void ApplyPassiveEffects()
@@ -267,13 +317,26 @@ public class Player : MonoBehaviour
         {
             if (item.itemType == itemType.Passive)
             {
-
                 Debug.Log("패시브 아이템 효과 적용: " + item.itemName);
-                item.UseItem();
             }
         }
     }
 
+   //private void OnTriggerEnter(Collider other)
+   //{
+   //    ItemHolder holder = other.GetComponent<ItemHolder>();
+   //    if (holder != null && holder.itemInstance != null)
+   //    {
+   //        AcquireItem(holder.itemInstance);
+   //        Destroy(other.gameObject);
+   //    }
+   //}
+
+
+    private void Die()
+    {
+
+    }
 
     public void UseItem(int index, itemType type)
     {
@@ -283,30 +346,52 @@ public class Player : MonoBehaviour
         {
             if (targetList[index].itemType == type)
             {
-                
-                if (type == itemType.Active && Input.GetKeyDown(KeyCode.Alpha1))
+
+                Debug.Log("액티브 아이템 사용: " + targetList[index].itemName);
+                targetList[index].UseItem(); // 액티브 아이템의 UseItem() 호출 (실제 효과 구현)
+                // 사용 후 아이템 제거 또는 쿨타임 처리 등 추가 로직 필요
+                if (type == itemType.Active)
                 {
-                    Debug.Log("액티브 아이템 사용: " + targetList[index].itemName);
-                    targetList[index].UseItem(); 
-                 // 예시: 사용 후 첫 번째 액티브 아이템 제거
-                    activeItems.RemoveAt(index);
-                 // UpdateActiveItemUI();
+                    // 예시: 사용 후 첫 번째 액티브 아이템 제거
+                    // activeItems.RemoveAt(index);
+
+
+                    if (type == itemType.Active && Input.GetKeyDown(KeyCode.Alpha1))
+                    {
+                        Debug.Log("액티브 아이템 사용: " + targetList[index].itemName);
+                        targetList[index].UseItem();
+                        // 예시: 사용 후 첫 번째 액티브 아이템 제거
+                        activeItems.RemoveAt(index);
+
+                        // UpdateActiveItemUI();
+                    }
+                }
+                else
+                {
+                    Debug.Log("해당 슬롯은 " + type + " 아이템이 아닙니다.");
                 }
             }
             else
             {
-                Debug.Log("해당 슬롯은 " + type + " 아이템이 아닙니다.");
+                Debug.Log("??? ?琯????? ???????? ???????.");
             }
-        }
-        else
-        {
-            Debug.Log("패시브 아이템은 사용할수 없습니다.");
         }
     }
 
-    private void Die()
+    public void ResetPlayer()
     {
-        Debug.Log("플레이어 사망!");
+        this.CulHealth = this.MaxHealth;
+
+        // 아이템 초기화
+        passiveItems.Clear();
+        activeItems.Clear();
+
+        // 체력 초기화 (UI 쪽과 연동된다면 HealthManager에서도 추가 작업 필요)
+        FindObjectOfType<HealthManager>()?.ResetHealth(MaxHealth);
+
+        // 위치 초기화
+        transform.position = new Vector3(0f, 5f, 0f);
+        transform.rotation = Quaternion.identity;
     }
 
     private void UseGranade()

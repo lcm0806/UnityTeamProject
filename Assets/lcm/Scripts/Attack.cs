@@ -13,7 +13,6 @@ public class Attack : MonoBehaviour
 
     [SerializeField] GameObject bulletPrefab;
     [SerializeField] Transform muzzlePoint;
-    
 
     private bool isTripleShotEnabled = false;
     private bool is8WayShotEnabled = false;
@@ -113,8 +112,8 @@ public class Attack : MonoBehaviour
         }
 
 
-        float bulletScale = Player.Instance.GetCurrentBulletScale();
-        instance.transform.localScale = Vector3.one * bulletScale;
+       // float bulletScale = Player.Instance.GetCurrentBulletScale();
+        //instance.transform.localScale = Vector3.one * bulletScale;
 
         Bullet bulletComponent = instance.GetComponent<Bullet>();
         if (bulletComponent != null)

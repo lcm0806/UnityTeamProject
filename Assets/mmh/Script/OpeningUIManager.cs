@@ -95,8 +95,16 @@ public class OpeningUIManager : MonoBehaviour
 
     public void OnNewGameButton()
     {
+
         Debug.Log("New Game Start!");
-        StartGame(true); // 초기화 ON
+       //GameBootFlags.isNewGame = true;
+       //SceneManager.LoadScene("GameScene");
+    }
+
+    public void NewGame()
+    {
+        GameBootFlags.isNewGame = true;
+        SceneManager.LoadScene("GameScene");
     }
 
     public void OnContinueButton()
@@ -187,10 +195,20 @@ public class OpeningUIManager : MonoBehaviour
             if (resetPlayer) // 초기화 여부에 따라 분기
             {
                 playerScript.CulHealth = playerScript.MaxHealth;
-                player.transform.position = new Vector3(0f, 0f, 0f);
+                player.transform.position = new Vector3(0f, 5f, 0f);
                 player.transform.rotation = Quaternion.identity;
             }
         }
+
+        if (resetPlayer && player != null)
+        {
+            var playerScript = player.GetComponent<Player>();
+            playerScript.ResetPlayer();
+
+            FindObjectOfType<PassiveEquipmentUI>()?.ResetUI();
+            FindObjectOfType<ActiveEquipmentUI>()?.ResetUI();
+        }
+
     }
 
 
