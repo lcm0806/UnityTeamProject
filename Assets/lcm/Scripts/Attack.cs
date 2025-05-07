@@ -112,8 +112,8 @@ public class Attack : MonoBehaviour
         }
 
 
-        float bulletScale = Player.Instance.GetCurrentBulletScale();
-        instance.transform.localScale = Vector3.one * bulletScale;
+       // float bulletScale = Player.Instance.GetCurrentBulletScale();
+        //instance.transform.localScale = Vector3.one * bulletScale;
 
         Bullet bulletComponent = instance.GetComponent<Bullet>();
         if (bulletComponent != null)
