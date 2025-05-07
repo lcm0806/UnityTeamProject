@@ -13,7 +13,6 @@ public class Attack : MonoBehaviour
 
     [SerializeField] GameObject bulletPrefab;
     [SerializeField] Transform muzzlePoint;
-    
 
     private bool isTripleShotEnabled = false;
     private bool is8WayShotEnabled = false;
