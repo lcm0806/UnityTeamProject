@@ -5,9 +5,9 @@ using UnityEngine.UI;
 
 public class HealthManager : MonoBehaviour
 {
-    public Image[] hearts; // ÇÏÆ® ÀÌ¹ÌÁö ¹è¿­
-    public Sprite fullHeart; // »¡°£ ÇÏÆ®
-    public Sprite emptyHeart; // ºó ÇÏÆ®
+    public Image[] hearts; // ï¿½ï¿½Æ® ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½è¿­
+    public Sprite fullHeart; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ®
+    public Sprite emptyHeart; // ï¿½ï¿½ ï¿½ï¿½Æ®
     private Player playerInstance;
     private int previousHealth;
 
@@ -16,20 +16,20 @@ public class HealthManager : MonoBehaviour
         playerInstance = Player.Instance;
         if (playerInstance == null)
         {
-            Debug.LogError("Player ÀÎ½ºÅÏ½º¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù. HealthManager°¡ Á¦´ë·Î ÀÛµ¿ÇÏÁö ¾ÊÀ» ¼ö ÀÖ½À´Ï´Ù.");
+            Debug.LogError("Player ï¿½Î½ï¿½ï¿½Ï½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½. HealthManagerï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ûµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö½ï¿½ï¿½Ï´ï¿½.");
             enabled = false;
             return;
         }
 
-        // ÇÏÆ® ¹è¿­ ÃÊ±âÈ­ È®ÀÎ
+        // ï¿½ï¿½Æ® ï¿½è¿­ ï¿½Ê±ï¿½È­ È®ï¿½ï¿½
         if (hearts == null || hearts.Length == 0)
         {
-            Debug.LogError("ÇÏÆ® ÀÌ¹ÌÁö ¹è¿­ÀÌ ÃÊ±âÈ­µÇÁö ¾Ê¾Ò½À´Ï´Ù!");
+            Debug.LogError("ï¿½ï¿½Æ® ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½è¿­ï¿½ï¿½ ï¿½Ê±ï¿½È­ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¾Ò½ï¿½ï¿½Ï´ï¿½!");
             enabled = false;
             return;
         }
 
-        previousHealth = playerInstance.CulHealth; // ÃÊ±â Ã¼·Â »óÅÂ ÀúÀå
+        previousHealth = playerInstance.CulHealth; // ï¿½Ê±ï¿½ Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         UpdateHearts();
     }
 
@@ -50,10 +50,10 @@ public class HealthManager : MonoBehaviour
         int currentHealth = playerInstance.CulHealth;
         int maxHealth = playerInstance.MaxHealth;
 
-        // ÇÏÆ® °³¼ö°¡ ÃÖ´ë Ã¼·Âº¸´Ù ¸¹À¸¸é Á¶Á¤
+        // ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ Ã¼ï¿½Âºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         if (hearts.Length > maxHealth)
         {
-            Debug.LogWarning("ÇÏÆ® UI ¿ä¼Ò°¡ ÃÖ´ë Ã¼·Âº¸´Ù ¸¹½À´Ï´Ù. UI ¼³Á¤À» È®ÀÎÇÏ¼¼¿ä.");
+            Debug.LogWarning("ï¿½ï¿½Æ® UI ï¿½ï¿½Ò°ï¿½ ï¿½Ö´ï¿½ Ã¼ï¿½Âºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½. UI ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½.");
             for (int i = maxHealth; i < hearts.Length; i++)
             {
                 hearts[i].gameObject.SetActive(false);
@@ -61,8 +61,8 @@ public class HealthManager : MonoBehaviour
         }
         else if (hearts.Length < maxHealth)
         {
-            Debug.LogWarning("ÇÏÆ® UI ¿ä¼Ò°¡ ÃÖ´ë Ã¼·Âº¸´Ù Àû½À´Ï´Ù. ¸ðµç Ã¼·ÂÀ» Ç¥½ÃÇÏÁö ¸øÇÒ ¼ö ÀÖ½À´Ï´Ù.");
-            // ÇÊ¿äÇÏ´Ù¸é µ¿ÀûÀ¸·Î ÇÏÆ® UI¸¦ Ãß°¡ÇÏ´Â ·ÎÁ÷ ±¸Çö °¡´É
+            Debug.LogWarning("ï¿½ï¿½Æ® UI ï¿½ï¿½Ò°ï¿½ ï¿½Ö´ï¿½ Ã¼ï¿½Âºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½. ï¿½ï¿½ï¿½ Ã¼ï¿½ï¿½ï¿½ï¿½ Ç¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö½ï¿½ï¿½Ï´ï¿½.");
+            // ï¿½Ê¿ï¿½ï¿½Ï´Ù¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ® UIï¿½ï¿½ ï¿½ß°ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         }
 
         for (int i = 0; i < hearts.Length; i++)
@@ -70,12 +70,12 @@ public class HealthManager : MonoBehaviour
             if (i < currentHealth)
             {
                 hearts[i].sprite = fullHeart;
-                hearts[i].gameObject.SetActive(true); // È°¼ºÈ­
+                hearts[i].gameObject.SetActive(true); // È°ï¿½ï¿½È­
             }
             else
             {
                 hearts[i].sprite = emptyHeart;
-                if (i < maxHealth) // ÃÖ´ë Ã¼·Â ¹üÀ§ ³»ÀÇ ºó ÇÏÆ®´Â È°¼ºÈ­
+                if (i < maxHealth) // ï¿½Ö´ï¿½ Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½Æ®ï¿½ï¿½ È°ï¿½ï¿½È­
                 {
                     hearts[i].gameObject.SetActive(true);
                 }
@@ -85,8 +85,8 @@ public class HealthManager : MonoBehaviour
 
     public void ResetHealth(int max)
     {
-        this.health = max;
-        this.maxHealth = max;
-        UpdateHearts();
+      //this.health = max;
+      //this.maxHealth = max;
+      //UpdateHearts();
     }
 }
