@@ -35,16 +35,19 @@ public class HealthManager : MonoBehaviour
 
     void Update()
     {
-        if (playerInstance != null && playerInstance.CulHealth != previousHealth)
-        {
-            previousHealth = playerInstance.CulHealth;
-            UpdateHearts();
-        }
+        UpdateHearts();
     }
 
+    public void TakeDamage(int damage)
+    {
+        health -= damage;
+        if (health < 0)
+            health = 0;
+    }
 
     void UpdateHearts()
     {
+
         if (hearts == null || playerInstance == null) return;
 
         int currentHealth = playerInstance.CulHealth;
@@ -65,28 +68,33 @@ public class HealthManager : MonoBehaviour
             // �ʿ��ϴٸ� �������� ��Ʈ UI�� �߰��ϴ� ���� ���� ����
         }
 
+
         for (int i = 0; i < hearts.Length; i++)
         {
-            if (i < currentHealth)
-            {
+            if (i < health)
                 hearts[i].sprite = fullHeart;
+
                 hearts[i].gameObject.SetActive(true); // Ȱ��ȭ
             }
-            else
-            {
+
+            else{
                 hearts[i].sprite = emptyHeart;
+
                 if (i < maxHealth) // �ִ� ü�� ���� ���� �� ��Ʈ�� Ȱ��ȭ
                 {
                     hearts[i].gameObject.SetActive(true);
                 }
             }
+
         }
     }
 
     public void ResetHealth(int max)
     {
+
       //this.health = max;
       //this.maxHealth = max;
       //UpdateHearts();
+
     }
 }

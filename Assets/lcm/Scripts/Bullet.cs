@@ -19,6 +19,7 @@ public class Bullet : MonoBehaviour
 
     void Start()
     {
+        
         rb = GetComponent<Rigidbody>();
         initialY = transform.position.y; // 초기 Y 좌표 저장
 
@@ -27,6 +28,8 @@ public class Bullet : MonoBehaviour
         {
             FindClosestMonsterAndSetInitialDirection();
         }
+
+        Debug.Log(transform.position);
     }
 
     void FixedUpdate()
