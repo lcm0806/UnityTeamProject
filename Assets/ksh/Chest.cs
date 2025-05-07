@@ -36,7 +36,7 @@ public class NewBehaviourScript : MonoBehaviour
         items.Add(new YumHeart());
         items.Add(new BookOfShadow());//이펙트
         items.Add(new ShoopDaWhoop());
-        items.Add(new TheNail()); 
+        items.Add(new TheNail());
         items.Add(new MrBoom()); //이펙트
         items.Add(new TammysBlessing());
         items.Add(new Cross());
