@@ -7,7 +7,11 @@ public class BossMonsterMissile : MonsterBullet
     public Transform target;
     public float moveSpeed;
 
-  
+    void Update()
+    {
+        Trace();
+    }
+
     private void Trace()
     {
         
