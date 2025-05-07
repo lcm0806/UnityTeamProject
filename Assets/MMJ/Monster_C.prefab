@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5498334948122430249}
   - component: {fileID: 382074647319617452}
   - component: {fileID: 3732717507832626904}
+  - component: {fileID: 4235141298382529791}
   m_Layer: 20
   m_Name: Monster_C
   m_TagString: Monster
@@ -107,8 +108,20 @@ MonoBehaviour:
   isDead: 0
   rigid: {fileID: 0}
   boxCollider: {fileID: 0}
-  mat: {fileID: 0}
+  meshs: []
   anime: {fileID: 0}
+--- !u!114 &4235141298382529791
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2877379589520346134}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60d9c01e671188449aa52aa7fbb5be5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &5626499292353480573
 PrefabInstance:
   m_ObjectHideFlags: 0

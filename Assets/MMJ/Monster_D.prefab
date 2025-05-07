@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: 4458126563582589149}
   - component: {fileID: 3598237266481800563}
   - component: {fileID: 6383771543587049761}
+  - component: {fileID: 7492064214671262234}
   m_Layer: 20
   m_Name: Monster_D
   m_TagString: Monster
@@ -142,7 +143,7 @@ MonoBehaviour:
   isDead: 0
   rigid: {fileID: 0}
   boxCollider: {fileID: 0}
-  mat: {fileID: 0}
+  meshs: []
   anime: {fileID: 0}
   missile: {fileID: 6588574633023880281, guid: a44276642f302034da3a257f885d7bf1, type: 3}
   missilePortA: {fileID: 5347236865268061169}
@@ -163,6 +164,18 @@ MonoBehaviour:
   pool: []
   prefab: {fileID: 5526812104307456553, guid: a44276642f302034da3a257f885d7bf1, type: 3}
   size: 10
+--- !u!114 &7492064214671262234
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2877379589520346134}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60d9c01e671188449aa52aa7fbb5be5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6025714687981535220
 GameObject:
   m_ObjectHideFlags: 0
