@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
     }
     [SerializeField] private List<Item> passiveItems = new List<Item>();
     [SerializeField] private List<Item> activeItems = new List<Item>();
+    [SerializeField] private List<Item> normalItems = new List<Item>();
     [SerializeField] private float bulletSpeed;
     public float BulletSpeed { get => bulletSpeed; set => bulletSpeed = value;}
     private int maxhealth;
@@ -42,7 +43,7 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject pickupTextUIPrefab; // 인스펙터에서 연결할 프리팹
     [SerializeField] private GameObject BombPrefab;
     [SerializeField] private Transform BombPoint;
-    public int hasGrenades;
+    public int hasGranade;
 
     public void ShowPickupText(string message)
     {
@@ -114,6 +115,8 @@ public class Player : MonoBehaviour
     }
 
     Animator anim;
+    private int hasGrenades;
+
     private void Awake()
     {
         if(instance != null && instance != this)
