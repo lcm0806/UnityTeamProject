@@ -10,6 +10,8 @@ public class Player : MonoBehaviour
     private float vAxis;
 
     [SerializeField] private float speed;
+    [SerializeField] private GameObject bombPrefab; // Inspector에서 할당할 폭탄 프리팹
+    [SerializeField] private float bombOffset = 1f;
     public float Speed
     {
         get => speed;
@@ -89,6 +91,8 @@ public class Player : MonoBehaviour
     Vector3 sideVec;
     Vector3 dodgeVec;
 
+    public int hasGranade = 0;
+
     private static Player instance = null;
 
     public static Player Instance
@@ -152,6 +156,12 @@ public class Player : MonoBehaviour
         Turn();
         Dodge();
         Attack();
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            UseGranade();
+        }
+
     }
 
     private void GetInput()
@@ -291,11 +301,14 @@ public class Player : MonoBehaviour
             activeItems.Add(newItem);
             //FindObjectOfType<ActiveEquipmentUI>()?.AddActiveItem(newItem.itemIcon);
         }
+
+        else if(newItem.itemType == itemType.Normal && newItem.itemName == "폭탄")
+        {
+            hasGranade += 1;
+        }
         ShowPickupText(newItem.itemName);
-
-
         Debug.Log("아이템 획득 :" + newItem.itemName + " (" + newItem.itemType + ")");
-}
+    }
 
     private void ApplyPassiveEffects()
     {
@@ -381,10 +394,40 @@ public class Player : MonoBehaviour
         transform.rotation = Quaternion.identity;
     }
 
-    //private void Die()
-    //{
-    //    Debug.Log("플레이어 사망!");
-    //}
+    private void UseGranade()
+    {
+        if (hasGranade > 0)
+        {
+            Debug.Log("폭탄사용");
+            hasGranade--;
+            Debug.Log($"남은 폭탄개수: {hasGranade}");
+
+            Bomb tempBomb = new Bomb();
+            tempBomb.player = this;
+            tempBomb.UseItem();
+        }
+        else
+        {
+            Debug.Log("사용 가능한 폭탄이 없습니다.");
+        }
+    }
+
+    public void SpawnBomb(GameObject bombPrefab)
+    {
+        if (bombPrefab != null)
+        {
+            Vector3 spawnPosition = transform.position + transform.forward * bombOffset;
+            GameObject bombInstance = Instantiate(bombPrefab, spawnPosition, Quaternion.identity);
+
+            // 생성된 폭탄 오브젝트에 폭발 효과 컴포넌트 추가
+            BombLogic bombEffect = bombInstance.AddComponent<BombLogic>();
+
+        }
+        else
+        {
+            Debug.LogError("Bomb 프리팹이 null입니다.");
+        }
+    }
 
     // UI 업데이트 (임시)
     private void UpdatePassiveItemsUI()

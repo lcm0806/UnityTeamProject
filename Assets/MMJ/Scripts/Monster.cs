@@ -48,6 +48,10 @@ public class Monster : MonoBehaviour
 
             StartCoroutine(OnDamage(reactVec));
         }
+        else if(other.tag == "Rayser")
+        {
+
+        }
     }
 
 
