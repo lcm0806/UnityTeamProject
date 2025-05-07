@@ -84,7 +84,7 @@ public class TheInnerEye : Item //패시브아이템
 
 
         //눈물이 3갈래로 나감
-        Attack playerAttack = Player.Instance.GetComponent<Attack>();
+        Attack playerAttack = Player.Instance.GetComponentInChildren<Attack>();
         playerAttack.SetTripleShot(true); // Attack 스크립트에 트리플 샷 활성화
 
         Player.Instance.BulletSpeed *= 0.51f;
@@ -405,6 +405,10 @@ public class TammysBlessing : Item //액티브아이템
     public override void UseItem()
     {
         //8방향 눈물 발사
+        Attack playerAttack = Player.Instance.GetComponentInChildren<Attack>();
+        playerAttack.Set8WayShot(true);
+        playerAttack.Fire(Player.Instance.Damage);
+        playerAttack.Set8WayShot(false);
     }
 }
 
