@@ -63,7 +63,8 @@ public class SadOnion : Item //패시브아이템
 
     public override void UseItem()
     {
-        Player.Instance.BulletSpeed += 0.7f;
+        Player.Instance.BulletSpeed += 1.7f;
+        Debug.Log("총알속도증가!!");
     }
 }
 
@@ -81,13 +82,15 @@ public class TheInnerEye : Item //패시브아이템
 
     public override void UseItem()
     {
-
-
-        //눈물이 3갈래로 나감
         Attack playerAttack = Player.Instance.GetComponent<Attack>();
-        playerAttack.SetTripleShot(true); // Attack 스크립트에 트리플 샷 활성화
+        if (Player.Instance != null)
+        {
+            //눈물이 3갈래로 나감
+            
+            playerAttack.SetTripleShot(true); // Attack 스크립트에 트리플 샷 활성화
 
-        Player.Instance.BulletSpeed *= 0.51f;
+            Player.Instance.BulletSpeed *= 0.51f;
+        }
     }
 }
 
@@ -516,19 +519,7 @@ public class Bomb : Item // Normal 타입 아이템
 
     public override void UseItem()
     {
-        if (player != null)
-        {
-            Debug.Log($"{itemName} 사용 준비!");
-            // 폭탄 생성 요청만 하고, 실제 생성은 Player 스크립트에서 처리
-            Player playerScript = player.GetComponent<Player>();
-            if (playerScript != null)
-            {
-                playerScript.SpawnBomb(itemPrefab);
-            }
-        }
-        else
-        {
-            Debug.LogError("플레이어 참조가 없습니다.");
-        }
+
     }
+}
 
