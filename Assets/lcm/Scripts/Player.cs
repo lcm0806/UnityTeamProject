@@ -40,6 +40,9 @@ public class Player : MonoBehaviour
 
     [SerializeField] private float defaultBulletScale = 1f;
     [SerializeField] private GameObject pickupTextUIPrefab; // 인스펙터에서 연결할 프리팹
+    [SerializeField] private GameObject BombPrefab;
+    [SerializeField] private Transform BombPoint;
+    public int hasGrenades;
 
     public void ShowPickupText(string message)
     {
@@ -68,6 +71,7 @@ public class Player : MonoBehaviour
 
     private bool wDown;
     private bool jDown;
+    private bool gDown;
 
     private bool isSide;
     private bool isDodge;
@@ -88,6 +92,8 @@ public class Player : MonoBehaviour
     Vector3 dodgeVec;
 
     private static Player instance = null;
+    private bool canUseItem = true;
+    private Item item;
 
     public static Player Instance
     {
@@ -125,6 +131,7 @@ public class Player : MonoBehaviour
         Attack attack = GetComponent<Attack>();
         meshs = GetComponentsInChildren<MeshRenderer>();
         invincibleScript = GetComponent<Invincible>();
+
     }
 
     private void Start()
@@ -150,12 +157,16 @@ public class Player : MonoBehaviour
         Turn();
         Dodge();
         Attack();
-        UseItem(0,itemType.Active);
 
-        if (Input.GetKeyDown(KeyCode.R))
+        if (activeItems != null && activeItems.Count > 0)
         {
+            UseItem(0, itemType.Active);
         }
 
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            Grenade();
+        }
     }
 
     private void GetInput()
@@ -241,8 +252,6 @@ public class Player : MonoBehaviour
             Debug.Log("플레이어 무적 상태로 데미지를 받지 않음!");
         }
     }
-
-
     IEnumerator OnDamage()
     {
         isDamage = true;
@@ -276,7 +285,14 @@ public class Player : MonoBehaviour
             activeItems.Add(newItem);
             //FindObjectOfType<ActiveEquipmentUI>()?.AddActiveItem(newItem.itemIcon);
         }
-
+        else if (newItem.itemType == itemType.Normal)
+        {
+            normalItems.Add(newItem);
+        }
+        else if(newItem.itemType == itemType.Normal && newItem.itemName == "폭탄")
+        {
+            hasGranade += 1;
+        }
         ShowPickupText(newItem.itemName);
 
 
@@ -310,7 +326,19 @@ public class Player : MonoBehaviour
     public void UseItem(int index, itemType type)
     {
         List<Item> targetList = (type == itemType.Active) ? activeItems : passiveItems;
+        
+        if (index < 0 || index >= targetList.Count)
+        {
+            Debug.LogWarning("인덱스 범위 초과: " + index);
+            return;
+        }
 
+        if (targetList[index] == null)
+        {
+            Debug.LogWarning("해당 슬롯에 아이템이 없습니다.");
+            return;
+        }
+        
         if (index >= 0 && index < targetList.Count)
         {
             if (type == itemType.Active)
@@ -358,6 +386,39 @@ public class Player : MonoBehaviour
         for (int i = 0; i < passiveItems.Count; i++)
         {
             Debug.Log($"{i + 1}: {passiveItems[i].itemName} ({passiveItems[i].itemType})");
+        }
+    }
+
+    private IEnumerator Cooltime()
+    {
+        yield return new WaitForSeconds(3f);
+        canUseItem = true;
+    }
+
+    private void Grenade()
+    {
+        if (hasGrenades <= 0)
+        {
+            return;
+        }
+        GameObject bomb = Instantiate(BombPrefab, BombPoint.position, Quaternion.identity);
+        
+        Vector3 throwrange = transform.forward + transform.up * 1f;
+        Rigidbody rb = bomb.GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            // 플레이어가 바라보는 방향으로 폭탄에 힘을 줌
+            rb.AddForce(transform.forward * 3f, ForceMode.Impulse);
+        }
+        hasGrenades--;
+    }
+
+    public void PickupItem(Item item)
+    {
+        if (item.itemType == itemType.Normal && item.itemName == "Bomm")
+        {
+            normalItems.Add(item);
+            hasGrenades++;
         }
     }
 

@@ -8,6 +8,7 @@ public class SixBomb : MonoBehaviour
     public GameObject BombPrefab;
     private int Bombcount = 6;
     private Room room;
+    private bool Isusedbomb = false;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -41,7 +42,7 @@ public class SixBomb : MonoBehaviour
     {
         Debug.Log("폭탄 발동");
         RaycastHit hit;
-
+        Isusedbomb = true;
         for (int i = 0; i < Bombcount; i++)
         {
             Vector3 randompos = room.GetRandomSpawnPosition();
