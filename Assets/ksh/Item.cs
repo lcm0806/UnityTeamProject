@@ -531,4 +531,5 @@ public class Bomb : Item // Normal 타입 아이템
             Debug.LogError("플레이어 참조가 없습니다.");
         }
     }
+}
 
