@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
     }
     [SerializeField] private List<Item> passiveItems = new List<Item>();
     [SerializeField] private List<Item> activeItems = new List<Item>();
+    [SerializeField] private List<Item> normalItems = new List<Item>();
     [SerializeField] private float bulletSpeed;
     public float BulletSpeed { get => bulletSpeed; set => bulletSpeed = value;}
     private int maxhealth;
@@ -42,7 +43,7 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject pickupTextUIPrefab; // 인스펙터에서 연결할 프리팹
     [SerializeField] private GameObject BombPrefab;
     [SerializeField] private Transform BombPoint;
-    public int hasGrenades;
+    public int hasGranade;
 
     public void ShowPickupText(string message)
     {
@@ -114,6 +115,8 @@ public class Player : MonoBehaviour
     }
 
     Animator anim;
+    private int hasGrenades;
+
     private void Awake()
     {
         if(instance != null && instance != this)
@@ -157,10 +160,10 @@ public class Player : MonoBehaviour
         Turn();
         Dodge();
         Attack();
-        UseItem(0,itemType.Active);
 
-        if (Input.GetKeyDown(KeyCode.R))
+        if (activeItems != null && activeItems.Count > 0)
         {
+            UseItem(0, itemType.Active);
         }
 
         if (Input.GetKeyDown(KeyCode.E))
@@ -252,7 +255,6 @@ public class Player : MonoBehaviour
             Debug.Log("플레이어 무적 상태로 데미지를 받지 않음!");
         }
     }
-
     IEnumerator OnDamage()
     {
         isDamage = true;
@@ -296,10 +298,6 @@ public class Player : MonoBehaviour
         else if (newItem.itemType == itemType.Normal)
         {
             normalItems.Add(newItem);
-        }
-        else if(newItem.itemType == itemType.Normal && newItem.itemName == "폭탄")
-        {
-            hasGranade += 1;
         }
         ShowPickupText(newItem.itemName);
 
@@ -435,7 +433,7 @@ public class Player : MonoBehaviour
 
     public void PickupItem(Item item)
     {
-        if (item.itemType == itemType.Normal && item.itemName == "Bomm")
+        if (item.itemType == itemType.Normal && item.itemName == "Bomb")
         {
             normalItems.Add(item);
             hasGrenades++;

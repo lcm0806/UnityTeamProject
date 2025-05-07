@@ -5,9 +5,9 @@ using UnityEngine.UI;
 
 public class HealthManager : MonoBehaviour
 {
-    public Image[] hearts; // ��Ʈ �̹��� �迭
-    public Sprite fullHeart; // ���� ��Ʈ
-    public Sprite emptyHeart; // �� ��Ʈ
+    public Image[] hearts; 
+    public Sprite fullHeart; 
+    public Sprite emptyHeart; 
     private Player playerInstance;
     private int previousHealth;
 
@@ -29,20 +29,13 @@ public class HealthManager : MonoBehaviour
             return;
         }
 
-        previousHealth = playerInstance.CulHealth; // �ʱ� ü�� ���� ����
+        previousHealth = playerInstance.CulHealth; 
         UpdateHearts();
     }
 
     void Update()
     {
         UpdateHearts();
-    }
-
-    public void TakeDamage(int damage)
-    {
-        health -= damage;
-        if (health < 0)
-            health = 0;
     }
 
     void UpdateHearts()
@@ -64,30 +57,35 @@ public class HealthManager : MonoBehaviour
         else if (hearts.Length < maxHealth)
         {
             Debug.LogWarning("��Ʈ UI ��Ұ� �ִ� ü�º��� �����ϴ�. ��� ü���� ǥ������ ���� �� �ֽ��ϴ�.");
-            // �ʿ��ϴٸ� �������� ��Ʈ UI�� �߰��ϴ� ���� ���� ����
         }
+
 
         for (int i = 0; i < hearts.Length; i++)
         {
-            if (i < health)
+            if (i < previousHealth)
+            {
                 hearts[i].sprite = fullHeart;
                 hearts[i].gameObject.SetActive(true); // Ȱ��ȭ
             }
             else
+            {
                 hearts[i].sprite = emptyHeart;
+
                 if (i < maxHealth) // �ִ� ü�� ���� ���� �� ��Ʈ�� Ȱ��ȭ
                 {
                     hearts[i].gameObject.SetActive(true);
                 }
             }
+
         }
     }
+
 
     public void ResetHealth(int max)
     {
       //this.health = max;
       //this.maxHealth = max;
       //UpdateHearts();
-
     }
+
 }
