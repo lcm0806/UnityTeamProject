@@ -2,14 +2,15 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class EnemyDeath : MonoBehaviour
 {
-    public event Action OnDeath; // 죽음 이벤트
-
+    //public event Action OnDeath; // 죽음 이벤트
+    [SerializeField] UnityEvent OnDeath;
     public void OnDisable()
     {
-        if(OnDeath != null) { Die(); }
+        Die();
     }
 
     public void Die()
