@@ -10,8 +10,6 @@ public class Player : MonoBehaviour
     private float vAxis;
 
     [SerializeField] private float speed;
-    [SerializeField] private GameObject bombPrefab; // Inspector에서 할당할 폭탄 프리팹
-    [SerializeField] private float bombOffset = 1f;
     public float Speed
     {
         get => speed;
@@ -88,8 +86,6 @@ public class Player : MonoBehaviour
     Vector3 moveVec;
     Vector3 sideVec;
     Vector3 dodgeVec;
-
-    public int hasGranade = 0;
 
     private static Player instance = null;
 
@@ -286,8 +282,10 @@ public class Player : MonoBehaviour
             hasGranade++;
         }
         ShowPickupText(newItem.itemName);
+
+
         Debug.Log("아이템 획득 :" + newItem.itemName + " (" + newItem.itemType + ")");
-    }
+}
 
     private void ApplyPassiveEffects()
     {

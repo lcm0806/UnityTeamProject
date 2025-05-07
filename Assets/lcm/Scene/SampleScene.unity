@@ -670,16 +670,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 15
-  bombPrefab: {fileID: 5530515833611478191, guid: 3237158e59a66e242a8be182ec39bce8, type: 3}
-  bombOffset: 1
   bulletSpeed: 30
   damage: 10
   attack: {fileID: 1776008821}
   soulhealth: 0
   attackRate: 0.5
   defaultBulletScale: 1
-  pickupTextUIPrefab: {fileID: 1090280180}
-  hasGranade: 2
 --- !u!54 &721955885
 Rigidbody:
   m_ObjectHideFlags: 0

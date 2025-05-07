@@ -505,7 +505,7 @@ public class GoldenKey : Item //액티브아이템
     }
 }
 
-public class Bomb : Item // Normal 타입 아이템
+public class Bomb : Item //액티브아이템
 {
     public Bomb()
     {
