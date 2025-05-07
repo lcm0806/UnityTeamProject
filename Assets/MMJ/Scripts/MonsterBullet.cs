@@ -8,6 +8,7 @@ public class MonsterBullet : MonoBehaviour
     public bool isMelee;
     public bool isrock;
 
+
     private void OnCollisionEnter(Collision collision)
     {
         if (!isrock && collision.gameObject.tag == "Floor")
@@ -18,6 +19,11 @@ public class MonsterBullet : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        else if (!isMelee && collision.gameObject.tag == "Player")
+        {
+            Destroy(gameObject);
+        }
+
     }
 
     private void OnTriggerEnter(Collider other)
@@ -26,5 +32,11 @@ public class MonsterBullet : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        if (!isMelee && other.gameObject.tag == "Player")
+        {
+            Player.Instance.TakeDamage(damage);
+            Destroy(gameObject);
+        }
     }
+
 }

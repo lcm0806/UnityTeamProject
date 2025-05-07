@@ -9,6 +9,9 @@ TagManager:
   - MonsterBullet
   - Wall
   - Item
+  - Bullet
+  - Room
+  - Ground
   layers:
   - Default
   - TransparentFX
@@ -16,7 +19,7 @@ TagManager:
   - Player
   - Water
   - UI
-  - 
+  - Bullet
   - 
   - 
   - 
